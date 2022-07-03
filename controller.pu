@@ -1,0 +1,24 @@
+@startuml
+
+[*] --> index : /
+
+state index {
+	state users
+	users : *{id}
+	users : *{osmid}
+	users : *{task.cityname}
+}
+state form {
+	state mapper {
+		mapper : osmid
+		mapper : task.cityname
+	}
+}
+
+index --> index : /delete/{id}
+index --> form : /edit/{id}
+index --> form : /add
+form --> index : /process[!hasErrors]
+form --> form : /process[hasErrors]
+
+@enduml

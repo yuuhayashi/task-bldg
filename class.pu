@@ -1,0 +1,47 @@
+@startuml
+class Mapper <<Entity>> {
+  - id : Long
+  - osmid : String
+  - tasks : List<Task>
+}
+
+class Task <<Entity>> {
+  - id : Long
+  - citycode : String
+  - meshcode : String
+  - cityname : String
+  - mappers : List<Mapper>
+}
+note right : spring.datasource.url=jdbc:h2:mem:taskdb
+
+interface TaskRepository <<Repository>> {
+}
+
+interface MapperRepository <<Repository>> {
+}
+
+class MapperController <<Controller>> {
+  - repository : MapperRepository
+  + showList(model)
+  + addMapper(mapper)
+  + process(mapper, result)
+  + editMapper(id, model)
+  + deleteMapper(id)
+}
+
+interface CommandLineRunner
+
+class DataLoader <<Component>> {
+  - repository : TaskRepository
+  + run()
+}
+
+TaskRepository <|-- Task
+DataLoader *-- TaskRepository
+CommandLineRunner <|-- DataLoader
+
+Mapper .o Task
+MapperRepository <|-- Mapper
+MapperController *-- MapperRepository
+@enduml
+
