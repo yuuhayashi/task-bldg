@@ -21,7 +21,7 @@
 
             <div class="card shadow">
               <div class="card-header">
-                <h6 class="text-navy my-2">マッパー一覧</h6>
+                <h6 class="text-navy my-2">Plateau 3D都市データ リスト</h6>
               </div>
               <div class="card-body">
 
@@ -35,16 +35,18 @@
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>OSM アカウント名</th>
-                      <th>city name</th>
+                      <th>citycode</th>
+                      <th>cityname</th>
+                      <th>folder</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:each="mapper : ${mappers}" th:object="${mapper}">
+                    <tr th:each="city : ${cities}" th:object="${city}">
                       <td th:text="*{id}"></td>
-                      <td th:text="*{osmid}"></td>
-                      <td th:text="*{task.cityname}"></td>
+                      <td th:text="*{citycode}"></td>
+                      <td th:text="*{cityname}"></td>
+                      <td th:text="*{folder}"></td>
                       <td>
                         <a th:href="@{/edit/{id}(id=*{id})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square"></i>

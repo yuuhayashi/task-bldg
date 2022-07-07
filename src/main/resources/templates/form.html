@@ -24,24 +24,28 @@
                 <h6 class="text-navy my-2">マッパー登録</h6>
               </div>
               <div class="card-body">
-                <form th:action="@{/process}" th:object="${mapper}" method="post">
+                <form th:action="@{/process}" th:object="${city}" method="post">
                   <input type="hidden" th:field="*{id}">
 
                   <div class="mb-3">
-                    <label for="osmid">OSM名</label>
-                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{osmid}">
-                    <div class="invalid-feedback" th:errors="*{osmid}">
+                    <label for="citycode">citycode</label>
+                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{citycode}">
+                    <div class="invalid-feedback" th:errors="*{citycode}">
                     </div>
                   </div>
 
                   <div class="mb-3">
-                    <label for="task">タスク</label>
-                    <select class="form-select" th:field="*{task}">
-                      <th:block th:each="task : ${@taskRepository.findAll()}">
-                        <option th:value="${task.id}" th:text="${task.cityname}">
-                        </option>
-                      </th:block>
-                    </select>
+                    <label for="cityname">cityname</label>
+                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{cityname}">
+                    <div class="invalid-feedback" th:errors="*{cityname}">
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="folder">folder</label>
+                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{folder}">
+                    <div class="invalid-feedback" th:errors="*{folder}">
+                    </div>
                   </div>
 
                   <hr>

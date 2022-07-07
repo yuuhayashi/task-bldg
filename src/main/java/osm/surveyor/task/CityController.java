@@ -10,41 +10,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
-import osm.surveyor.task.model.Mapper;
+import osm.surveyor.task.model.City;
 
 @RequiredArgsConstructor
 @Controller
-public class MapperController {
-	private final MapperRepository repository;
+public class CityController {
+	private final CityRepository repository;
 	
 	@GetMapping("/")
 	public String showList(Model model) {
-		model.addAttribute("mappers", repository.findAll());
+		model.addAttribute("cities", repository.findAll());
 		return "index";
 	}
 	
 	@GetMapping("/add")
-	public String addMapper(@ModelAttribute Mapper mapper) {
+	public String addCity(@ModelAttribute City city) {
 		return "form";
 	}
 	
 	@PostMapping("/process")
-	public String process(@Validated @ModelAttribute Mapper mapper, BindingResult result) {
+	public String process(@Validated @ModelAttribute City city, BindingResult result) {
 		if (result.hasErrors()) {
 			return "form";
 		}
-		repository.save(mapper);
+		repository.save(city);
 		return "redirect:/";
 	}
 
 	@GetMapping("/edit/{id}")
-	public String editMapper(@PathVariable Long id, Model model) {
-		model.addAttribute("mapper", repository.findById(id));
+	public String editCity(@PathVariable Long id, Model model) {
+		model.addAttribute("city", repository.findById(id));
 		return "form";
 	}
 
 	@GetMapping("/delete/{id}")
-	public String deleteMapper(@PathVariable Long id) {
+	public String deleteCity(@PathVariable Long id) {
 		repository.deleteById(id);
 		return "redirect:/";
 	}

@@ -4,26 +4,26 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
-import osm.surveyor.task.model.Task;
+import osm.surveyor.task.model.City;
 
 @RequiredArgsConstructor
 @Component
 public class DataLoader implements CommandLineRunner {
-	private final TaskRepository repository;
+	private final CityRepository repository;
 	
 	@Override
 	public void run(String... args) throws Exception {
-		Task task = new Task();
-		task.setCitycode("01100");
-		task.setMeshcode("000000");
-		task.setCityname("北海道 札幌市");
-		repository.save(task);
+		City city = new City();
+		city.setCitycode("01100");
+		city.setCityname("北海道 札幌市");
+		city.setFolder("01100_sapporo-shi_2020");
+		repository.save(city);
 
-		task = new Task();
-		task.setCitycode("07203");
-		task.setMeshcode("000000");
-		task.setCityname("福島県 郡山市");
-		repository.save(task);
+		city = new City();
+		city.setCitycode("07203");
+		city.setCityname("福島県 郡山市");
+		city.setFolder("07203_koriyama-shi_2020");
+		repository.save(city);
 	}
 
 }

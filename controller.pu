@@ -3,20 +3,21 @@
 [*] --> index : /
 
 state index {
-	state users
-	users : *{id}
-	users : *{osmid}
-	users : *{task.cityname}
+	state cities
+	cities : *{citycode}
+	cities : *{cityname}
+	cities : *{path}
 }
 state form {
-	state mapper {
-		mapper : osmid
-		mapper : task.cityname
+	state city {
+		city : citycode
+		city : cityname
+		city : path
 	}
 }
 
-index --> index : /delete/{id}
-index --> form : /edit/{id}
+index --> index : /delete/{citycode}
+index --> form : /edit/{citycode}
 index --> form : /add
 form --> index : /process[!hasErrors]
 form --> form : /process[hasErrors]

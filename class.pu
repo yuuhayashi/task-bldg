@@ -1,47 +1,51 @@
 @startuml
-class Mapper <<Entity>> {
-  - id : Long
-  - osmid : String
-  - tasks : List<Task>
-}
 
-class Task <<Entity>> {
-  - id : Long
+database "h2" as db {
+	entity city {
+		citycode : String
+		cityname : String
+		path : String
+		lng : Double
+		lat : Double
+	}
+}
+note bottom of db : spring.datasource.url=jdbc:h2:mem:taskdb\nspring.jpa.hibernate.ddl-auto=none
+
+class City <<Entity>> {
+  + id : Long
   - citycode : String
-  - meshcode : String
   - cityname : String
-  - mappers : List<Mapper>
+  - path : String
+  - lng : Double
+  - lat : Double
 }
-note right : spring.datasource.url=jdbc:h2:mem:taskdb
+City .. city
 
-interface TaskRepository <<Repository>> {
+interface CityRepository <<Repository>> {
+	findByCitycode(String)
+	deleteByCitycode(String)
 }
 
-interface MapperRepository <<Repository>> {
-}
-
-class MapperController <<Controller>> {
-  - repository : MapperRepository
+class CityController <<Controller>> {
+  - repository : CityRepository
   + showList(model)
-  + addMapper(mapper)
-  + process(mapper, result)
-  + editMapper(id, model)
-  + deleteMapper(id)
+  + addCity(city)
+  + process(city, result)
+  + editCity(id, model)
+  + deleteCity(id)
 }
 
 interface CommandLineRunner
 
 class DataLoader <<Component>> {
-  - repository : TaskRepository
+  - repository : CityRepository
   + run()
 }
 
-TaskRepository <|-- Task
-DataLoader *-- TaskRepository
+CityRepository <|-- City
+DataLoader *-- CityRepository
 CommandLineRunner <|-- DataLoader
 
-Mapper .o Task
-MapperRepository <|-- Mapper
-MapperController *-- MapperRepository
+CityController *-- CityRepository
 @enduml
 
