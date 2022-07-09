@@ -1,6 +1,15 @@
 @startuml
 
+[*] --> success : /login
 [*] --> index : /
+
+state success {
+	state "Sign in" as login
+	login : Username
+	login : Password
+}
+login --> index : / [success]
+login --> login : [!success]
 
 state index {
 	state cities
