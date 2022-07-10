@@ -11,6 +11,18 @@ database "h2" as db {
 }
 note bottom of db : spring.datasource.url=jdbc:h2:mem:taskdb\nspring.jpa.hibernate.ddl-auto=none
 
+class SecurityConfig <<Configuration>> {
+	+ passwordEncoder() : PasswordEncoder
+	+ configure(WebSecurity)
+	configure(HttpSecurity)
+	configure(AuthenticationManagerBuilder)
+}
+
+class SecurityController <<Controller>> {
+  + success()
+  + showList(loginUser, model)
+}
+
 class City <<Entity>> {
   + id : Long
   - citycode : String

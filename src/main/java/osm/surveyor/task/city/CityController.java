@@ -1,4 +1,4 @@
-package osm.surveyor.task;
+package osm.surveyor.task.city;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,42 +10,42 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
-import osm.surveyor.task.model.City;
+import osm.surveyor.task.city.model.City;
 
 @RequiredArgsConstructor
 @Controller
 public class CityController {
 	private final CityRepository repository;
 	
-	@GetMapping("/")
+	@GetMapping("/city")
 	public String showList(Model model) {
 		model.addAttribute("cities", repository.findAll());
-		return "index";
+		return "cities";
 	}
 	
-	@GetMapping("/add")
+	@GetMapping("/city/add")
 	public String addCity(@ModelAttribute City city) {
 		return "form";
 	}
 	
-	@PostMapping("/process")
+	@PostMapping("/city/process")
 	public String process(@Validated @ModelAttribute City city, BindingResult result) {
 		if (result.hasErrors()) {
 			return "form";
 		}
 		repository.save(city);
-		return "redirect:/";
+		return "redirect:/city";
 	}
 
-	@GetMapping("/edit/{id}")
+	@GetMapping("/city/edit/{id}")
 	public String editCity(@PathVariable Long id, Model model) {
 		model.addAttribute("city", repository.findById(id));
 		return "form";
 	}
 
-	@GetMapping("/delete/{id}")
+	@GetMapping("/city/delete/{id}")
 	public String deleteCity(@PathVariable Long id) {
 		repository.deleteById(id);
-		return "redirect:/";
+		return "redirect:/city";
 	}
 }

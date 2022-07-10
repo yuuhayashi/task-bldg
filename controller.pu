@@ -1,22 +1,30 @@
 @startuml
 
-[*] --> success : /login
-[*] --> index : /
+[*] --> sidebar
 
-state success {
-	state "Sign in" as login
-	login : Username
-	login : Password
+state sidebar {
+	state "ユーザ管理" as users
+	state "ログイン" as login
+	state "ログアウト" as logout
+	state "BLDGデータリスト" as indeies
+	state "BLDGデータ登録" as add
 }
-login --> index : / [success]
-login --> login : [!success]
 
-state index {
-	state cities
+state "Sign in" as signin {
+	signin : Username
+	signin : Password
+}
+login --> signin : /login
+signin --> signin : [!success]
+sidebar <-- signin : [success]
+
+state cities
 	cities : *{citycode}
 	cities : *{cityname}
 	cities : *{path}
 }
+indeies --> cities : /city
+
 state form {
 	state city {
 		city : citycode
@@ -25,10 +33,16 @@ state form {
 	}
 }
 
-index --> index : /delete/{citycode}
-index --> form : /edit/{citycode}
-index --> form : /add
-form --> index : /process[!hasErrors]
-form --> form : /process[hasErrors]
+state user {
+	user : username
+	user : role
+}
+users --> user : /user
+
+cities --> cities : /city/delete/{citycode}
+cities --> form : /city/edit/{citycode}
+add --> form : /city/add
+form --> sidebar : [!hasErrors]
+form --> form : [hasErrors]
 
 @enduml

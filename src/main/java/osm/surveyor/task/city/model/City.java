@@ -1,4 +1,4 @@
-package osm.surveyor.task.model;
+package osm.surveyor.task.city.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

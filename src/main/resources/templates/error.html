@@ -7,6 +7,11 @@
 </head>
 <body>
 
+  <!-- サイドバーの表示 -->
+  <div layout:fragment="sidebar"
+    th:replace="~{fragments/sidebar :: sidebar}">
+  </div>
+
   <!-- コンテンツの表示 -->
   <div layout:fragment="content">
     <main class="offcanvas-outside bg-light vh-100">

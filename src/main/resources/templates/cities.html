@@ -7,6 +7,12 @@
 </head>
 <body>
 
+  <!-- サイドバーの表示 -->
+  <div layout:fragment="sidebar"
+    th:replace="~{fragments/sidebar :: sidebar}">
+  </div>
+
+
   <!-- コンテンツの表示 -->
   <div layout:fragment="content">
     <main class="offcanvas-outside bg-light">
@@ -48,12 +54,12 @@
                       <td th:text="*{cityname}"></td>
                       <td th:text="*{folder}"></td>
                       <td>
-                        <a th:href="@{/edit/{id}(id=*{id})}" class="btn btn-navy">
+                        <a th:href="@{/city/edit/{id}(id=*{id})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square"></i>
                           編集
                         </a>
 
-                        <a th:href="@{/delete/{id}(id=*{id})}" class="btn btn-danger">
+                        <a th:href="@{/city/delete/{id}(id=*{id})}" class="btn btn-danger">
                           <i class="bi bi-trash-fill"></i>
                           削除
                         </a>

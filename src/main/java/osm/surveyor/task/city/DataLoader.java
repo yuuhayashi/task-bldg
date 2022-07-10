@@ -1,10 +1,10 @@
-package osm.surveyor.task;
+package osm.surveyor.task.city;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
-import osm.surveyor.task.model.City;
+import osm.surveyor.task.city.model.City;
 
 @RequiredArgsConstructor
 @Component
