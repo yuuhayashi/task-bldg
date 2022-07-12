@@ -4,19 +4,46 @@
 
 state sidebar {
 	state "ユーザ管理" as users
-	state "ログイン" as login
+	state "ユーザ一覧\n[Role=admin]" as list_
+	state "ログイン" as login_
 	state "ログアウト" as logout
 	state "BLDGデータリスト" as indeies
 	state "BLDGデータ登録" as add
+	logout --> logout : /logout
 }
 
-state "Sign in" as signin {
-	signin : Username
-	signin : Password
+state "login" as login {
+	login : Username
+	login : Password
 }
-login --> signin : /login
-signin --> signin : [!success]
-sidebar <-- signin : [success]
+
+state "register" as register {
+	register : username
+	register : password
+	register : email
+	register : admin
+}
+
+login_ --> login : /login
+login --> login : [!success]
+sidebar <-- login : [success]
+login --> register : /register 新規登録
+
+state user {
+	user : username
+	user : role
+}
+users --> user : /user
+
+state "ユーザ一覧" as list {
+	state ユーザ {
+		ユーザ : id
+		ユーザ : username
+		ユーザ : email
+		ユーザ : role
+	}
+}
+list_ --> list : /admin/list
 
 state cities
 	cities : *{citycode}
@@ -32,12 +59,6 @@ state form {
 		city : path
 	}
 }
-
-state user {
-	user : username
-	user : role
-}
-users --> user : /user
 
 cities --> cities : /city/delete/{citycode}
 cities --> form : /city/edit/{citycode}

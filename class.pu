@@ -9,19 +9,46 @@ database "h2" as db {
 		lat : Double
 	}
 }
-note bottom of db : spring.datasource.url=jdbc:h2:mem:taskdb\nspring.jpa.hibernate.ddl-auto=none
+note bottom of db : spring.datasource.url=jdbc:h2:./taskdb\nspring.jpa.hibernate.ddl-auto=update
 
 class SecurityConfig <<Configuration>> {
+	- userDetailsService : UserDetailsService
 	+ passwordEncoder() : PasswordEncoder
 	+ configure(WebSecurity)
 	configure(HttpSecurity)
 	configure(AuthenticationManagerBuilder)
 }
 
+class UserDetailsServiceImpl <<Service>> {
+  - userRepository : SiteUserRepository
+  + loadUserByUsername(username) : UserDetails
+  + createUserDetails(:SiteUser) : User
+}
+
 class SecurityController <<Controller>> {
+  - userRepository : userRepository
+  - passwordEncoder : PasswordEncoder
   + success()
   + showList(loginUser, model)
 }
+
+class SiteUser <<Entity>> {
+  + id : Long
+  - username : String
+  - email : String@Email
+  - admin : boolean
+  - role : String
+  - active : boolean
+}
+
+interface SiteUserRepository <<JpaRepository>> {
+	findByUsername(String)
+	existsByUsername(String)
+}
+SecurityConfig *-- UserDetailsServiceImpl
+UserDetailsServiceImpl *-- SiteUserRepository
+SecurityController *-- SiteUserRepository
+SiteUserRepository <|-- SiteUser
 
 class City <<Entity>> {
   + id : Long

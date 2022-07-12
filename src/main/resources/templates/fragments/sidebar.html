@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
 </head>
@@ -41,6 +41,12 @@
               <a th:href="@{/login}" class="nav-link text-white">
                 <i class="bi bi-person-fill me-2"></i>
                 ログイン
+              </a>
+            </li>
+            <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+              <a th:href="@{/admin/list}" class="nav-link text-white">
+                <i class="bi bi-table me-2"></i>
+                ユーザ一覧
               </a>
             </li>
             <li class="nav-item">

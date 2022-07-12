@@ -7,13 +7,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import lombok.RequiredArgsConstructor;
+import osm.surveyor.task.util.Role;
+
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final UserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -24,14 +30,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // セキュリティ設定を、無視（ignoring）するパスを指定します
         // 通常、cssやjs、imgなどの静的リソースを指定します
-        web.ignoring().antMatchers("/city/**", "/css/**", "/img/**", "/webjars/**");
+        web.ignoring().antMatchers("/city/**", "/js/**", "/css/**", "/img/**", "/webjars/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 		        // 「/login」と「/error」をアクセス可能にします
-		        .antMatchers("/login", "/error").permitAll()
+		        .antMatchers("/login", "/error", "/register").permitAll()
+		        .antMatchers("/admin/**").hasRole(Role.ADMIN.name())
 		        .anyRequest().authenticated()
 		        .and()
 		    .formLogin()
@@ -57,13 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-	        .withUser("admin")
-	            .password(passwordEncoder().encode("password"))
-	            .authorities("ROLE_ADMIN")
-	            .and()
-	        .withUser("user")
-	            .password(passwordEncoder().encode("password"))
-	            .authorities("ROLE_USER");
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 }

@@ -9,6 +9,10 @@
   <link th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}" rel="stylesheet">
   <link th:href="@{/css/app.css}" rel="stylesheet">
 
+  <!-- DataTablesのCSSを追加-->
+  <link th:href="@{/webjars/datatables/css/dataTables.bootstrap5.min.css}" rel="stylesheet">
+  <link th:href="@{/webjars/datatables-buttons/css/buttons.dataTables.min.css}" rel="stylesheet">
+
   <title>Plateau-BLDG import task</title>
 </head>
 <body>
@@ -22,5 +26,15 @@
   </div>
 
   <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+  <!-- DataTablesのJSを追加 -->
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/datatables/js/jquery.dataTables.min.js}"></script>
+  <script th:src="@{/webjars/datatables/js/dataTables.bootstrap5.min.js}"></script>
+  <script th:src="@{/webjars/datatables-buttons/js/dataTables.buttons.min.js}"></script>
+  <script th:src="@{/webjars/datatables-buttons/js/buttons.html5.min.js}"></script>
+  <script th:src="@{/webjars/datatables-buttons/js/buttons.print.min.js}"></script>
+  <script th:src="@{/webjars/jszip/jszip.min.js}"></script></body>
+  <script th:src="@{/js/usertables.js}"></script>
 </body>
 </html>
