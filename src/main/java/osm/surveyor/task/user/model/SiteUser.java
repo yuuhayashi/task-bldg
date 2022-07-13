@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
+import osm.surveyor.task.user.validator.UniqueLogin;
 
 @Getter
 @Setter
@@ -20,6 +21,7 @@ public class SiteUser {
     private Long id;
 
     @Size(min = 2, max = 20)
+    @UniqueLogin
     private String username;
 
     @Size(min = 4, max = 255)

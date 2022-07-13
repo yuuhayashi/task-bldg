@@ -41,6 +41,17 @@ class SiteUser <<Entity>> {
   - active : boolean
 }
 
+class UniqueLoginValidator<UniqueLogin> <<ConstraintValidator>> {
+  - userRepository : SiteUserRepository
+  + isValid(String, ConstraintValidatorContext) : boolean
+}
+
+class UniqueLogin <<Constraint>> {
+  message() : String
+  groups() : Class<?>[]
+  payload() : Class<? extends Payload>[]
+}
+
 interface SiteUserRepository <<JpaRepository>> {
 	findByUsername(String)
 	existsByUsername(String)
@@ -48,6 +59,8 @@ interface SiteUserRepository <<JpaRepository>> {
 SecurityConfig *-- UserDetailsServiceImpl
 UserDetailsServiceImpl *-- SiteUserRepository
 SecurityController *-- SiteUserRepository
+UniqueLoginValidator *-- SiteUserRepository
+UniqueLogin .. UniqueLoginValidator
 SiteUserRepository <|-- SiteUser
 
 class City <<Entity>> {
