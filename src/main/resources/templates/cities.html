@@ -5,11 +5,10 @@
 <head>
   <meta charset="UTF-8" th:remove="tag">
 </head>
-<body>
+<body onload='loadMap()'>
 
   <!-- サイドバーの表示 -->
-  <div layout:fragment="sidebar"
-    th:replace="~{fragments/sidebar :: sidebar}">
+  <div layout:fragment="sidebar" th:replace="~{fragments/sidebar :: sidebar}">
   </div>
 
 
@@ -17,7 +16,6 @@
   <div layout:fragment="content">
     <main class="offcanvas-outside bg-light">
       <div class="container-fluid">
-
         <!-- トグルボタン -->
         <div th:replace="~{fragments/sidebar :: toggler}">
         </div>
@@ -27,10 +25,23 @@
 
             <div class="card shadow">
               <div class="card-header">
-                <h6 class="text-navy my-2">Plateau 3D都市データ リスト</h6>
+                <h6 class="text-navy my-2">Plateau 3D都市データ</h6>
               </div>
               <div class="card-body">
 
+                <!-- マップ -->
+                <div id="wrap">
+                  <div class="header">
+                    <div id='map'></div>
+                  </div>
+                    
+                  <!-- ポップアップ -->
+                  <div id='popup' class='ol-popup'>
+                    <a href='#' id='popup-closer' class='ol-popup-closer'></a>
+                    <div id='popup-content'></div>
+                  </div>
+                </div>
+            
                 <!-- 
                 <div th:if="${mappers.size() == 0}">
                   該当データがありません
