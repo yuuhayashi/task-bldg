@@ -2,11 +2,21 @@
 
 database "h2" as db {
 	entity city {
-		citycode : String
-		cityname : String
-		path : String
-		lng : Double
-		lat : Double
+		+ id : BIGINT
+		citycode : VARCHAR(255)
+		cityname : VARCHAR(255)
+		folder : VARCHAR(255)
+		lng : VARCHAR(255)
+		lat :VARCHAR(255)
+	}
+	entity site_user {
+		+ id : BIGINT
+		active : BOOLEAN
+		admin : BOOLEAN
+		email : VARCHAR(255)
+		password : VARCHAR(255)
+		role :VARCHAR(255)
+		username :VARCHAR(20)
 	}
 }
 note bottom of db : spring.datasource.url=jdbc:h2:./taskdb\nspring.jpa.hibernate.ddl-auto=update
@@ -40,6 +50,7 @@ class SiteUser <<Entity>> {
   - role : String
   - active : boolean
 }
+SiteUser .. site_user
 
 class UniqueLoginValidator<UniqueLogin> <<ConstraintValidator>> {
   - userRepository : SiteUserRepository
@@ -67,11 +78,23 @@ class City <<Entity>> {
   + id : Long
   - citycode : String
   - cityname : String
-  - path : String
-  - lng : Double
-  - lat : Double
+  - folder : String
+  - lng : String
+  - lat : String
+  + setLng(BigDecimal)
+  + setLat(BigDecimal)
+  + setCoordinates(lng,lat)
+  + getCoordinates() : Coordinates
+  + toString() : String
 }
 City .. city
+
+class Coordinates {
+  - lng : Double
+  - lat : Double
+  + toString() : String
+}
+City .> Coordinates
 
 class CityIndex {
 	- site : String
@@ -80,8 +103,6 @@ class CityIndex {
 CityIndex *-- City
 
 interface CityRepository <<Repository>> {
-	findByCitycode(String)
-	deleteByCitycode(String)
 }
 CityRepository <|-- City
 
