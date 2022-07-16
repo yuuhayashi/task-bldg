@@ -16,9 +16,9 @@ import lombok.Setter;
 public class City {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
 	private String citycode;
 	
@@ -34,20 +34,24 @@ public class City {
 	@NotBlank
 	private String lat = "0.0";
 	
+	public void setCitycode(String citycode) {
+		this.citycode = citycode;
+	}
+	
 	public void setLng(String str) {
-		this.lng = str; 
+		this.lng = str;
 	}
 
 	public void setLng(BigDecimal dec) {
-		this.lng = dec.toString(); 
+		this.lng = dec.toString();
 	}
 
 	public void setLat(String str) {
-		this.lat = str; 
+		this.lat = str;
 	}
 
 	public void setLat(BigDecimal dec) {
-		this.lat = dec.toString(); 
+		this.lat = dec.toString();
 	}
 	
 	public void setCoordinates(BigDecimal lng, BigDecimal lat) {

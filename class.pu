@@ -3,20 +3,21 @@
 database "h2" as db {
 	entity city {
 		+ id : BIGINT
-		citycode : VARCHAR(255)
-		cityname : VARCHAR(255)
-		folder : VARCHAR(255)
-		lng : VARCHAR(255)
-		lat :VARCHAR(255)
+		- citycode : VARCHAR 255
+		cityname : VARCHAR 255
+		folder : VARCHAR 255
+		lng : VARCHAR 255
+		lat :VARCHAR 255
 	}
+
 	entity site_user {
 		+ id : BIGINT
 		active : BOOLEAN
 		admin : BOOLEAN
-		email : VARCHAR(255)
-		password : VARCHAR(255)
-		role :VARCHAR(255)
-		username :VARCHAR(20)
+		email : VARCHAR 255
+		password : VARCHAR 255
+		role :VARCHAR 255
+		username :VARCHAR 20
 	}
 }
 note bottom of db : spring.datasource.url=jdbc:h2:./taskdb\nspring.jpa.hibernate.ddl-auto=update
@@ -76,7 +77,7 @@ SiteUserRepository <|-- SiteUser
 
 class City <<Entity>> {
   + id : Long
-  - citycode : String
+  + citycode : String
   - cityname : String
   - folder : String
   - lng : String
@@ -102,7 +103,9 @@ class CityIndex {
 }
 CityIndex *-- City
 
-interface CityRepository <<Repository>> {
+interface CityRepository <<JpaRepository>> {
+	deleteByCitycode(String)
+	findByCitycode(String) : Object
 }
 CityRepository <|-- City
 
