@@ -56,10 +56,10 @@ interface SiteUserRepository <<JpaRepository>> {
 	findByUsername(String)
 	existsByUsername(String)
 }
-SecurityConfig *-- UserDetailsServiceImpl
-UserDetailsServiceImpl *-- SiteUserRepository
-SecurityController *-- SiteUserRepository
-UniqueLoginValidator *-- SiteUserRepository
+SecurityConfig ..> UserDetailsServiceImpl
+UserDetailsServiceImpl ..> SiteUserRepository
+SecurityController ..> SiteUserRepository
+UniqueLoginValidator ..> SiteUserRepository
 UniqueLogin .. UniqueLoginValidator
 SiteUserRepository <|-- SiteUser
 
@@ -73,10 +73,17 @@ class City <<Entity>> {
 }
 City .. city
 
+class CityIndex {
+	- site : String
+	- list : List<City>[]
+}
+CityIndex *-- City
+
 interface CityRepository <<Repository>> {
 	findByCitycode(String)
 	deleteByCitycode(String)
 }
+CityRepository <|-- City
 
 class CityController <<Controller>> {
   - repository : CityRepository
@@ -86,6 +93,16 @@ class CityController <<Controller>> {
   + editCity(id, model)
   + deleteCity(id)
 }
+CityController ..> CityRepository
+
+class CityIndexController <<Controller>> {
+  - repository : CityIndexRepository
+  + show(model)
+  + addCity(city)
+  + process(city, result)
+  + deleteCity(id)
+}
+CityIndexController ..> CityIndexRepository
 
 interface CommandLineRunner
 
@@ -93,11 +110,9 @@ class DataLoader <<Component>> {
   - repository : CityRepository
   + run()
 }
+DataLoader ..> CityRepository
 
-CityRepository <|-- City
-DataLoader *-- CityRepository
 CommandLineRunner <|-- DataLoader
 
-CityController *-- CityRepository
 @enduml
 
