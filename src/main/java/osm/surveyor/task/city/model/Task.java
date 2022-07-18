@@ -35,10 +35,6 @@ public class Task {
 	
 	private String line;
 	
-	public void setPoint(Point p) {
-		this.point = p.toString();
-	}
-	
 	public void setLine(JsonGeometryLine p) {
 		this.line = p.toString();
 	}
