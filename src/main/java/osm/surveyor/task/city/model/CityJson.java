@@ -5,6 +5,7 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import osm.surveyor.task.util.Point;
 
 @Getter
 @Setter
@@ -18,8 +19,8 @@ public class CityJson {
 	
 	private List<Double> coordinates = new ArrayList<>();
 	
-	public Coordinates toCoordinates() {
-		Coordinates obj = new Coordinates();
+	public Point toCoordinates() {
+		Point obj = new Point();
 		if (this.coordinates.size() >= 2) {
 			obj.setLng(Double.toString(this.coordinates.get(0)));
 			obj.setLat(Double.toString(this.coordinates.get(1)));

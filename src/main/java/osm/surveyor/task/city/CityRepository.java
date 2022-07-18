@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import osm.surveyor.task.city.model.City;
 
 public interface CityRepository extends JpaRepository<City,Long> {
+
+	City findByCitycode(String citycode);
 }

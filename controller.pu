@@ -11,6 +11,7 @@ state sidebar {
 	state "BLDGデータ登録" as add
 	logout --> logout : /logout
 }
+indeies --> cities : /city
 
 state "login" as login {
 	login : Username
@@ -45,12 +46,20 @@ state "ユーザ一覧" as list {
 }
 list_ --> list : /admin/list
 
-state cities
-	cities : *{citycode}
-	cities : *{cityname}
-	cities : *{path}
+state cities {
+	state city_list {
+		city_list : *{citycode}
+		city_list : *{cityname}
+		city_list : *{path}
+	}
 }
-indeies --> cities : /city
+cities --> cities : /city/delete/{citycode}
+cities --> form : /city/edit/{citycode}
+cities --> tasks : /task/{citycode}
+
+state tasks {
+	state task_list
+}
 
 state form {
 	state city {
@@ -60,8 +69,6 @@ state form {
 	}
 }
 
-cities --> cities : /city/delete/{citycode}
-cities --> form : /city/edit/{citycode}
 add --> form : /city/add
 form --> sidebar : [!hasErrors]
 form --> form : [hasErrors]

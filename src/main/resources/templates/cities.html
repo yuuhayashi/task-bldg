@@ -55,6 +55,7 @@
                       <th>citycode</th>
                       <th>cityname</th>
                       <th>folder</th>
+                      <th>site</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -64,7 +65,13 @@
                       <td th:text="*{citycode}"></td>
                       <td th:text="*{cityname}"></td>
                       <td th:text="*{folder}"></td>
+                      <td th:text="*{site}"></td>
                       <td>
+                        <a th:href="@{/task/{citycode}(citycode=*{citycode})}" class="btn btn-navy">
+                          <i class="bi bi-pencil-square"></i>
+                          タスク
+                        </a>
+
                         <a th:href="@{/city/edit/{id}(id=*{id})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square"></i>
                           編集

@@ -19,6 +19,17 @@ database "h2" as db {
 		role :VARCHAR 255
 		username :VARCHAR 20
 	}
+
+	entity task {
+		+ id : BIGINT
+		- citycode : VARCHAR 255
+		- meshcode : VARCHAR 255
+		version :VARCHAR 255
+		path : VARCHAR 255
+		line : VARCHAR 255
+		point :VARCHAR 255
+	}
+	task }|- city : citycode
 }
 note bottom of db : spring.datasource.url=jdbc:h2:./taskdb\nspring.jpa.hibernate.ddl-auto=update
 
@@ -76,36 +87,32 @@ UniqueLogin .. UniqueLoginValidator
 SiteUserRepository <|-- SiteUser
 
 class City <<Entity>> {
+	site : static String
   + id : Long
   + citycode : String
   - cityname : String
   - folder : String
   - lng : String
   - lat : String
+  + setSite(String)
+  + getSite() : String
   + setLng(BigDecimal)
   + setLat(BigDecimal)
-  + setCoordinates(lng,lat)
-  + getCoordinates() : Coordinates
+  + setPoint(lng,lat)
+  + getPoint() : Point
   + toString() : String
 }
 City .. city
 
-class Coordinates {
+class Point {
   - lng : Double
   - lat : Double
   + toString() : String
 }
-City .> Coordinates
-
-class CityIndex {
-	- site : String
-	- list : List<City>[]
-}
-CityIndex *-- City
+City .> Point
 
 interface CityRepository <<JpaRepository>> {
-	deleteByCitycode(String)
-	findByCitycode(String) : Object
+	findByCitycode(String) : City
 }
 CityRepository <|-- City
 
@@ -119,14 +126,29 @@ class CityController <<Controller>> {
 }
 CityController ..> CityRepository
 
-class CityIndexController <<Controller>> {
-  - repository : CityIndexRepository
-  + show(model)
-  + addCity(city)
-  + process(city, result)
-  + deleteCity(id)
+class TaskController <<Controller>> {
+  - repository : TaskRepository
+  + showList(citycode, model)
 }
-CityIndexController ..> CityIndexRepository
+TaskController ..> TaskRepository
+
+interface TaskRepository <<JpaRepository>> {
+	findByCitycode() : List<Task>
+}
+TaskRepository <|-- Task
+
+class Task <<Entity>> {
+  + id : Long
+  - citycode : String
+  - meshcode : String
+  version : String
+  path : String
+  point : String
+  line : String
+  + setPoint(Point)
+  + setLine(JsonLine)
+}
+Task .. task
 
 interface CommandLineRunner
 

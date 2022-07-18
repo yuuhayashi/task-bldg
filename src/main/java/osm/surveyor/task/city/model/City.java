@@ -9,11 +9,13 @@ import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
+import osm.surveyor.task.util.Point;
 
 @Getter
 @Setter
 @Entity
 public class City {
+	private static String site;		// 全体に適用する
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +35,14 @@ public class City {
 	
 	@NotBlank
 	private String lat = "0.0";
+	
+	public void setSite(String site) {
+		City.site = site;
+	}
+	
+	public String getSite() {
+		return City.site;
+	}
 	
 	public void setCitycode(String citycode) {
 		this.citycode = citycode;
@@ -59,16 +69,16 @@ public class City {
 		setLat(lat);
 	}
 	
-	public void setCoordinates(String lng, String lat) {
+	public void setPoint(String lng, String lat) {
 		setLng(lng);
 		setLat(lat);
 	}
 	
-	public Coordinates getCoordinates() {
-		Coordinates coordinates = new Coordinates();
-		coordinates.setLng(getLng());
-		coordinates.setLat(getLat());
-		return coordinates;
+	public Point getPoint() {
+		Point point = new Point();
+		point.setLng(getLng());
+		point.setLat(getLat());
+		return point;
 	}
 	
 	@Override
@@ -78,7 +88,7 @@ public class City {
 		sb.append("\"code\":\""+ getCitycode() +"\"");
 		sb.append(",\"name\":\""+ getCityname() +"\"");
 		sb.append(",\"path\":\""+ getFolder() +"\"");
-		sb.append(",\"coordinates\":"+ getCoordinates().toString());
+		sb.append(",\"coordinates\":"+ getPoint().toString());
 		sb.append("}");
 		return sb.toString();
 	}
