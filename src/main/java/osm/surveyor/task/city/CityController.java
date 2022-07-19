@@ -33,19 +33,20 @@ public class CityController {
 		if (result.hasErrors()) {
 			return "form";
 		}
+
 		repository.save(city);
 		return "redirect:/city";
 	}
 
-	@GetMapping("/city/edit/{id}")
-	public String editCity(@PathVariable Long id, Model model) {
-		model.addAttribute("city", repository.findById(id));
+	@GetMapping("/city/edit/{citycode}")
+	public String editCity(@PathVariable String citycode, Model model) {
+		model.addAttribute("city", repository.findByCitycode(citycode));
 		return "form";
 	}
 
-	@GetMapping("/city/delete/{id}")
-	public String deleteCity(@PathVariable Long id) {
-		repository.deleteById(id);
+	@GetMapping("/city/delete/{citycode}")
+	public String deleteCity(@PathVariable String citycode) {
+		repository.deleteByCitycode(citycode);
 		return "redirect:/city";
 	}
 }

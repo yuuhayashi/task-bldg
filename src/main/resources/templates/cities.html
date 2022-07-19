@@ -51,7 +51,6 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th>#</th>
                       <th>citycode</th>
                       <th>cityname</th>
                       <th>folder</th>
@@ -61,7 +60,6 @@
                   </thead>
                   <tbody>
                     <tr th:each="city : ${cities}" th:object="${city}">
-                      <td th:text="*{id}"></td>
                       <td th:text="*{citycode}"></td>
                       <td th:text="*{cityname}"></td>
                       <td th:text="*{folder}"></td>
@@ -72,12 +70,12 @@
                           タスク
                         </a>
 
-                        <a th:href="@{/city/edit/{id}(id=*{id})}" class="btn btn-navy">
+                        <a th:href="@{/city/edit/{citycode}(citycode=*{citycode})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square"></i>
                           編集
                         </a>
 
-                        <a th:href="@{/city/delete/{id}(id=*{id})}" class="btn btn-danger">
+                        <a th:href="@{/city/delete/{citycode}(citycode=*{citycode})}" class="btn btn-danger">
                           <i class="bi bi-trash-fill"></i>
                           削除
                         </a>

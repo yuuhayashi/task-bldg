@@ -1,30 +1,26 @@
 package osm.surveyor.task.city.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
 import osm.surveyor.task.util.JsonGeometryLine;
-import osm.surveyor.task.util.Point;
 
 @Getter
 @Setter
 @Entity
+@IdClass(TaskPK.class)
 public class Task {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
-	@NotBlank
-	private String citycode;
+	@Id
+	private String citycode;	// TaskPK.citycode
 	
-	@NotBlank
-	private String meshcode;
-	
+	@Id
+	private String meshcode;	// TaskPK.meshcode
+
 	@NotBlank
 	private String version;
 	

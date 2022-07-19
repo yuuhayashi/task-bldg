@@ -80,16 +80,8 @@ public class DataLoader implements CommandLineRunner {
                     		}
                     	}
         			}
-        			
-                	// TODO:
         		}
         	}
-        	
-        	// TODO:
-        	System.out.println("["+ path + "] " + geojson.toString());
         }
-        
-		// TODO:
-		
 	}
 }

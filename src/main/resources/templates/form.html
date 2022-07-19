@@ -31,8 +31,6 @@
               </div>
               <div class="card-body">
                 <form th:action="@{/city/process}" th:object="${city}" method="post">
-                  <input type="hidden" th:field="*{id}">
-
                   <div class="mb-3">
                     <label for="citycode">citycode</label>
                     <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{citycode}">

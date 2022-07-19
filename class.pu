@@ -2,8 +2,7 @@
 
 database "h2" as db {
 	entity city {
-		+ id : BIGINT
-		- citycode : VARCHAR 255
+		+ citycode : VARCHAR 255
 		cityname : VARCHAR 255
 		folder : VARCHAR 255
 		lng : VARCHAR 255
@@ -21,9 +20,8 @@ database "h2" as db {
 	}
 
 	entity task {
-		+ id : BIGINT
-		- citycode : VARCHAR 255
-		- meshcode : VARCHAR 255
+		+ citycode : VARCHAR 255
+		+ meshcode : VARCHAR 255
 		version :VARCHAR 255
 		path : VARCHAR 255
 		line : VARCHAR 255
@@ -88,7 +86,6 @@ SiteUserRepository <|-- SiteUser
 
 class City <<Entity>> {
 	site : static String
-  + id : Long
   + citycode : String
   - cityname : String
   - folder : String
@@ -103,16 +100,17 @@ class City <<Entity>> {
   + toString() : String
 }
 City .. city
+City . CityPK : citycode
 
-class Point {
-  - lng : Double
-  - lat : Double
-  + toString() : String
+class CityPK {
+	citycode : String
+	+ equals(Object) : boolean
+	+ hashCode() : int
 }
-City .> Point
 
 interface CityRepository <<JpaRepository>> {
 	findByCitycode(String) : City
+	deleteByCitycode(String) : List<City>
 }
 CityRepository <|-- City
 
