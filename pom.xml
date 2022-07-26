@@ -8,7 +8,7 @@
 		<version>2.6.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>osm.surveyor.solr</groupId>
+	<groupId>osm.surveyor.plateau</groupId>
 	<artifactId>task-bldg</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>

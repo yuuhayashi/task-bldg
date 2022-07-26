@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class JsonGeometryLine {
+public class JsonGeometryLine extends JsonTemple {
 	
 	/**
 	 *	{
@@ -38,12 +38,12 @@ public class JsonGeometryLine {
 			boolean c1 = false;
 			sb.append("[");
 			for (JsonNumberArray arry : coordinates) {
-				c1 = Geojson.out(c1, sb, null, arry);
+				c1 = out(c1, sb, null, arry);
 			}
 			sb.append("]");
 		}
 		if (type != null) {
-			first = Geojson.outStr(first, sb, "type", getType());
+			first = outStr(first, sb, "type", getType());
 		}
 		sb.append("}");
 		return sb.toString();

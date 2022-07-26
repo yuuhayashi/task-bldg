@@ -9,6 +9,7 @@ state sidebar {
 	state "ログアウト" as logout
 	state "BLDGデータリスト" as indeies
 	state "BLDGデータ登録" as add
+	state "都道府県" as pref
 	logout --> logout : /logout
 }
 indeies --> cities : /city
@@ -18,11 +19,13 @@ state "login" as login {
 	login : Password
 }
 
-state "register" as register {
-	register : username
-	register : password
-	register : email
-	register : admin
+state "register.html" as register {
+	state "user" as register_user {
+		register_user : username
+		register_user : password
+		register_user : email
+		register_user : admin
+	}
 }
 
 login_ --> login : /login
@@ -68,6 +71,15 @@ state form {
 		city : path
 	}
 }
+
+state "preflist.html" as preflist {
+	state pref_list {
+		pref_list : *{prefcode}
+		pref_list : *{prefname}
+		pref_list : *{Point}
+	}
+}
+pref --> preflist : /pref
 
 add --> form : /city/add
 form --> sidebar : [!hasErrors]

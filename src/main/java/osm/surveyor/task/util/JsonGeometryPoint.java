@@ -13,7 +13,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class JsonGeometryPoint {
+public class JsonGeometryPoint extends JsonTemple {
 	private Point coordinates;
 	
 	private String type = "Point";
@@ -22,8 +22,8 @@ public class JsonGeometryPoint {
 		StringBuffer sb = new StringBuffer();
 		boolean c = false;
 		sb.append("{");
-		c = Geojson.out(c, sb, "coordinates", this.coordinates);
-		c = Geojson.outStr(c, sb, "type", this.type);
+		c = out(c, sb, "coordinates", this.coordinates.toString());
+		c = outStr(c, sb, "type", this.type);
 		sb.append("}");
 		return sb.toString();
 	}

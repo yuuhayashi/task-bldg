@@ -86,11 +86,11 @@ SiteUserRepository <|-- SiteUser
 
 class City <<Entity>> {
 	site : static String
-  + citycode : String
+  + citycode : String@NumberFormat
   - cityname : String
   - folder : String
-  - lng : String
-  - lat : String
+  - lng : String@NumberFormat
+  - lat : String@NumberFormat
   + setSite(String)
   + getSite() : String
   + setLng(BigDecimal)
@@ -137,7 +137,7 @@ TaskRepository <|-- Task
 
 class Task <<Entity>> {
   + id : Long
-  - citycode : String
+  - citycode : String@NumberFormat
   - meshcode : String
   version : String
   path : String

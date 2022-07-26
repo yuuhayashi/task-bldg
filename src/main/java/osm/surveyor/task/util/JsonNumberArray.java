@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class JsonNumberArray {
+public class JsonNumberArray extends JsonTemple {
 	
 	private List<String> list = new ArrayList<>();
 	
@@ -31,7 +31,7 @@ public class JsonNumberArray {
 		sb.append("[");
 		boolean first = false;
 		for (String str : this.list) {
-			first = Geojson.out(first, sb, null, str);
+			first = out(first, sb, null, str);
 		}
 		sb.append("]");
 		return sb.toString();

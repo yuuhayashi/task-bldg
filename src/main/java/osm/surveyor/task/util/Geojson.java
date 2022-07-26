@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Geojson {
+public class Geojson extends JsonTemple {
 	
 	private String type = "FeatureCollection";
 	
@@ -22,15 +22,16 @@ public class Geojson {
 		StringBuffer sb = new StringBuffer();
 		boolean c = false;
 		sb.append("{");
-		c = Geojson.outStr(c, sb, "type", this.type);
-		c = Geojson.out(c, sb, "crs", this.crs);
+		c = outStr(c, sb, "type", this.type);
+		c = out(c, sb, "crs", this.crs);
 		if (c) {
 			sb.append(",");
 		}
 		sb.append("\"features\":[");
 		boolean c2 = false;
 		for (JsonFeature f : features) {
-			c2 = Geojson.out(c2, sb, null, f);
+			c2 = out(c2, sb, null, f);
+			sb.append(System.lineSeparator());
 		}
 		sb.append("]");
 		
@@ -56,39 +57,5 @@ public class Geojson {
 		    	this.features.add(feature);
 			}
 		}
-	}
-	
-	public static boolean out(boolean c, StringBuffer sb, String name, Object obj) {
-		boolean c1 = c;
-		if (obj != null) {
-			if (c1) {
-				sb.append(",");
-			}
-			else {
-				c1 = true;
-			}
-			if (name != null) {
-				sb.append("\""+ name +"\":");
-			}
-			sb.append(obj.toString());
-		}
-		return c1;
-	}
-	
-	public static boolean outStr(boolean c, StringBuffer sb, String name, Object obj) {
-		boolean c1 = c;
-		if (obj != null) {
-			if (c1) {
-				sb.append(",");
-			}
-			else {
-				c1 = true;
-			}
-			if (name != null) {
-				sb.append("\""+ name +"\":");
-			}
-			sb.append("\""+ obj.toString() +"\"");
-		}
-		return c1;
 	}
 }

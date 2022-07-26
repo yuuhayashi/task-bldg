@@ -8,6 +8,8 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.format.annotation.NumberFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 import osm.surveyor.task.util.Point;
@@ -22,6 +24,7 @@ public class City {
 	private static String site;		// 全体に適用する
 	
 	@Id
+	@NumberFormat(pattern="#####")
 	private String citycode;
 	
 	@NotBlank
@@ -31,9 +34,11 @@ public class City {
 	private String folder;
 	
 	@NotBlank
+	@NumberFormat
 	private String lng = "0.0";
 	
 	@NotBlank
+	@NumberFormat
 	private String lat = "0.0";
 	
 	public void setSite(String site) {

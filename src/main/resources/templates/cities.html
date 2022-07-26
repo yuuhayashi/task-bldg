@@ -4,6 +4,7 @@
   layout:decorate="~{layout/layout}">
 <head>
   <meta charset="UTF-8" th:remove="tag">
+  <script th:src="@{/custom/cities.js}"></script>
 </head>
 <body onload='loadMap()'>
 
@@ -51,19 +52,19 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
+                      <th>status</th>
                       <th>citycode</th>
                       <th>cityname</th>
                       <th>folder</th>
-                      <th>site</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr th:each="city : ${cities}" th:object="${city}">
+                      <td>準備中</td>
                       <td th:text="*{citycode}"></td>
                       <td th:text="*{cityname}"></td>
                       <td th:text="*{folder}"></td>
-                      <td th:text="*{site}"></td>
                       <td>
                         <a th:href="@{/task/{citycode}(citycode=*{citycode})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square"></i>

@@ -32,7 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 通常、cssやjs、imgなどの静的リソースを指定します
         web.ignoring().antMatchers(
     		"/favicon.ico",
+    		"/pref/**",
     		"/city/**",
+    		"/task/**",
+    		"/tasks/**",
     		"/js/**",
     		"/css/**",
     		"/img/**",

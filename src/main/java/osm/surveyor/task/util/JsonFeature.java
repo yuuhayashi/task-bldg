@@ -31,7 +31,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class JsonFeature {
+public class JsonFeature extends JsonTemple {
 	private JsonGeometryPoint geometryPoint;
 	private JsonGeometryLine geometryLine;
 	
@@ -43,10 +43,10 @@ public class JsonFeature {
 		StringBuffer sb = new StringBuffer();
 		boolean c = false;
 		sb.append("{");
-		c = Geojson.outStr(c, sb, "type", this.type);
-		c = Geojson.out(c, sb, "properties", this.properties.toString());
-		c = Geojson.out(c, sb, "geometry", this.geometryPoint);
-		c = Geojson.out(c, sb, "geometry", this.geometryLine);
+		c = outStr(c, sb, "type", this.type);
+		c = out(c, sb, "properties", this.properties.toString());
+		c = out(c, sb, "geometry", this.geometryPoint);
+		c = out(c, sb, "geometry", this.geometryLine);
 		sb.append("}");
 		return sb.toString();
 	}

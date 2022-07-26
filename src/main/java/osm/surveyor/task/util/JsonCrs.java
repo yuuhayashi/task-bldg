@@ -15,7 +15,7 @@ import lombok.Setter;
 */
 @Getter
 @Setter
-public class JsonCrs {
+public class JsonCrs extends JsonTemple {
 	
 	private String type = "name";
 	private JsonProperties properties;
@@ -24,8 +24,8 @@ public class JsonCrs {
 		StringBuffer sb = new StringBuffer();
 		boolean c1 = false;
 		sb.append("{");
-		c1 = Geojson.outStr(c1, sb, "type", this.type);
-		c1 = Geojson.out(c1, sb, "properties", this.properties);
+		c1 = outStr(c1, sb, "type", this.type);
+		c1 = out(c1, sb, "properties", this.properties);
 		sb.append("}");
 		return sb.toString();
 	}
