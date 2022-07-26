@@ -35,7 +35,7 @@ public class JsonProperties extends JsonTemple {
 		c1 = outStr(c1, sb, "path", this.path);
 		c1 = outStr(c1, sb, "id", this.id);
 		c1 = outStr(c1, sb, "version", this.version);
-		c1 = out(c1, sb, "prefcode", getPrefcode().toString());
+		c1 = out(c1, sb, "prefcode", getPrefcode());
 		c1 = outStr(c1, sb, "prefname", getPrefname());
 		sb.append("}");
 		return sb.toString();

@@ -57,6 +57,23 @@ public class JsonTemple implements JsonRepository {
 		return c1;
 	}
 
+	public boolean out(boolean c, StringBuffer sb, String name, Long l) {
+		boolean c1 = c;
+		if (l != null) {
+			if (c1) {
+				sb.append(",");
+			}
+			else {
+				c1 = true;
+			}
+			if (name != null) {
+				sb.append("\""+ name +"\":");
+			}
+			sb.append(l.toString());
+		}
+		return c1;
+	}
+
 	public boolean outStr(boolean c, StringBuffer sb, String name, JsonTemple obj) {
 		boolean c1 = c;
 		if (obj != null) {
