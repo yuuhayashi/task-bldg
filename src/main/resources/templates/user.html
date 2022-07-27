@@ -8,13 +8,11 @@
 <body>
 
   <!-- サイドバーの表示 -->
-  <div layout:fragment="sidebar"
-    th:replace="~{fragments/sidebar :: sidebar}">
+  <div layout:fragment="sidebar" th:replace="~{fragments/sidebar :: sidebar}">
   </div>
 
   <!-- コンテンツの表示 -->
-  <main layout:fragment="content"
-    class="offcanvas-outside bg-light">
+  <main layout:fragment="content" class="offcanvas-outside bg-light">
     <div class="container-fluid">
       <!-- トグルボタン -->
       <div th:replace="~{fragments/sidebar :: toggler}">
@@ -33,8 +31,8 @@
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th>ログインユーザ名</th>
-                    <th>ユーザ権限</th>
+                    <th>マッパー名</th>
+                    <th>マッパー権限</th>
                   </tr>
                 </thead>
                 <tbody>

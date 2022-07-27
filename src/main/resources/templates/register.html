@@ -16,14 +16,14 @@
         <div class="card shadow" style="max-width: 480px;">
           <div class="card-body">
             <h3 class="card-title mb-3 text-center text-navy">
-              ユーザ登録
+              マッパー登録
             </h3>
 
             <form th:action="@{/register}" th:object="${user}" method="post" novalidate>
               <div class="mb-3">
                 <label for="username" class="form-label">
                   <span class="badge bg-danger">必須</span>
-                  ユーザ名
+                  マッパー名
                 </label>
                 <input class="form-control" type="text"
                   th:errorclass="is-invalid" th:field="*{username}">
