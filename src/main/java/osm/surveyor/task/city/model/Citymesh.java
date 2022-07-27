@@ -15,16 +15,16 @@ import osm.surveyor.task.util.JsonGeometryLine;
 @Getter
 @Setter
 @Entity
-@IdClass(TaskPK.class)
-public class Task {
+@IdClass(CitymeshPK.class)
+public class Citymesh {
 
 	@Id
 	@NumberFormat(pattern="#####")
-	private String citycode;	// TaskPK.citycode
+	private String citycode;	// CitymeshPK.citycode
 	
 	@Id
 	@NumberFormat
-	private String meshcode;	// TaskPK.meshcode
+	private String meshcode;	// CitymeshPK.meshcode
 
 	private String version;
 	

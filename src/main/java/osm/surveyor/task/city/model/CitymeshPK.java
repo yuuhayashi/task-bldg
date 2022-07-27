@@ -11,17 +11,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Embeddable
-public class TaskPK implements Serializable {
+public class CitymeshPK implements Serializable {
 	private String citycode;
 	private String meshcode;
 	
-	public TaskPK() {
+	public CitymeshPK() {
 	}
 	
 	public boolean equals(Object obj) {
-		if (obj instanceof TaskPK) {
-			if (((TaskPK)obj).getCitycode().equals(this.citycode)) {
-				if (((TaskPK)obj).getMeshcode().equals(this.meshcode)) {
+		if (obj instanceof CitymeshPK) {
+			if (((CitymeshPK)obj).getCitycode().equals(this.citycode)) {
+				if (((CitymeshPK)obj).getMeshcode().equals(this.meshcode)) {
 					return true;
 				}
 			}

@@ -58,10 +58,10 @@ state cities {
 }
 cities --> cities : /city/delete/{citycode}
 cities --> form : /city/edit/{citycode}
-cities --> tasks : /task/{citycode}
+cities --> meshes : /mesh/{citycode}
 
-state tasks {
-	state task_list
+state meshes {
+	state mesh_list
 }
 
 state form {

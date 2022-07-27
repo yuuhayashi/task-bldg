@@ -19,7 +19,7 @@ database "h2" as db {
 		username :VARCHAR 20
 	}
 
-	entity task {
+	entity CITYMESH {
 		+ citycode : VARCHAR 255
 		+ meshcode : VARCHAR 255
 		version :VARCHAR 255
@@ -27,7 +27,7 @@ database "h2" as db {
 		line : VARCHAR 255
 		point :VARCHAR 255
 	}
-	task }|- city : citycode
+	CITYMESH }|- city : citycode
 }
 note bottom of db : spring.datasource.url=jdbc:h2:./taskdb\nspring.jpa.hibernate.ddl-auto=update
 
@@ -124,18 +124,18 @@ class CityController <<Controller>> {
 }
 CityController ..> CityRepository
 
-class TaskController <<Controller>> {
-  - repository : TaskRepository
+class CitymeshController <<Controller>> {
+  - repository : CitymeshRepository
   + showList(citycode, model)
 }
-TaskController ..> TaskRepository
+CitymeshController ..> CitymeshRepository
 
-interface TaskRepository <<JpaRepository>> {
-	findByCitycode() : List<Task>
+interface CitymeshRepository <<JpaRepository>> {
+	findByCitycode() : List<Citymesh>
 }
-TaskRepository <|-- Task
+CitymeshRepository <|-- Citymesh
 
-class Task <<Entity>> {
+class Citymesh <<Entity>> {
   + id : Long
   - citycode : String@NumberFormat
   - meshcode : String
@@ -146,7 +146,7 @@ class Task <<Entity>> {
   + setPoint(Point)
   + setLine(JsonLine)
 }
-Task .. task
+Citymesh .. CITYMESH
 
 interface CommandLineRunner
 
@@ -159,4 +159,3 @@ DataLoader ..> CityRepository
 CommandLineRunner <|-- DataLoader
 
 @enduml
-

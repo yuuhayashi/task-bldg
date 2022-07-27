@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 import osm.surveyor.task.city.model.CitiesJson;
 import osm.surveyor.task.city.model.City;
 import osm.surveyor.task.city.model.CityJson;
-import osm.surveyor.task.city.model.Task;
+import osm.surveyor.task.city.model.Citymesh;
 import osm.surveyor.task.util.Geojson;
 import osm.surveyor.task.util.JsonFeature;
 import osm.surveyor.task.util.JsonGeometryPoint;
@@ -26,7 +26,7 @@ import osm.surveyor.task.util.Point;
 @Component
 public class DataLoader implements CommandLineRunner {
 	private final CityRepository repository;
-	private final TaskRepository taskRepository;
+	private final CitymeshRepository taskRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -70,7 +70,7 @@ public class DataLoader implements CommandLineRunner {
                     	if (prop != null) {
                     		String meshcode = prop.getId();
                     		if (meshcode != null) {
-                            	Task task = new Task();
+                            	Citymesh task = new Citymesh();
                             	task.setCitycode(city.getCitycode());
                     			task.setMeshcode(meshcode);
                     			task.setVersion(prop.getVersion());

@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import lombok.RequiredArgsConstructor;
 import osm.surveyor.task.city.model.City;
-import osm.surveyor.task.city.model.Task;
+import osm.surveyor.task.city.model.Citymesh;
 
 @RequiredArgsConstructor
 @Controller
-public class TaskController {
-	private final TaskRepository taskRepository;
+public class CitymeshController {
+	private final CitymeshRepository meshRepository;
 	private final CityRepository cityRepository;
 
-	@GetMapping("/task/{citycode}")
+	@GetMapping("/mesh/{citycode}")
 	public String showList(@PathVariable String citycode, Model model) {
 		City city = cityRepository.findByCitycode(citycode);
-		List<Task> tasks = taskRepository.findByCitycode(citycode);
+		List<Citymesh> tasks = meshRepository.findByCitycode(citycode);
 		model.addAttribute("city", city);
-		model.addAttribute("tasks", tasks);
-		return "tasks";
+		model.addAttribute("meshes", tasks);
+		return "meshes";
 	}
 }

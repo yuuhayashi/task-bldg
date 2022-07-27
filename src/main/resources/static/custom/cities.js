@@ -79,7 +79,7 @@ function loadMap() {
 	            var descriptionHTML =
 	                "<div>" + info.code + "</div>" +
 	                "<div>" + info.name + "</div>" +
-	                "<div><a href='/task/"+ info.code +"'>" + info.path + "</a></div>";
+	                "<div><a href='/mesh/"+ info.code +"'>" + info.path + "</a></div>";
 	            element.innerHTML = descriptionHTML;
 	            __overlay.setPosition(coordinates);
 	            __map.addOverlay(__overlay);

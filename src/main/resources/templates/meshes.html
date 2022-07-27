@@ -4,7 +4,7 @@
   layout:decorate="~{layout/layout}">
 <head>
   <meta charset="UTF-8" th:remove="tag">
-  <script th:src="@{/custom/tasks.js}"></script>
+  <script th:src="@{/custom/meshes.js}"></script>
 </head>
 <body onload='loadMap()'>
   <input type="hidden" id="city" th:value="${city}" />
@@ -12,7 +12,6 @@
   <!-- サイドバーの表示 -->
   <div layout:fragment="sidebar" th:replace="~{fragments/sidebar :: sidebar}">
   </div>
-
 
   <!-- コンテンツの表示 -->
   <div layout:fragment="content">
@@ -56,13 +55,13 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:each="task : ${tasks}" th:object="${task}">
+                    <tr th:each="mesh : ${meshes}" th:object="${mesh}">
                       <td th:text="*{status}"></td>
                       <td th:text="*{meshcode}"></td>
                       <td th:text="*{version}"></td>
                       <td th:text="*{path}"></td>
                       <td>
-                        <a th:href="@{/task/{citycode}(citycode=*{citycode})/{meshcode}(meshcode=*{meshcode})}" class="btn btn-navy">
+                        <a th:href="@{/mesh/{citycode}(citycode=*{citycode})/{meshcode}(meshcode=*{meshcode})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square"></i>
                           タスク
                         </a>
