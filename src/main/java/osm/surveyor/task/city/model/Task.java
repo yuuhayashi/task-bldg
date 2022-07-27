@@ -1,9 +1,10 @@
 package osm.surveyor.task.city.model;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.NumberFormat;
 
@@ -25,10 +26,8 @@ public class Task {
 	@NumberFormat
 	private String meshcode;	// TaskPK.meshcode
 
-	@NotBlank
 	private String version;
 	
-	@NotBlank
 	private String path;
 	
 	private String point;
@@ -38,4 +37,10 @@ public class Task {
 	public void setLine(JsonGeometryLine p) {
 		this.line = p.toString();
 	}
+
+	/**
+	 * ステータス
+	 */
+	@Enumerated(EnumType.ORDINAL)
+	private Status status = Status.PREPARATION;
 }
