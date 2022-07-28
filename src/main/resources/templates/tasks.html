@@ -48,22 +48,23 @@
                   <thead>
                     <tr>
                       <th>ステータス</th>
+                      <th>自治体コード</th>
                       <th>地域メッシュ</th>
-                      <th>version</th>
-                      <th>file</th>
                       <th>operation</th>
+                      <th>updateTime</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr th:each="mesh : ${meshes}" th:object="${mesh}">
                       <td th:text="*{status}"></td>
+                      <td th:text="*{citycode}"></td>
                       <td th:text="*{meshcode}"></td>
-                      <td th:text="*{version}"></td>
-                      <td th:text="*{path}"></td>
+                      <td th:text="*{operation}"></td>
+                      <td th:text="*{updateTime}"></td>
                       <td>
-                        <a th:href="@{/task?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+                        <a th:href="@{/task/{citycode}/{meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square"></i>
-                          タスク
+                          作業予約
                         </a>
                       </td>
                     </tr>

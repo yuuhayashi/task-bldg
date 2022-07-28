@@ -19,15 +19,16 @@ database "h2" as db {
 		username :VARCHAR 20
 	}
 
-	entity CITYMESH {
+	entity citymesh {
 		+ citycode : VARCHAR 255
 		+ meshcode : VARCHAR 255
 		version :VARCHAR 255
 		path : VARCHAR 255
 		line : VARCHAR 255
 		point :VARCHAR 255
+		city : City@ManyToOne
 	}
-	CITYMESH }|- city : citycode
+	city --|{ citymesh
 }
 note bottom of db : spring.datasource.url=jdbc:h2:./taskdb\nspring.jpa.hibernate.ddl-auto=update
 
@@ -138,7 +139,7 @@ CitymeshRepository <|-- Citymesh
 class Citymesh <<Entity>> {
   + id : Long
   - citycode : String@NumberFormat
-  - meshcode : String
+  - meshcode : String@NumberFormat
   version : String
   path : String
   point : String
@@ -146,7 +147,27 @@ class Citymesh <<Entity>> {
   + setPoint(Point)
   + setLine(JsonLine)
 }
-Citymesh .. CITYMESH
+Citymesh .. citymesh
+Citymesh . CitymeshPK
+class CitymeshPK {
+	citycode : String
+	meshcode : String
+	+ equals(Object) : boolean
+	+ hashCode() : int
+}
+
+class Task <<Entity>> {
+  + currentId : String
+  preId : String
+  - citycode : String@NumberFormat
+  - meshcode : String@NumberFormat
+  mesh : Citymesh
+  status : Status
+  username : String
+  validator : String
+  operation : Operation
+  updateTime : Date
+}
 
 interface CommandLineRunner
 
@@ -155,6 +176,7 @@ class DataLoader <<Component>> {
   + run()
 }
 DataLoader ..> CityRepository
+DataLoader ..> CitymeshRepository
 
 CommandLineRunner <|-- DataLoader
 

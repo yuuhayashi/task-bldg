@@ -11,18 +11,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @Embeddable
-public class MapperTaskPK implements Serializable {
+public class TaskPK implements Serializable {
 	private String username;
+	private String citycode;
 	private String meshcode;
 	
-	public MapperTaskPK() {
+	public TaskPK() {
 	}
 	
 	public boolean equals(Object obj) {
-		if (obj instanceof MapperTaskPK) {
-			if (((MapperTaskPK)obj).getUsername().equals(this.username)) {
-				if (((MapperTaskPK)obj).getMeshcode().equals(this.meshcode)) {
-					return true;
+		if (obj instanceof TaskPK) {
+			if (((TaskPK)obj).getUsername().equals(this.username)) {
+				if (((TaskPK)obj).getCitycode().equals(this.citycode)) {
+					if (((TaskPK)obj).getMeshcode().equals(this.meshcode)) {
+						return true;
+					}
 				}
 			}
 		}
@@ -30,7 +33,7 @@ public class MapperTaskPK implements Serializable {
 	}
 	
 	public int hashCode() {
-		String s = this.username + this.meshcode;
+		String s = this.username + this.citycode + this.meshcode;
 		return s.hashCode();
 	}
 }

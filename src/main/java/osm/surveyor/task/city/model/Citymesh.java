@@ -5,6 +5,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 
 import org.springframework.format.annotation.NumberFormat;
 
@@ -25,7 +26,10 @@ public class Citymesh {
 	@Id
 	@NumberFormat
 	private String meshcode;	// CitymeshPK.meshcode
-
+	
+	@ManyToOne
+	City city;					// リレーション: to City 多対１
+	
 	private String version;
 	
 	private String path;

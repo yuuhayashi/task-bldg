@@ -25,8 +25,8 @@ import osm.surveyor.task.util.Point;
 @RequiredArgsConstructor
 @Component
 public class DataLoader implements CommandLineRunner {
-	private final CityRepository repository;
-	private final CitymeshRepository taskRepository;
+	private final CityRepository cityRepository;
+	private final CitymeshRepository meshRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -45,8 +45,8 @@ public class DataLoader implements CommandLineRunner {
         		Point coordinates = citiesJson.toCoordinates();
         		city.setLng(coordinates.getLng());
         		city.setLat(coordinates.getLat());
-        		
-        		repository.save(city);
+
+        		cityRepository.save(city);
         		storeTask(city);
         	}
         }
@@ -70,13 +70,14 @@ public class DataLoader implements CommandLineRunner {
                     	if (prop != null) {
                     		String meshcode = prop.getId();
                     		if (meshcode != null) {
-                            	Citymesh task = new Citymesh();
-                            	task.setCitycode(city.getCitycode());
-                    			task.setMeshcode(meshcode);
-                    			task.setVersion(prop.getVersion());
-                    			task.setPath(prop.getPath());
-                    			task.setPoint(geometryPoint.getCoordinates().toString());
-                    			taskRepository.save(task);
+                            	Citymesh mesh = new Citymesh();
+                            	mesh.setCitycode(city.getCitycode());
+                    			mesh.setMeshcode(meshcode);
+                    			mesh.setVersion(prop.getVersion());
+                    			mesh.setPath(prop.getPath());
+                    			mesh.setPoint(geometryPoint.getCoordinates().toString());
+                    			mesh.setCity(city);
+                    			meshRepository.save(mesh);
                     		}
                     	}
         			}

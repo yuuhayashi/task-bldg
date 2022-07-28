@@ -41,6 +41,12 @@ public class City {
 	@NumberFormat
 	private String lat = "0.0";
 	
+	/**
+	 * リレーション： to Citymesh 1..*
+	 */
+	//@OneToMany
+	//List<Citymesh> meshes;
+		
 	public void setSite(String site) {
 		City.site = site;
 	}

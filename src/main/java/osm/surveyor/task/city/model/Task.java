@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
@@ -20,8 +21,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@IdClass(MapperTaskPK.class)
-public class MapperTask {
+@IdClass(CitymeshPK.class)
+public class Task {
 	
     @Id
     //@GenericGenerator(name = "UuidGenerator", strategy = "osm.surveyor.task.util.UuidGenerator") 
@@ -33,9 +34,14 @@ public class MapperTask {
     @Column(name = "pre_id")
     private String preId;
 
-	@Id
 	@NumberFormat
-	private String meshcode;	// MapperTaskPK.meshcode
+	private String citycode;	// CitymeshPK.citycode
+
+	@NumberFormat
+	private String meshcode;	// CitymeshPK.meshcode
+	
+	@ManyToOne
+	Citymesh mesh;				// リレーション: to Citymesh 多対１
 
 	/**
 	 * ステータス
@@ -46,7 +52,7 @@ public class MapperTask {
 	/**
 	 * インポート実行者
 	 */
-	private String username;
+	private String username;	// 
 	
 	/**
 	 * 検証者
