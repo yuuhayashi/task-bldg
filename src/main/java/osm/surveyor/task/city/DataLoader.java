@@ -16,6 +16,7 @@ import osm.surveyor.task.city.model.CitiesJson;
 import osm.surveyor.task.city.model.City;
 import osm.surveyor.task.city.model.CityJson;
 import osm.surveyor.task.city.model.Citymesh;
+import osm.surveyor.task.city.model.Status;
 import osm.surveyor.task.util.Geojson;
 import osm.surveyor.task.util.JsonFeature;
 import osm.surveyor.task.util.JsonGeometryPoint;
@@ -41,6 +42,10 @@ public class DataLoader implements CommandLineRunner {
         		city.setCitycode(citiesJson.getCode());
         		city.setCityname(citiesJson.getName());
         		city.setFolder(citiesJson.getPath());
+        		Status status = citiesJson.getStatus();
+        		if (status != null) {
+        			city.setStatus(status);
+        		}
 
         		Point coordinates = citiesJson.toCoordinates();
         		city.setLng(coordinates.getLng());
@@ -77,6 +82,10 @@ public class DataLoader implements CommandLineRunner {
                     			mesh.setPath(prop.getPath());
                     			mesh.setPoint(geometryPoint.getCoordinates().toString());
                     			mesh.setCity(city);
+                        		Status status = city.getStatus();
+                        		if (status != null) {
+                        			mesh.setStatus(status);
+                        		}
                     			meshRepository.save(mesh);
                     		}
                     	}

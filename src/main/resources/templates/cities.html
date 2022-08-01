@@ -61,7 +61,7 @@
                   </thead>
                   <tbody>
                     <tr th:each="city : ${cities}" th:object="${city}">
-                      <td>準備中</td>
+                      <td th:text="*{status}"></td>
                       <td th:text="*{citycode}"></td>
                       <td th:text="*{cityname}"></td>
                       <td th:text="*{folder}"></td>

@@ -4,10 +4,9 @@
   layout:decorate="~{layout/layout}">
 <head>
   <meta charset="UTF-8" th:remove="tag">
-  <script th:src="@{/custom/meshes.js}"></script>
+  <script th:src="@{/custom/tasks.js}"></script>
 </head>
 <body onload='loadMap()'>
-  <input type="hidden" id="city" th:value="${city}" />
 
   <!-- サイドバーの表示 -->
   <div layout:fragment="sidebar" th:replace="~{fragments/sidebar :: sidebar}">
@@ -47,26 +46,47 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th>ステータス</th>
-                      <th>自治体コード</th>
-                      <th>地域メッシュ</th>
-                      <th>operation</th>
-                      <th>updateTime</th>
+                      <th th:text="${citycode}"></th>
+                      <th th:text="${cityname}"></th>
+                      <th th:text="${meshcode}"></th>
+                      <th th:text="${username}"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:each="mesh : ${meshes}" th:object="${mesh}">
-                      <td th:text="*{status}"></td>
-                      <td th:text="*{citycode}"></td>
-                      <td th:text="*{meshcode}"></td>
-                      <td th:text="*{operation}"></td>
-                      <td th:text="*{updateTime}"></td>
-                      <td>
-                        <a th:href="@{/task/{citycode}/{meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+                    <tr>
+                      <td th:object="${mesh}" colspan='4'>
+                        <a th:href="@{/task/reserve?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square"></i>
-                          作業予約
+                          予約登録
+                        </a>
+                        
+                        <a th:href="@{/task/reserve?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+                          <i class="bi bi-pencil-square"></i>
+                          予約取消
                         </a>
                       </td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+            
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>ステータス</th>
+                      <th>自治体コード</th>
+                      <th>インポート実行者</th>
+                      <th>オペレーション</th>
+                      <th>更新日時</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="task : ${tasks}" th:object="${task}">
+                      <td th:text="*{status}"></td>
+                      <td th:text="*{citycode}"></td>
+                      <td th:text="*{username}"></td>
+                      <td th:text="*{operation}"></td>
+                      <td th:text="*{updateTime}"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -78,6 +98,7 @@
       </div>
     </main>
   </div>
+  
 
 </body>
 </html>

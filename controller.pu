@@ -64,6 +64,22 @@ state meshes {
 	state mesh_list
 }
 
+state tasks {
+	state task_履歴
+}
+
+state task {
+	task : citycode
+	task : meshcode
+	task : operation
+	task : username
+	task : updateTime
+}
+
+meshes --> tasks : /tasks
+tasks --> task : /task
+tasks <-- task : /tasks
+
 state form {
 	state city {
 		city : citycode

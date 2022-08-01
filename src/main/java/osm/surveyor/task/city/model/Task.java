@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,7 +20,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@IdClass(CitymeshPK.class)
 public class Task {
 	
     @Id
@@ -46,7 +44,7 @@ public class Task {
 	/**
 	 * ステータス
 	 */
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private Status status = Status.PREPARATION;
 	
 	/**

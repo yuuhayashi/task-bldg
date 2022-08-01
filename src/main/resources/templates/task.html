@@ -8,8 +8,7 @@
 <body>
 
   <!-- サイドバーの表示 -->
-  <div layout:fragment="sidebar"
-    th:replace="~{fragments/sidebar :: sidebar}">
+  <div layout:fragment="sidebar" th:replace="~{fragments/sidebar :: sidebar}">
   </div>
 
 
@@ -27,56 +26,56 @@
 
             <div class="card shadow">
               <div class="card-header">
-                <h6 class="text-navy my-2">マッパー登録</h6>
+                <h6 class="text-navy my-2">タスク登録</h6>
               </div>
               <div class="card-body">
                 <form th:action="@{/task/process}" th:object="${task}" method="post">
+                  <input type="hidden" id="task" th:value="${task}" />
+                  
                   <div class="mb-3">
-                    <label for="citycode">citycode</label>
-                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{citycode}">
-                    <div class="invalid-feedback" th:errors="*{citycode}">
-                    </div>
+                    <label for="currentId">currentId</label>
+                    <input type="text" class="form-control" th:field="*{currentId}" disabled>
+                    <input type="hidden" th:field="*{currentId}" th:value="*{currentId}" />
                   </div>
 
                   <div class="mb-3">
-                    <label for="cityname">cityname</label>
-                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{city.cityname}">
-                    <div class="invalid-feedback" th:errors="*{city.cityname}">
-                    </div>
+                    <label for="preId">preId</label>
+                    <input type="text" class="form-control" th:field="*{preId}"  disabled>
+                    <input type="hidden" th:field="*{preId}" th:value="*{preId}" />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="citycode">citycode</label>
+                    <input type="text" class="form-control" th:field="*{citycode}"  disabled>
+                    <input type="hidden" th:field="*{citycode}" th:value="*{citycode}" />
                   </div>
 
                   <div class="mb-3">
                     <label for="meshcode">meshcode</label>
-                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{meshcode}">
-                    <div class="invalid-feedback" th:errors="*{meshcode}">
-                    </div>
+                    <input type="text" class="form-control" th:field="*{meshcode}"  disabled>
+                    <input type="hidden" th:field="*{meshcode}" th:value="*{meshcode}" />
                   </div>
 
                   <div class="mb-3">
                     <label for="folder">status</label>
-                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{status}">
+                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{status}"  disabled>
+                    <input type="hidden" th:field="*{status}" th:value="*{status}" />
                     <div class="invalid-feedback" th:errors="*{status}">
                     </div>
                   </div>
 
                   <div class="mb-3">
                     <label for="username">username</label>
-                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{username}">
+                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{username}"  readonly>
                     <div class="invalid-feedback" th:errors="*{username}">
                     </div>
                   </div>
 
                   <div class="mb-3">
                     <label for="operation">operation</label>
-                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{operation}">
+                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{operation}"  disabled>
+                    <input type="hidden" th:field="*{operation}" th:value="*{operation}" />
                     <div class="invalid-feedback" th:errors="*{operation}">
-                    </div>
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="updateTime">update time</label>
-                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{updateTime}">
-                    <div class="invalid-feedback" th:errors="*{updateTime}">
                     </div>
                   </div>
 

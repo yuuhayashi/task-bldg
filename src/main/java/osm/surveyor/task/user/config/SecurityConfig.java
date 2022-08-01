@@ -32,10 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 通常、cssやjs、imgなどの静的リソースを指定します
         web.ignoring().antMatchers(
     		"/favicon.ico",
+    		"/custom/**",
     		"/pref/**",
-    		"/city/**",
-    		"/task/**",
-    		"/tasks/**",
     		"/js/**",
     		"/css/**",
     		"/img/**",
@@ -57,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		        // ログイン時のURLを指定
 		        .loginPage("/login")
 		        // 認証後にリダイレクトする場所を指定
-		        .defaultSuccessUrl("/")
+		        .defaultSuccessUrl("/city")
 		        .and()
 		    // ログアウトの設定
 		    .logout()

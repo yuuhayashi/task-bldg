@@ -28,7 +28,22 @@ database "h2" as db {
 		point :VARCHAR 255
 		city : City@ManyToOne
 	}
-	city --|{ citymesh
+
+	city |o--|{ citymesh
+	
+	entity task {
+		+currentId : VARCHAR 255
+		preId : VARCHAR 255
+		citycode : VARCHAR 255
+		meshcode : VARCHAR 255
+		status : Status
+		username : VARCHAR 255
+		validator : VARCHAR 255
+		operation : Operation
+		updateTime : Date
+		mesh : @ManyToOne
+	}
+	citymesh ||--o{ task
 }
 note bottom of db : spring.datasource.url=jdbc:h2:./taskdb\nspring.jpa.hibernate.ddl-auto=update
 
@@ -137,7 +152,6 @@ interface CitymeshRepository <<JpaRepository>> {
 CitymeshRepository <|-- Citymesh
 
 class Citymesh <<Entity>> {
-  + id : Long
   - citycode : String@NumberFormat
   - meshcode : String@NumberFormat
   version : String
@@ -168,6 +182,18 @@ class Task <<Entity>> {
   operation : Operation
   updateTime : Date
 }
+class TaskPK {
+	currentId : String
+	+ equals(Object) : boolean
+	+ hashCode() : int
+}
+
+Task .. task
+Task . TaskPK
+
+interface TaskRepository <<JpaRepository>> {
+}
+
 
 interface CommandLineRunner
 

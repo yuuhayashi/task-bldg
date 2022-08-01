@@ -3,8 +3,9 @@ package osm.surveyor.task.city.model;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -18,7 +19,6 @@ import osm.surveyor.task.util.Point;
 @Setter
 @Entity
 @Table(name = "city")
-@IdClass(CityPK.class)
 public class City {
 
 	private static String site;		// 全体に適用する
@@ -40,6 +40,12 @@ public class City {
 	@NotBlank
 	@NumberFormat
 	private String lat = "0.0";
+	
+	/**
+	 * ステータス
+	 */
+	@Enumerated(EnumType.STRING)
+	private Status status = Status.PREPARATION;
 	
 	/**
 	 * リレーション： to Citymesh 1..*

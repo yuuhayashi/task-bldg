@@ -12,28 +12,22 @@ import lombok.Setter;
 @Setter
 @Embeddable
 public class TaskPK implements Serializable {
-	private String username;
-	private String citycode;
-	private String meshcode;
+	private String currentId;
 	
 	public TaskPK() {
 	}
 	
 	public boolean equals(Object obj) {
 		if (obj instanceof TaskPK) {
-			if (((TaskPK)obj).getUsername().equals(this.username)) {
-				if (((TaskPK)obj).getCitycode().equals(this.citycode)) {
-					if (((TaskPK)obj).getMeshcode().equals(this.meshcode)) {
-						return true;
-					}
-				}
+			if (((TaskPK)obj).getCurrentId().equals(this.currentId)) {
+				return true;
 			}
 		}
 		return false;
 	}
 	
 	public int hashCode() {
-		String s = this.username + this.citycode + this.meshcode;
+		String s = this.currentId;
 		return s.hashCode();
 	}
 }

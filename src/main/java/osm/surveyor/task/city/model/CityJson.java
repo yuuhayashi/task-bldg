@@ -17,6 +17,8 @@ public class CityJson {
 	
 	private String path;
 	
+	private Status status;
+
 	private List<Double> coordinates = new ArrayList<>();
 	
 	public Point toCoordinates() {
@@ -36,6 +38,7 @@ public class CityJson {
 		sb.append("\"code\":\""+ getCode() +"\"");
 		sb.append(",\"name\":\""+ getName() +"\"");
 		sb.append(",\"path\":\""+ getPath() +"\"");
+		sb.append(",\"status\":\""+ getStatus() +"\"");
 		sb.append(",\"coordinates\":"+ getCoordinates().toString());
 		sb.append("}");
 		return sb.toString();

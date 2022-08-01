@@ -27,7 +27,7 @@
 		{"code": "17206", "name": "石川県 加賀市", "path": "17206_kaga-shi_2021", "coordinates":[136.31501,36.30282]},
 		{"code": "20202", "name": "長野県 松本市", "path": "20202_matsumoto-shi_2020", "coordinates":[137.96847,36.23800]},
 		{"code": "20204", "name": "長野県 岡谷市", "path": "20204_okaya-shi_2020", "coordinates":[138.04970,36.07857]},
-		{"code": "20209", "name": "長野県 伊那市", "path": "20209_ina-shi_2020", "coordinates":[137.95746,35.82935]},
+		{"code": "20209", "name": "長野県 伊那市", "path": "20209_ina-shi_2020", "status": "ACCEPTING", "coordinates":[137.95746,35.82935]},
 		{"code": "20214", "name": "長野県 茅野市", "path": "20214_chino-shi_2020", "coordinates":[138.15793,35.98550]},
 		{"code": "21201", "name": "岐阜県 岐阜市", "path": "21201_gifu-shi_2020", "coordinates":[136.76315,35.42288]},
 		{"code": "22213", "name": "静岡県 掛川市", "path": "22213_kakegawa-shi_2020", "coordinates":[138.01897,34.79317]},
