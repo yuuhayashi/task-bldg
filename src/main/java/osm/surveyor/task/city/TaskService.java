@@ -25,7 +25,9 @@ public class TaskService {
 			task.setStatus(Status.RESERVED);
 		}
 		else {
-			throw new RuntimeException("未サポートのオペレーション: "+ task.getOperation());
+			NotAcceptableException e = new NotAcceptableException("未サポートのオペレーションです: "+ task.getOperation());
+			e.setTask(task);
+			throw e;
 		}
 		
 		String uuid = UUID.randomUUID().toString();
@@ -37,11 +39,15 @@ public class TaskService {
 		}
 		else {
 			if (!ctask.getCurrentId().equals(task.getCurrentId())) {
-				throw new RuntimeException("タスクが変更されたため更新できません");
+				ConflictException e = new ConflictException("他のスレッドによってタスクが変更されたため更新できませんでした。");
+				e.setTask(task);
+				throw e;
 			}
 			if (task.getOperation() == Operation.RESERVE) {
 				if (ctask.getStatus() != Status.ACCEPTING) {
-					throw new RuntimeException("ACCEPTIONGではないため予約できません: "+ task.getOperation());
+					NotAcceptableException e = new NotAcceptableException("ステータスがACCEPTIONGではないためタスク登録できませんでした : "+ task.getOperation());
+					e.setTask(task);
+					throw e;
 				}
 			}
 			task.setPreId(ctask.getCurrentId());

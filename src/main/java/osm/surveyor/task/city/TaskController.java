@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -140,5 +142,61 @@ public class TaskController {
 		service.add(task);
 		
 		return "redirect:/tasks?citycode="+ task.getCitycode() +"&meshcode="+ task.getMeshcode();
+	}
+	
+	/**
+	 * 406 Not Acceptable
+	 * "ACCEPTIONGではないため予約できません"
+	 * 
+	 * @param e
+	 * @param model
+	 * @param citycode
+	 * @param meshcode
+	 * @return
+	 */
+	@ExceptionHandler(NotAcceptableException.class)
+	public String notAcceptableExceptionHandler(NotAcceptableException e, Model model) 
+	{
+		model.addAttribute("error", "406 Not Acceptable");
+		model.addAttribute("message", e.toString());
+		model.addAttribute("status", HttpStatus.NOT_ACCEPTABLE);
+		
+		Task task = e.getTask();
+		if (task == null) {
+			return "error";
+		}
+		
+		model.addAttribute("citycode", task.getCitycode());
+		model.addAttribute("meshcode", task.getMeshcode());
+		model.addAttribute("task", task);
+		return "task";
+	}
+
+	/**
+	 * 409 Conflict
+	 * "タスクが変更されたため更新できません"
+	 * 
+	 * @param e
+	 * @param model
+	 * @param citycode
+	 * @param meshcode
+	 * @return
+	 */
+	@ExceptionHandler(ConflictException.class)
+	public String conflictExceptionHandler(ConflictException e, Model model) 
+	{
+		model.addAttribute("error", "409 Conflict");
+		model.addAttribute("message", e.toString());
+		model.addAttribute("status", HttpStatus.CONFLICT);
+		
+		Task task = e.getTask();
+		if (task == null) {
+			return "error";
+		}
+		
+		model.addAttribute("citycode", task.getCitycode());
+		model.addAttribute("meshcode", task.getMeshcode());
+		model.addAttribute("task", task);
+		return "task";
 	}
 }

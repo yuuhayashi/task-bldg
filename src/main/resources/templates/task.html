@@ -82,12 +82,17 @@
                   </div>
 
                   <hr>
+
+                  <p th:text="${error}"></p>
+                  <p th:text="${message}"></p>
+
                   <a th:text="#{return}" th:href="@{/tasks?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
                   </a>
             
                   <button class="btn btn-navy col-4">
                     <i class="bi bi-pencil-square" th:text="#{reserve}"></i>
                   </button>
+
                 </form>
               </div>
             </div>
