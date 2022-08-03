@@ -1,9 +1,9 @@
 package osm.surveyor.task.city;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -29,6 +29,9 @@ public class TaskController {
 	private final CityRepository cityRepository;
 	private final CitymeshRepository meshRepository;
 	private final TaskRepository taskRepository;
+	
+	@Autowired
+	private TaskService service;
 	
 	/**
 	 * ログインユーザーが関係しているTASKリスト
@@ -72,7 +75,8 @@ public class TaskController {
 	 * @return
 	 */
 	@GetMapping("/task/reserve")
-	public String showTask(@AuthenticationPrincipal UserDetails user, Model model,
+	public String reserve(@AuthenticationPrincipal UserDetails user,
+			Model model,
 			@RequestParam(name="citycode") String citycode,
 			@RequestParam(name="meshcode") String meshcode) 
 	{
@@ -93,25 +97,26 @@ public class TaskController {
 		pk.setMeshcode(meshcode);
 		Citymesh mesh = meshRepository.getById(pk);
 		
-		List<Task> tasks = taskRepository.serchByMesh(citycode, meshcode);
-		for (Task t : tasks) {
-			model.addAttribute("task", t);
+		Task pre = service.getTaskByMesh(citycode, meshcode);
+		if (pre != null) {
+			model.addAttribute("task", pre);
 			return "task";
 		}
-		
-		// Taskが無い場合は生成する
-		String uuid = UUID.randomUUID().toString();
-		Task task = new Task();
-		task.setCurrentId(uuid);
-		task.setPreId(uuid);
-		task.setCitycode(citycode);
-		task.setMeshcode(meshcode);
-		task.setMesh(mesh);
-		task.setStatus(Status.PREPARATION);
-		task.setUsername(loginName);
-		task.setOperation(Operation.RESERVE);
-		model.addAttribute("task", task);
-		return "task";
+		else {
+			// Taskが無い場合は生成する
+			String uuid = UUID.randomUUID().toString();
+			Task task = new Task();
+			task.setCurrentId(uuid);
+			task.setPreId(uuid);
+			task.setCitycode(citycode);
+			task.setMeshcode(meshcode);
+			task.setMesh(mesh);
+			task.setStatus(Status.PREPARATION);
+			task.setUsername(loginName);
+			task.setOperation(Operation.RESERVE);
+			model.addAttribute("task", task);
+			return "task";
+		}
 	}
 	
 	@GetMapping("/task/add")
@@ -129,10 +134,10 @@ public class TaskController {
 			BindingResult result)
 	{
 		if (result.hasErrors()) {
+			// エラーがある場合
 			return "task";
 		}
-		task.setUpdateTime(new Date());
-		taskRepository.save(task);
+		service.add(task);
 		
 		return "redirect:/tasks?citycode="+ task.getCitycode() +"&meshcode="+ task.getMeshcode();
 	}

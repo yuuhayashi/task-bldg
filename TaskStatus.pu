@@ -1,0 +1,23 @@
+@startuml
+
+[*] --> PREPARATION
+PREPARATION --> ACCEPTING : DataLoad
+ACCEPTING --> RESERVED	: RESERVE(マッパー登録)
+RESERVED --> IMPORTED	: DONE(インポート済み) 
+IMPORTED -> verification : 検証者登録
+verification --> END	: [検証結果=OK]
+ACCEPTING <-- verification : [検証結果=NG]
+
+state "PREPARATION\n準備中" as PREPARATION {
+}
+
+state "ACCEPTING\n受付中" as ACCEPTING {
+}
+
+state "RESERVED\n予約済み" as RESERVED {
+}
+
+state "IMPORTED\nインポート済み" as IMPORTED {
+}
+
+@enduml

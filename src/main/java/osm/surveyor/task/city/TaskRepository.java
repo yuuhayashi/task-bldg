@@ -10,7 +10,7 @@ import osm.surveyor.task.city.model.Task;
 
 public interface TaskRepository extends JpaRepository<Task,String> {
 	
-	@Query("SELECT t FROM Task t WHERE t.citycode = :citycode AND t.meshcode = :meshcode order by update_time")
-    List<Task> serchByMesh(@Param("citycode")String citycode,@Param("meshcode")String meshcode);
+	@Query("SELECT t FROM Task t WHERE t.citycode = :citycode AND t.meshcode = :meshcode order by update_time DESC")
+    List<Task> serchByMesh(@Param("citycode")String citycode, @Param("meshcode")String meshcode);
 
 }

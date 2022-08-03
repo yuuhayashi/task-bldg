@@ -52,10 +52,10 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th>status</th>
-                      <th>citycode</th>
-                      <th>cityname</th>
-                      <th>folder</th>
+                      <th th:text="#{status}"></th>
+                      <th th:text="#{citycode}"></th>
+                      <th th:text="#{cityname}"></th>
+                      <th th:text="#{folder}"></th>
                       <th></th>
                     </tr>
                   </thead>
@@ -67,8 +67,7 @@
                       <td th:text="*{folder}"></td>
                       <td>
                         <a th:href="@{/mesh/{citycode}(citycode=*{citycode})}" class="btn btn-navy">
-                          <i class="bi bi-pencil-square"></i>
-                          タスク
+                          <i class="bi bi-pencil-square" th:text="#{operation}"></i>
                         </a>
                       </td>
                     </tr>

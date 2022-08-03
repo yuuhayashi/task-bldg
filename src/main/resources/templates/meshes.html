@@ -26,14 +26,13 @@
 
             <div class="card shadow">
               <div class="card-header">
-                <h6 class="text-navy my-2">Plateau 3D都市データ</h6>
+                <h6 class="text-navy my-2" id='title'></h6>
               </div>
               <div class="card-body">
 
                 <!-- マップ -->
                 <div id="wrap">
                   <div class="header">
-                    <div id='title'></div>
                     <div id='map'></div>
                   </div>
                     
@@ -47,11 +46,11 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th>ステータス</th>
-                      <th>地域メッシュ</th>
+                      <th th:text="#{status}"></th>
+                      <th th:text="#{meshcode}"></th>
                       <th>version</th>
-                      <th>file</th>
-                      <th>operation</th>
+                      <th th:text="#{path}"></th>
+                      <th th:text="#{operation}"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -61,9 +60,11 @@
                       <td th:text="*{version}"></td>
                       <td th:text="*{path}"></td>
                       <td>
+                        <a th:text="#{download}" th:href="@{{site}{folder}/bldg/{path}(site=*{city.site},folder=*{city.folder},path=*{path})}" class="btn btn-navy">
+                        </a>
+
                         <a th:href="@{/tasks?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
-                          <i class="bi bi-pencil-square"></i>
-                          タスク
+                          <i class="bi bi-pencil-square" th:text="#{operation}"></i>
                         </a>
                       </td>
                     </tr>

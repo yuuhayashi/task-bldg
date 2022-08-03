@@ -3,7 +3,9 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{layout/layout}">
 <head>
-  <meta charset="UTF-8" th:remove="tag">
+  <meta charset="UTF-8" th:remove="tag" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
 </head>
 <body>
 
@@ -29,7 +31,7 @@
                 <h6 class="text-navy my-2">タスク登録</h6>
               </div>
               <div class="card-body">
-                <form th:action="@{/task/process}" th:object="${task}" method="post">
+                <form th:action="@{/task/process}" th:object="${task}" method="post" novalidate>
                   <input type="hidden" id="task" th:value="${task}" />
                   
                   <div class="mb-3">
@@ -45,19 +47,19 @@
                   </div>
 
                   <div class="mb-3">
-                    <label for="citycode">citycode</label>
+                    <label for="citycode" th:text="#{citycode}"></label>
                     <input type="text" class="form-control" th:field="*{citycode}"  disabled>
                     <input type="hidden" th:field="*{citycode}" th:value="*{citycode}" />
                   </div>
 
                   <div class="mb-3">
-                    <label for="meshcode">meshcode</label>
+                    <label for="meshcode" th:text="#{meshcode}"></label>
                     <input type="text" class="form-control" th:field="*{meshcode}"  disabled>
                     <input type="hidden" th:field="*{meshcode}" th:value="*{meshcode}" />
                   </div>
 
                   <div class="mb-3">
-                    <label for="folder">status</label>
+                    <label for="folder" th:text="#{status}"></label>
                     <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{status}"  disabled>
                     <input type="hidden" th:field="*{status}" th:value="*{status}" />
                     <div class="invalid-feedback" th:errors="*{status}">
@@ -65,14 +67,14 @@
                   </div>
 
                   <div class="mb-3">
-                    <label for="username">username</label>
+                    <label for="username" th:text="#{username}"></label>
                     <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{username}"  readonly>
                     <div class="invalid-feedback" th:errors="*{username}">
                     </div>
                   </div>
 
                   <div class="mb-3">
-                    <label for="operation">operation</label>
+                    <label for="operation" th:text="#{operation}"></label>
                     <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{operation}"  disabled>
                     <input type="hidden" th:field="*{operation}" th:value="*{operation}" />
                     <div class="invalid-feedback" th:errors="*{operation}">
@@ -80,9 +82,11 @@
                   </div>
 
                   <hr>
+                  <a th:text="#{return}" th:href="@{/tasks?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+                  </a>
+            
                   <button class="btn btn-navy col-4">
-                    <i class="bi bi-pencil-square"></i>
-                    <span class="text">保存</span>
+                    <i class="bi bi-pencil-square" th:text="#{reserve}"></i>
                   </button>
                 </form>
               </div>
@@ -93,6 +97,6 @@
       </div>
     </main>
   </div>
-
+  <script th:src="@{webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
