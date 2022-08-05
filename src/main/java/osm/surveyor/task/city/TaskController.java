@@ -82,6 +82,8 @@ public class TaskController {
 			@RequestParam(name="citycode") String citycode,
 			@RequestParam(name="meshcode") String meshcode) 
 	{
+		model.addAttribute("command", "タスク登録");
+
 		// ログイン名を取得
 		String loginName = "";
     	if (user != null) {
@@ -101,6 +103,8 @@ public class TaskController {
 		
 		Task pre = service.getTaskByMesh(citycode, meshcode);
 		if (pre != null) {
+			pre.setOperation(Operation.RESERVE);
+			pre.setUsername(loginName);
 			model.addAttribute("task", pre);
 			return "task";
 		}
@@ -121,6 +125,121 @@ public class TaskController {
 		}
 	}
 	
+	/**
+	 * 「タスク登録取り消し」
+	 * @param user
+	 * @param model
+	 * @param citycode
+	 * @param meshcode
+	 * @return
+	 */
+	@GetMapping("/task/cancel")
+	public String cancel(@AuthenticationPrincipal UserDetails user,
+			Model model,
+			@RequestParam(name="citycode") String citycode,
+			@RequestParam(name="meshcode") String meshcode) 
+	{
+		model.addAttribute("command", "タスク登録取消");
+
+		// ログイン名を取得
+		String loginName = "";
+    	if (user != null) {
+    		loginName = user.getUsername();
+    	}
+        model.addAttribute("username", loginName);
+        
+        City city = cityRepository.getById(citycode);
+		model.addAttribute("citycode", citycode);
+		model.addAttribute("cityname", city.getCityname());
+		model.addAttribute("meshcode", meshcode);
+		
+		CitymeshPK pk = new CitymeshPK();
+		pk.setCitycode(citycode);
+		pk.setMeshcode(meshcode);
+		Citymesh mesh = meshRepository.getById(pk);
+		
+		Task pre = service.getTaskByMesh(citycode, meshcode);
+		if (pre != null) {
+			pre.setOperation(Operation.CANCEL);
+			pre.setUsername(loginName);
+			model.addAttribute("task", pre);
+			return "task";
+		}
+		else {
+			// Taskが無い場合は生成する
+			String uuid = UUID.randomUUID().toString();
+			Task task = new Task();
+			task.setCurrentId(uuid);
+			task.setPreId(uuid);
+			task.setCitycode(citycode);
+			task.setMeshcode(meshcode);
+			task.setMesh(mesh);
+			task.setStatus(Status.ACCEPTING);
+			task.setUsername(loginName);
+			task.setOperation(Operation.CANCEL);
+			model.addAttribute("task", task);
+			
+			return "task";
+		}
+	}
+
+	/**
+	 * 「作業完了」
+	 * @param user
+	 * @param model
+	 * @param citycode
+	 * @param meshcode
+	 * @return
+	 */
+	@GetMapping("/task/done")
+	public String done(@AuthenticationPrincipal UserDetails user,
+			Model model,
+			@RequestParam(name="citycode") String citycode,
+			@RequestParam(name="meshcode") String meshcode) 
+	{
+		model.addAttribute("command", "作業終了");
+
+		// ログイン名を取得
+		String loginName = "";
+    	if (user != null) {
+    		loginName = user.getUsername();
+    	}
+        model.addAttribute("username", loginName);
+        
+        City city = cityRepository.getById(citycode);
+		model.addAttribute("citycode", citycode);
+		model.addAttribute("cityname", city.getCityname());
+		model.addAttribute("meshcode", meshcode);
+		
+		CitymeshPK pk = new CitymeshPK();
+		pk.setCitycode(citycode);
+		pk.setMeshcode(meshcode);
+		Citymesh mesh = meshRepository.getById(pk);
+		
+		Task pre = service.getTaskByMesh(citycode, meshcode);
+		if (pre != null) {
+			pre.setOperation(Operation.DONE);
+			pre.setUsername(loginName);
+			model.addAttribute("task", pre);
+			return "task";
+		}
+		else {
+			// Taskが無い場合は生成する
+			String uuid = UUID.randomUUID().toString();
+			Task task = new Task();
+			task.setCurrentId(uuid);
+			task.setPreId(uuid);
+			task.setCitycode(citycode);
+			task.setMeshcode(meshcode);
+			task.setMesh(mesh);
+			task.setStatus(Status.IMPORTED);
+			task.setUsername(loginName);
+			task.setOperation(Operation.DONE);
+			model.addAttribute("task", task);
+			return "task";
+		}
+	}
+
 	@GetMapping("/task/add")
 	public String addTask(
 			@RequestParam(name="citycode") String citycode,
@@ -139,7 +258,7 @@ public class TaskController {
 			// エラーがある場合
 			return "task";
 		}
-		service.add(task);
+		service.add(task, user);
 		
 		return "redirect:/tasks?citycode="+ task.getCitycode() +"&meshcode="+ task.getMeshcode();
 	}
@@ -165,7 +284,15 @@ public class TaskController {
 		if (task == null) {
 			return "error";
 		}
-		
+		if (task.getOperation() == Operation.RESERVE) {
+			model.addAttribute("command", "タスク登録");
+		}
+		else if (task.getOperation() == Operation.CANCEL) {
+			model.addAttribute("command", "タスク登録取消");
+		}
+		else if (task.getOperation() == Operation.DONE) {
+			model.addAttribute("command", "作業完了");
+		}
 		model.addAttribute("citycode", task.getCitycode());
 		model.addAttribute("meshcode", task.getMeshcode());
 		model.addAttribute("task", task);
@@ -194,6 +321,15 @@ public class TaskController {
 			return "error";
 		}
 		
+		if (task.getOperation() == Operation.RESERVE) {
+			model.addAttribute("command", "タスク登録");
+		}
+		else if (task.getOperation() == Operation.CANCEL) {
+			model.addAttribute("command", "タスク登録取消");
+		}
+		else if (task.getOperation() == Operation.DONE) {
+			model.addAttribute("command", "作業完了");
+		}
 		model.addAttribute("citycode", task.getCitycode());
 		model.addAttribute("meshcode", task.getMeshcode());
 		model.addAttribute("task", task);

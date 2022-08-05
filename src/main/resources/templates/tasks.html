@@ -43,9 +43,6 @@
                   </div>
                 </div>
                 
-                <div class="text-muted mb-4" th:text="${error}"></div>
-                <div class="text-muted mb-4" th:text="${message}"></div>
-            
                 <table class="table table-bordered">
                   <thead>
                     <tr>
@@ -53,6 +50,8 @@
                       <th th:text="${cityname}"></th>
                       <th th:text="${meshcode}"></th>
                       <th th:text="${username}"></th>
+                      <th th:text="${changeSet}"></th>
+                      <th th:text="${validator}"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -65,9 +64,12 @@
                           <i class="bi bi-pencil-square" th:text="#{reserve}" ></i>
                         </a>
                         
-                        <a th:href="@{/task/reserve?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
-                          <i class="bi bi-pencil-square"></i>
-                          予約取消
+                        <a th:href="@{/task/cancel?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+                          <i class="bi bi-pencil-square" th:text="#{cancel}"></i>
+                        </a>
+                        
+                        <a th:href="@{/task/done?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+                          <i class="bi bi-pencil-square" th:text="#{done}"></i>
                         </a>
                       </td>
                     </tr>
@@ -81,6 +83,8 @@
                       <th th:text="#{status}"></th>
                       <th th:text="#{citycode}"></th>
                       <th th:text="#{username}"></th>
+                      <th th:text="#{changeSet}"></th>
+                      <th th:text="#{validator}"></th>
                       <th th:text="#{operation}"></th>
                       <th th:text="#{updateTime}"></th>
                     </tr>
@@ -90,6 +94,8 @@
                       <td th:text="*{status}"></td>
                       <td th:text="*{citycode}"></td>
                       <td th:text="*{username}"></td>
+                      <td th:text="*{changeSet}"></td>
+                      <td th:text="*{validator}"></td>
                       <td th:text="*{operation}"></td>
                       <td th:text="*{updateTime}"></td>
                     </tr>

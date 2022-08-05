@@ -4,9 +4,11 @@
 PREPARATION --> ACCEPTING : DataLoad
 ACCEPTING --> RESERVED	: RESERVE(マッパー登録)
 RESERVED --> IMPORTED	: DONE(インポート済み) 
-IMPORTED -> verification : 検証者登録
-verification --> END	: [検証結果=OK]
-ACCEPTING <-- verification : [検証結果=NG]
+ACCEPTING <-- RESERVED	: CANCEL(取消)
+
+IMPORTED -> VERIFICATION : VALID(検証者登録)
+VERIFICATION --> END	: [検証結果=OK]
+ACCEPTING <-- VERIFICATION : [検証結果=NG]
 
 state "PREPARATION\n準備中" as PREPARATION {
 }

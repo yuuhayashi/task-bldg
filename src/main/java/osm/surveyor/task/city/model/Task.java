@@ -23,8 +23,6 @@ import lombok.Setter;
 public class Task {
 	
     @Id
-    //@GenericGenerator(name = "UuidGenerator", strategy = "osm.surveyor.task.util.UuidGenerator") 
-    //@GeneratedValue(generator = "UuidGenerator") 
     @Column(name = "current_id")
     private String currentId;
     
@@ -56,6 +54,13 @@ public class Task {
 	 * 検証者
 	 */
 	private String validator;
+	
+	/**
+	 * 変更セットNo
+	 */
+	@NumberFormat
+    @Column(name = "changeset")
+	private String changeSet;
 	
 	/**
 	 * 操作内容

@@ -6,8 +6,9 @@
   <meta charset="UTF-8" th:remove="tag" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+  <script th:src="@{/custom/task.js}"></script>
 </head>
-<body>
+<body onload='loadMap()'>
 
   <!-- サイドバーの表示 -->
   <div layout:fragment="sidebar" th:replace="~{fragments/sidebar :: sidebar}">
@@ -28,58 +29,79 @@
 
             <div class="card shadow">
               <div class="card-header">
-                <h6 class="text-navy my-2">タスク登録</h6>
+                <h6 class="text-navy my-2" th:text="${command}"></h6>
               </div>
-              <div class="card-body">
-                <form th:action="@{/task/process}" th:object="${task}" method="post" novalidate>
+              <div class="card-body" th:object="${task}">
+
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>item</th>
+                      <th>value</th>
+                      <th>comment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>currentId</td>
+                      <td th:text="*{currentId}"></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>preId</td>
+                      <td th:text="*{preId}"></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td th:text="#{citycode}"></td>
+                      <td th:text="${citycode}"></td>
+                      <td th:text="${cityname}"></td>
+                    </tr>
+                    <tr>
+                      <td th:text="#{meshcode}"></td>
+                      <td th:text="*{meshcode}"></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td th:text="#{username}"></td>
+                      <td th:text="*{username}"></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td th:text="#{validator}"></td>
+                      <td th:text="*{validator}"></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td th:text="#{changeSet}"></td>
+                      <td th:text="*{changeSet}"></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td th:text="#{status}"></td>
+                      <td th:text="*{status}"></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td th:text="#{operation}"></td>
+                      <td th:text="*{operation}"></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              
+                <form th:action="@{/task/process}" method="post" novalidate>
                   <input type="hidden" id="task" th:value="${task}" />
+                  <input type="hidden" th:field="*{currentId}" th:value="*{currentId}" />
+                  <input type="hidden" th:field="*{preId}" th:value="*{preId}" />
+                  <input type="hidden" th:field="*{citycode}" th:value="*{citycode}" />
+                  <input type="hidden" th:field="*{meshcode}" th:value="*{meshcode}" />
+                  <input type="hidden" th:field="*{username}" th:value="*{username}" />
+                  <input type="hidden" th:field="*{validator}" th:value="*{validator}" />
+                  <input type="hidden" th:field="*{status}" th:value="*{status}" />
+                  <input type="hidden" th:field="*{operation}" th:value="*{operation}" />
                   
-                  <div class="mb-3">
-                    <label for="currentId">currentId</label>
-                    <input type="text" class="form-control" th:field="*{currentId}" disabled>
-                    <input type="hidden" th:field="*{currentId}" th:value="*{currentId}" />
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="preId">preId</label>
-                    <input type="text" class="form-control" th:field="*{preId}"  disabled>
-                    <input type="hidden" th:field="*{preId}" th:value="*{preId}" />
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="citycode" th:text="#{citycode}"></label>
-                    <input type="text" class="form-control" th:field="*{citycode}"  disabled>
-                    <input type="hidden" th:field="*{citycode}" th:value="*{citycode}" />
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="meshcode" th:text="#{meshcode}"></label>
-                    <input type="text" class="form-control" th:field="*{meshcode}"  disabled>
-                    <input type="hidden" th:field="*{meshcode}" th:value="*{meshcode}" />
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="folder" th:text="#{status}"></label>
-                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{status}"  disabled>
-                    <input type="hidden" th:field="*{status}" th:value="*{status}" />
-                    <div class="invalid-feedback" th:errors="*{status}">
-                    </div>
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="username" th:text="#{username}"></label>
-                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{username}"  readonly>
-                    <div class="invalid-feedback" th:errors="*{username}">
-                    </div>
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="operation" th:text="#{operation}"></label>
-                    <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{operation}"  disabled>
-                    <input type="hidden" th:field="*{operation}" th:value="*{operation}" />
-                    <div class="invalid-feedback" th:errors="*{operation}">
-                    </div>
-                  </div>
+                  <div class="mb-3" id="changeSet"></div>
 
                   <hr>
 
@@ -90,7 +112,7 @@
                   </a>
             
                   <button class="btn btn-navy col-4">
-                    <i class="bi bi-pencil-square" th:text="#{reserve}"></i>
+                    <i class="bi bi-pencil-square" th:text="${command}"></i>
                   </button>
 
                 </form>
@@ -102,6 +124,5 @@
       </div>
     </main>
   </div>
-  <script th:src="@{webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

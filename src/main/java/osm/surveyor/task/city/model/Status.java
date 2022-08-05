@@ -5,7 +5,6 @@ public enum Status {
     ACCEPTING,		// Accepting 受付中
     RESERVED,		// 予約済み
     IMPORTED,		// インポート済み
-    OK,				// 検証済み
-    NG,				// 不良
+    VERIFICATION,	// 検証者登録
     END				// 完了
 }

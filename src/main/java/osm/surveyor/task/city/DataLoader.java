@@ -17,6 +17,7 @@ import osm.surveyor.task.city.model.City;
 import osm.surveyor.task.city.model.CityJson;
 import osm.surveyor.task.city.model.Citymesh;
 import osm.surveyor.task.city.model.Status;
+import osm.surveyor.task.city.model.Task;
 import osm.surveyor.task.util.Geojson;
 import osm.surveyor.task.util.JsonFeature;
 import osm.surveyor.task.util.JsonGeometryPoint;
@@ -28,6 +29,7 @@ import osm.surveyor.task.util.Point;
 public class DataLoader implements CommandLineRunner {
 	private final CityRepository cityRepository;
 	private final CitymeshRepository meshRepository;
+	private final TaskService taskService;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -82,10 +84,17 @@ public class DataLoader implements CommandLineRunner {
                     			mesh.setPath(prop.getPath());
                     			mesh.setPoint(geometryPoint.getCoordinates().toString());
                     			mesh.setCity(city);
-                        		Status status = city.getStatus();
-                        		if (status != null) {
-                        			mesh.setStatus(status);
-                        		}
+                    			
+                    			Task task = taskService.getTaskByMesh(city.getCitycode(), meshcode);
+                    			if (task == null) {
+                            		Status status = city.getStatus();
+                            		if (status != null) {
+                            			mesh.setStatus(status);
+                            		}
+                    			}
+                    			else {
+                    				mesh.setStatus(task.getStatus());
+                    			}
                     			meshRepository.save(mesh);
                     		}
                     	}
