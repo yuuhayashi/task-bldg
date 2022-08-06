@@ -67,186 +67,80 @@ public class TaskController {
 		model.addAttribute("tasks", tasks);
 		return "tasks";
 	}
-	
-	/**
-	 * 「予約登録」
-	 * @param user
-	 * @param model
-	 * @param citycode
-	 * @param meshcode
-	 * @return
-	 */
-	@GetMapping("/task/reserve")
-	public String reserve(@AuthenticationPrincipal UserDetails user,
-			Model model,
-			@RequestParam(name="citycode") String citycode,
-			@RequestParam(name="meshcode") String meshcode) 
-	{
-		model.addAttribute("command", "タスク登録");
-
-		// ログイン名を取得
-		String loginName = "";
-    	if (user != null) {
-    		loginName = user.getUsername();
-    	}
-        model.addAttribute("username", loginName);
-        
-        City city = cityRepository.getById(citycode);
-		model.addAttribute("citycode", citycode);
-		model.addAttribute("cityname", city.getCityname());
-		model.addAttribute("meshcode", meshcode);
-		
-		CitymeshPK pk = new CitymeshPK();
-		pk.setCitycode(citycode);
-		pk.setMeshcode(meshcode);
-		Citymesh mesh = meshRepository.getById(pk);
-		
-		Task pre = service.getTaskByMesh(citycode, meshcode);
-		if (pre != null) {
-			pre.setOperation(Operation.RESERVE);
-			pre.setUsername(loginName);
-			model.addAttribute("task", pre);
-			return "task";
-		}
-		else {
-			// Taskが無い場合は生成する
-			String uuid = UUID.randomUUID().toString();
-			Task task = new Task();
-			task.setCurrentId(uuid);
-			task.setPreId(uuid);
-			task.setCitycode(citycode);
-			task.setMeshcode(meshcode);
-			task.setMesh(mesh);
-			task.setStatus(Status.PREPARATION);
-			task.setUsername(loginName);
-			task.setOperation(Operation.RESERVE);
-			model.addAttribute("task", task);
-			return "task";
-		}
-	}
-	
-	/**
-	 * 「タスク登録取り消し」
-	 * @param user
-	 * @param model
-	 * @param citycode
-	 * @param meshcode
-	 * @return
-	 */
-	@GetMapping("/task/cancel")
-	public String cancel(@AuthenticationPrincipal UserDetails user,
-			Model model,
-			@RequestParam(name="citycode") String citycode,
-			@RequestParam(name="meshcode") String meshcode) 
-	{
-		model.addAttribute("command", "タスク登録取消");
-
-		// ログイン名を取得
-		String loginName = "";
-    	if (user != null) {
-    		loginName = user.getUsername();
-    	}
-        model.addAttribute("username", loginName);
-        
-        City city = cityRepository.getById(citycode);
-		model.addAttribute("citycode", citycode);
-		model.addAttribute("cityname", city.getCityname());
-		model.addAttribute("meshcode", meshcode);
-		
-		CitymeshPK pk = new CitymeshPK();
-		pk.setCitycode(citycode);
-		pk.setMeshcode(meshcode);
-		Citymesh mesh = meshRepository.getById(pk);
-		
-		Task pre = service.getTaskByMesh(citycode, meshcode);
-		if (pre != null) {
-			pre.setOperation(Operation.CANCEL);
-			pre.setUsername(loginName);
-			model.addAttribute("task", pre);
-			return "task";
-		}
-		else {
-			// Taskが無い場合は生成する
-			String uuid = UUID.randomUUID().toString();
-			Task task = new Task();
-			task.setCurrentId(uuid);
-			task.setPreId(uuid);
-			task.setCitycode(citycode);
-			task.setMeshcode(meshcode);
-			task.setMesh(mesh);
-			task.setStatus(Status.ACCEPTING);
-			task.setUsername(loginName);
-			task.setOperation(Operation.CANCEL);
-			model.addAttribute("task", task);
-			
-			return "task";
-		}
-	}
 
 	/**
-	 * 「作業完了」
-	 * @param user
-	 * @param model
+	 * 「タスク操作」
 	 * @param citycode
 	 * @param meshcode
+	 * @param task
 	 * @return
 	 */
-	@GetMapping("/task/done")
-	public String done(@AuthenticationPrincipal UserDetails user,
-			Model model,
-			@RequestParam(name="citycode") String citycode,
-			@RequestParam(name="meshcode") String meshcode) 
-	{
-		model.addAttribute("command", "作業終了");
-
-		// ログイン名を取得
-		String loginName = "";
-    	if (user != null) {
-    		loginName = user.getUsername();
-    	}
-        model.addAttribute("username", loginName);
-        
-        City city = cityRepository.getById(citycode);
-		model.addAttribute("citycode", citycode);
-		model.addAttribute("cityname", city.getCityname());
-		model.addAttribute("meshcode", meshcode);
-		
-		CitymeshPK pk = new CitymeshPK();
-		pk.setCitycode(citycode);
-		pk.setMeshcode(meshcode);
-		Citymesh mesh = meshRepository.getById(pk);
-		
-		Task pre = service.getTaskByMesh(citycode, meshcode);
-		if (pre != null) {
-			pre.setOperation(Operation.DONE);
-			pre.setUsername(loginName);
-			model.addAttribute("task", pre);
-			return "task";
-		}
-		else {
-			// Taskが無い場合は生成する
-			String uuid = UUID.randomUUID().toString();
-			Task task = new Task();
-			task.setCurrentId(uuid);
-			task.setPreId(uuid);
-			task.setCitycode(citycode);
-			task.setMeshcode(meshcode);
-			task.setMesh(mesh);
-			task.setStatus(Status.IMPORTED);
-			task.setUsername(loginName);
-			task.setOperation(Operation.DONE);
-			model.addAttribute("task", task);
-			return "task";
-		}
-	}
-
 	@GetMapping("/task/add")
-	public String addTask(
+	public String addTask(@AuthenticationPrincipal UserDetails user,
+			Model model,
+			@RequestParam(name="op") String op,
 			@RequestParam(name="citycode") String citycode,
-			@RequestParam(name="meshcode") String meshcode,
-			@ModelAttribute Task task)
+			@RequestParam(name="meshcode") String meshcode)
 	{
-		return "task";
+		String next = "task";
+		Operation operation = Operation.NOP;
+		Status baseStatus = Status.PREPARATION;
+		if (op.equals(Operation.RESERVE.toString())) {
+			model.addAttribute("command", "タスク予約");
+			operation = Operation.RESERVE;
+			baseStatus = Status.PREPARATION;
+		}
+		else if (op.equals(Operation.CANCEL.toString())) {
+			model.addAttribute("command", "タスク予約取消");
+			operation = Operation.CANCEL;
+			baseStatus = Status.ACCEPTING;
+		}
+		else if (op.equals(Operation.DONE.toString())) {
+			model.addAttribute("command", "編集完了");
+			operation = Operation.DONE;
+			baseStatus = Status.IMPORTED;
+			next = "task_done";
+		}
+
+		// ログイン名を取得
+		String loginName = "";
+    	if (user != null) {
+    		loginName = user.getUsername();
+    	}
+        model.addAttribute("username", loginName);
+        
+        City city = cityRepository.getById(citycode);
+		model.addAttribute("citycode", citycode);
+		model.addAttribute("cityname", city.getCityname());
+		model.addAttribute("meshcode", meshcode);
+		
+		CitymeshPK pk = new CitymeshPK();
+		pk.setCitycode(citycode);
+		pk.setMeshcode(meshcode);
+		Citymesh mesh = meshRepository.getById(pk);
+		
+		Task pre = service.getTaskByMesh(citycode, meshcode);
+		if (pre != null) {
+			pre.setOperation(operation);
+			pre.setUsername(loginName);
+			model.addAttribute("task", pre);
+			return next;
+		}
+		else {
+			// 既存Taskが無い場合は生成する
+			String uuid = UUID.randomUUID().toString();
+			Task task = new Task();
+			task.setCurrentId(uuid);
+			task.setPreId(uuid);
+			task.setCitycode(citycode);
+			task.setMeshcode(meshcode);
+			task.setMesh(mesh);
+			task.setStatus(baseStatus);
+			task.setUsername(loginName);
+			task.setOperation(operation);
+			model.addAttribute("task", task);
+			return next;
+		}
 	}
 	
 	@PostMapping("/task/process")
@@ -256,6 +150,9 @@ public class TaskController {
 	{
 		if (result.hasErrors()) {
 			// エラーがある場合
+			if (task.getOperation() == Operation.DONE) {
+				return "task_done";
+			}
 			return "task";
 		}
 		service.add(task, user);
@@ -263,6 +160,24 @@ public class TaskController {
 		return "redirect:/tasks?citycode="+ task.getCitycode() +"&meshcode="+ task.getMeshcode();
 	}
 	
+	/**
+	 * 400 Bad Request
+	 * 
+	 * @param e
+	 * @param model
+	 * @param citycode
+	 * @param meshcode
+	 * @return
+	 */
+	@ExceptionHandler(TaskException.class)
+	public String taskExceptionHandler(TaskException e, Model model) 
+	{
+		model.addAttribute("error", "400 Bad Request");
+		model.addAttribute("message", e.toString());
+		model.addAttribute("status", HttpStatus.BAD_REQUEST);
+		return exceptionHandler(e.getTask(), model);
+	}
+
 	/**
 	 * 406 Not Acceptable
 	 * "ACCEPTIONGではないため予約できません"
@@ -279,24 +194,7 @@ public class TaskController {
 		model.addAttribute("error", "406 Not Acceptable");
 		model.addAttribute("message", e.toString());
 		model.addAttribute("status", HttpStatus.NOT_ACCEPTABLE);
-		
-		Task task = e.getTask();
-		if (task == null) {
-			return "error";
-		}
-		if (task.getOperation() == Operation.RESERVE) {
-			model.addAttribute("command", "タスク登録");
-		}
-		else if (task.getOperation() == Operation.CANCEL) {
-			model.addAttribute("command", "タスク登録取消");
-		}
-		else if (task.getOperation() == Operation.DONE) {
-			model.addAttribute("command", "作業完了");
-		}
-		model.addAttribute("citycode", task.getCitycode());
-		model.addAttribute("meshcode", task.getMeshcode());
-		model.addAttribute("task", task);
-		return "task";
+		return exceptionHandler(e.getTask(), model);
 	}
 
 	/**
@@ -315,24 +213,30 @@ public class TaskController {
 		model.addAttribute("error", "409 Conflict");
 		model.addAttribute("message", e.toString());
 		model.addAttribute("status", HttpStatus.CONFLICT);
-		
-		Task task = e.getTask();
+		return exceptionHandler(e.getTask(), model);
+	}
+	
+	private String exceptionHandler(Task task, Model model) {
 		if (task == null) {
 			return "error";
 		}
 		
 		if (task.getOperation() == Operation.RESERVE) {
-			model.addAttribute("command", "タスク登録");
+			model.addAttribute("command", "タスク予約");
 		}
 		else if (task.getOperation() == Operation.CANCEL) {
-			model.addAttribute("command", "タスク登録取消");
+			model.addAttribute("command", "タスク予約取消");
 		}
 		else if (task.getOperation() == Operation.DONE) {
-			model.addAttribute("command", "作業完了");
+			model.addAttribute("command", "編集済み");
 		}
 		model.addAttribute("citycode", task.getCitycode());
 		model.addAttribute("meshcode", task.getMeshcode());
 		model.addAttribute("task", task);
+		
+		if (task.getOperation() == Operation.DONE) {
+			return "task_done";
+		}
 		return "task";
 	}
 }

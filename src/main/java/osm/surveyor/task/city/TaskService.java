@@ -62,34 +62,46 @@ public class TaskService {
 			}
 			if (task.getOperation() == Operation.RESERVE) {
 				if (ctask.getStatus() != Status.ACCEPTING) {
-					NotAcceptableException e = new NotAcceptableException("ステータスがACCEPTIONGではないためタスク登録できませんでした : "+ task.getOperation());
+					NotAcceptableException e = new NotAcceptableException("ステータスがACCEPTIONGではないためタスク予約できませんでした : "+ task.getOperation());
 					e.setTask(task);
 					throw e;
 				}
 			}
 			else if (task.getOperation() == Operation.CANCEL) {
 				if (ctask.getStatus() != Status.RESERVED) {
-					NotAcceptableException e = new NotAcceptableException("ステータスがRESERVEDではないためタスク登録できませんでした : "+ task.getOperation());
+					NotAcceptableException e = new NotAcceptableException("ステータスがRESERVEDではないため予約取消できませんでした : "+ task.getOperation());
 					e.setTask(task);
 					throw e;
 				}
 				if (!ctask.getUsername().equals(user.getUsername())) {
-					NotAcceptableException e = new NotAcceptableException("他のマッパーのタスクはCANCELできません");
+					NotAcceptableException e = new NotAcceptableException("他のマッパーのタスク予約はCANCELできません");
 					e.setTask(task);
 					throw e;
 				}
 			}
 			else if (task.getOperation() == Operation.DONE) {
-				if (ctask.getStatus() != Status.RESERVED) {
-					NotAcceptableException e = new NotAcceptableException("タスク登録されていないためタスク完了できませんでした");
+				// タスク予約していなくてもインポートできる
+				// 他のマッパーが予約していてもインポート可能
+				String changeset = task.getChangeSet();
+				if (changeset == null) {
+					TaskException e = new TaskException("変更セットNoが入力されていません");
 					e.setTask(task);
 					throw e;
 				}
-				if (!ctask.getUsername().equals(user.getUsername())) {
-					NotAcceptableException e = new NotAcceptableException("他のマッパーのタスクは完了できません");
+				else if (changeset.isEmpty()) {
+					TaskException e = new TaskException("変更セットNoが入力されていません");
 					e.setTask(task);
 					throw e;
 				}
+				try {
+					Long.parseLong(changeset);
+				}
+				catch (NumberFormatException nfe) {
+					TaskException e = new TaskException("変更セットNoに数字以外の文字が入っています");
+					e.setTask(task);
+					throw e;
+				}
+				
 			}
 			task.setPreId(ctask.getCurrentId());
 			task.setCurrentId(uuid);

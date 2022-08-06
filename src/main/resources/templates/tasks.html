@@ -59,16 +59,19 @@
                       <td th:object="${mesh}" colspan='4'>
                         <a th:text="#{return}" th:href="@{/mesh/{citycode}(citycode=*{citycode})}" class="btn btn-navy">
                         </a>
-                                              
-                        <a th:href="@{/task/reserve?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+
+                        <a th:text="#{download}" th:href="@{{site}{folder}/bldg/{path}(site=*{city.site},folder=*{city.folder},path=*{path})}" class="btn btn-navy">
+                        </a>
+                        
+                        <a th:href="@{/task/add?op=RESERVE&citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square" th:text="#{reserve}" ></i>
                         </a>
                         
-                        <a th:href="@{/task/cancel?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+                        <a th:href="@{/task/add?op=CANCEL&citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square" th:text="#{cancel}"></i>
                         </a>
                         
-                        <a th:href="@{/task/done?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+                        <a th:href="@{/task/add?op=DONE&citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square" th:text="#{done}"></i>
                         </a>
                       </td>
