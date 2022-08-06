@@ -44,19 +44,22 @@
                 </div>
                 
                 <table class="table table-bordered">
-                  <thead>
+                  <tbody th:object="${mesh}">
                     <tr>
-                      <th th:text="${citycode}"></th>
-                      <th th:text="${cityname}"></th>
-                      <th th:text="${meshcode}"></th>
-                      <th th:text="${username}"></th>
-                      <th th:text="${changeSet}"></th>
-                      <th th:text="${validator}"></th>
+                      <th>
+                        <div>
+                          <i th:text="#{cityname}"></i> : <i th:text="*{citycode}"></i> <i th:text="${cityname}"></i>
+                        </div>
+                        <div>
+                          <i th:text="#{meshcode}"></i> : <i th:text="*{meshcode}"></i>
+                        </div>
+                        <div>
+                          <i th:text="#{status}"></i> : <i th:text="*{status}"></i>
+                        </div>
+                      </th>
                     </tr>
-                  </thead>
-                  <tbody>
                     <tr>
-                      <td th:object="${mesh}" colspan='4'>
+                      <td>
                         <a th:text="#{return}" th:href="@{/mesh/{citycode}(citycode=*{citycode})}" class="btn btn-navy">
                         </a>
 
@@ -74,33 +77,43 @@
                         <a th:href="@{/task/add?op=DONE&citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square" th:text="#{done}"></i>
                         </a>
+                        
+                        <a th:href="@{/task/add?op=NG&citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+                          <i class="bi bi-pencil-square" th:text="#{NG}"></i>
+                        </a>
+                        
+                        <a th:href="@{/task/add?op=OK&citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+                          <i class="bi bi-pencil-square" th:text="#{OK}"></i>
+                        </a>
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                
             
                 <table class="table table-bordered">
                   <thead>
                     <tr>
+                      <th colspan="6">履歴</th>
+                    </tr>
+                    <tr>
+                      <th th:text="#{updateTime}"></th>
                       <th th:text="#{status}"></th>
-                      <th th:text="#{citycode}"></th>
                       <th th:text="#{username}"></th>
                       <th th:text="#{changeSet}"></th>
                       <th th:text="#{validator}"></th>
                       <th th:text="#{operation}"></th>
-                      <th th:text="#{updateTime}"></th>
+                      <th th:text="#{comment}"></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr th:each="task : ${tasks}" th:object="${task}">
+                      <td th:text="*{updateTime}"></td>
                       <td th:text="*{status}"></td>
-                      <td th:text="*{citycode}"></td>
                       <td th:text="*{username}"></td>
                       <td th:text="*{changeSet}"></td>
                       <td th:text="*{validator}"></td>
                       <td th:text="*{operation}"></td>
-                      <td th:text="*{updateTime}"></td>
+                      <td th:text="*{comment}"></td>
                     </tr>
                   </tbody>
                 </table>

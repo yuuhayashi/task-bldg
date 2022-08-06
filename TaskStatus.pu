@@ -2,13 +2,14 @@
 
 [*] --> PREPARATION
 PREPARATION --> ACCEPTING : DataLoad
-ACCEPTING --> RESERVED	: RESERVE(マッパー登録)
-RESERVED --> IMPORTED	: DONE(インポート済み) 
-ACCEPTING <-- RESERVED	: CANCEL(取消)
+ACCEPTING --> RESERVED	: RESERVE(タスク予約)
+ACCEPTING --> IMPORTED	: DONE(編集完了) 
+RESERVED --> IMPORTED	: DONE(編集完了) 
+IMPORTED --> IMPORTED	: DONE(編集完了) 
+ACCEPTING <-- RESERVED	: CANCEL(タスク予約取消)
 
-IMPORTED -> VERIFICATION : VALID(検証者登録)
-VERIFICATION --> END	: [検証結果=OK]
-ACCEPTING <-- VERIFICATION : [検証結果=NG]
+IMPORTED --> END	: OK[検証結果=OK]
+ACCEPTING <-- IMPORTED : NG[検証結果=NG]
 
 state "PREPARATION\n準備中" as PREPARATION {
 }
@@ -17,9 +18,17 @@ state "ACCEPTING\n受付中" as ACCEPTING {
 }
 
 state "RESERVED\n予約済み" as RESERVED {
+	RESERVED : 編集者
 }
 
 state "IMPORTED\nインポート済み" as IMPORTED {
+	IMPORTED : 編集者
+	IMPORTED : 変更セットNo
 }
 
+state "END\n完了" as END {
+	END : 編集者
+	END : 変更セットNo
+	END : 検証者
+}
 @enduml

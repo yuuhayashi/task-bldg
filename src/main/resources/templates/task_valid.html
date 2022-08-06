@@ -98,17 +98,25 @@
                   <input type="hidden" th:field="*{citycode}" th:value="*{citycode}" />
                   <input type="hidden" th:field="*{meshcode}" th:value="*{meshcode}" />
                   <input type="hidden" th:field="*{username}" th:value="*{username}" />
-                  <input type="hidden" th:field="*{validator}" th:value="*{validator}" />
+                  <input type="hidden" th:field="*{changeSet}" th:value="*{changeSet}">
                   <input type="hidden" th:field="*{status}" th:value="*{status}" />
-                  <input type="hidden" th:field="*{operation}" th:value="*{operation}" />
-                  <input type="hidden" th:field="*{changeSet}" th:value="*{changeSet}" />
+                  
+                  <div class="mb-3">
+                    <label for="username" class="form-label">
+                      検証者
+                    </label>
+                    <p th:text="${username}"></p>
+                    <input type="hidden" th:field="*{validator}" th:value="${username}" />
+                  </div>
 
                   <div class="mb-3">
                     <label for="username" class="form-label">
-                      コメント
+                      <span class="badge bg-danger">必須</span>
+                      検証結果
                     </label>
-                    <input class="form-control" type="text" th:errorclass="is-invalid" th:field="*{comment}">
-                    <div class="invalid-feedback" th:errors="*{comment}">
+                    <input class="form-control" type="text" th:errorclass="is-invalid" th:field="*{operation}" >
+                    <input type="hidden" th:field="*{operation}" th:value="*{operation}" />
+                    <div class="invalid-feedback" th:errors="*{changeSet}">
                     </div>
                   </div>
 

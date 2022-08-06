@@ -84,22 +84,32 @@ public class TaskController {
 	{
 		String next = "task";
 		Operation operation = Operation.NOP;
-		Status baseStatus = Status.PREPARATION;
+		Status nextStatus = Status.PREPARATION;
 		if (op.equals(Operation.RESERVE.toString())) {
 			model.addAttribute("command", "タスク予約");
 			operation = Operation.RESERVE;
-			baseStatus = Status.PREPARATION;
+			nextStatus = Status.RESERVED;
 		}
 		else if (op.equals(Operation.CANCEL.toString())) {
 			model.addAttribute("command", "タスク予約取消");
 			operation = Operation.CANCEL;
-			baseStatus = Status.ACCEPTING;
+			nextStatus = Status.ACCEPTING;
 		}
 		else if (op.equals(Operation.DONE.toString())) {
 			model.addAttribute("command", "編集完了");
 			operation = Operation.DONE;
-			baseStatus = Status.IMPORTED;
+			nextStatus = Status.IMPORTED;
 			next = "task_done";
+		}
+		else if (op.equals(Operation.NG.toString())) {
+			model.addAttribute("command", "検証(NG)");
+			operation = Operation.NG;
+			nextStatus = Status.ACCEPTING;
+		}
+		else if (op.equals(Operation.OK.toString())) {
+			model.addAttribute("command", "検証(OK)");
+			operation = Operation.OK;
+			nextStatus = Status.END;
 		}
 
 		// ログイン名を取得
@@ -122,7 +132,12 @@ public class TaskController {
 		Task pre = service.getTaskByMesh(citycode, meshcode);
 		if (pre != null) {
 			pre.setOperation(operation);
-			pre.setUsername(loginName);
+			if (op.equals(Operation.OK.toString()) || op.equals(Operation.NG.toString())) {
+				pre.setValidator(loginName);
+			}
+			else {
+				pre.setUsername(loginName);
+			}
 			model.addAttribute("task", pre);
 			return next;
 		}
@@ -135,8 +150,11 @@ public class TaskController {
 			task.setCitycode(citycode);
 			task.setMeshcode(meshcode);
 			task.setMesh(mesh);
-			task.setStatus(baseStatus);
+			task.setStatus(nextStatus);
 			task.setUsername(loginName);
+			if (op.equals(Operation.OK.toString()) || op.equals(Operation.NG.toString())) {
+				task.setValidator(loginName);
+			}
 			task.setOperation(operation);
 			model.addAttribute("task", task);
 			return next;
@@ -150,10 +168,7 @@ public class TaskController {
 	{
 		if (result.hasErrors()) {
 			// エラーがある場合
-			if (task.getOperation() == Operation.DONE) {
-				return "task_done";
-			}
-			return "task";
+			return nextPage(task);
 		}
 		service.add(task, user);
 		
@@ -173,7 +188,7 @@ public class TaskController {
 	public String taskExceptionHandler(TaskException e, Model model) 
 	{
 		model.addAttribute("error", "400 Bad Request");
-		model.addAttribute("message", e.toString());
+		model.addAttribute("message", e.getMessage());
 		model.addAttribute("status", HttpStatus.BAD_REQUEST);
 		return exceptionHandler(e.getTask(), model);
 	}
@@ -192,7 +207,7 @@ public class TaskController {
 	public String notAcceptableExceptionHandler(NotAcceptableException e, Model model) 
 	{
 		model.addAttribute("error", "406 Not Acceptable");
-		model.addAttribute("message", e.toString());
+		model.addAttribute("message", e.getMessage());
 		model.addAttribute("status", HttpStatus.NOT_ACCEPTABLE);
 		return exceptionHandler(e.getTask(), model);
 	}
@@ -211,7 +226,7 @@ public class TaskController {
 	public String conflictExceptionHandler(ConflictException e, Model model) 
 	{
 		model.addAttribute("error", "409 Conflict");
-		model.addAttribute("message", e.toString());
+		model.addAttribute("message", e.getMessage());
 		model.addAttribute("status", HttpStatus.CONFLICT);
 		return exceptionHandler(e.getTask(), model);
 	}
@@ -230,10 +245,20 @@ public class TaskController {
 		else if (task.getOperation() == Operation.DONE) {
 			model.addAttribute("command", "編集済み");
 		}
+		else if (task.getOperation() == Operation.NG) {
+			model.addAttribute("command", "検証(NG)");
+		}
+		else if (task.getOperation() == Operation.OK) {
+			model.addAttribute("command", "検証(OK)");
+		}
 		model.addAttribute("citycode", task.getCitycode());
 		model.addAttribute("meshcode", task.getMeshcode());
 		model.addAttribute("task", task);
 		
+		return nextPage(task);
+	}
+	
+	private String nextPage(Task task) {
 		if (task.getOperation() == Operation.DONE) {
 			return "task_done";
 		}

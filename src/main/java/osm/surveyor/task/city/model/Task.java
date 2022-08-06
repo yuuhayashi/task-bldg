@@ -63,6 +63,11 @@ public class Task {
 	private String changeSet;
 	
 	/**
+	 * コメント
+	 */
+	private String comment;
+	
+	/**
 	 * 操作内容
 	 */
 	@Enumerated(EnumType.ORDINAL)

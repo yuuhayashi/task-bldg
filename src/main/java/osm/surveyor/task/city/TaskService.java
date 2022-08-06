@@ -36,6 +36,12 @@ public class TaskService {
 		else if (task.getOperation() == Operation.DONE) {
 			task.setStatus(Status.IMPORTED);
 		}
+		else if (task.getOperation() == Operation.NG) {
+			task.setStatus(Status.ACCEPTING);
+		}
+		else if (task.getOperation() == Operation.OK) {
+			task.setStatus(Status.END);
+		}
 		else {
 			NotAcceptableException e = new NotAcceptableException("未サポートのオペレーションです: "+ task.getOperation());
 			e.setTask(task);
@@ -69,7 +75,7 @@ public class TaskService {
 			}
 			else if (task.getOperation() == Operation.CANCEL) {
 				if (ctask.getStatus() != Status.RESERVED) {
-					NotAcceptableException e = new NotAcceptableException("ステータスがRESERVEDではないため予約取消できませんでした : "+ task.getOperation());
+					NotAcceptableException e = new NotAcceptableException("ステータスが予約中ではないため予約取消できませんでした : "+ task.getOperation());
 					e.setTask(task);
 					throw e;
 				}
@@ -82,6 +88,17 @@ public class TaskService {
 			else if (task.getOperation() == Operation.DONE) {
 				// タスク予約していなくてもインポートできる
 				// 他のマッパーが予約していてもインポート可能
+				if (ctask.getStatus() == Status.PREPARATION) {
+					NotAcceptableException e = new NotAcceptableException("準備中のため登録できませんでした");
+					e.setTask(task);
+					throw e;
+				}
+				if (ctask.getStatus() == Status.END) {
+					NotAcceptableException e = new NotAcceptableException("既にタスクが完了しているため登録できませんでした");
+					e.setTask(task);
+					throw e;
+				}
+
 				String changeset = task.getChangeSet();
 				if (changeset == null) {
 					TaskException e = new TaskException("変更セットNoが入力されていません");
@@ -93,15 +110,35 @@ public class TaskService {
 					e.setTask(task);
 					throw e;
 				}
-				try {
-					Long.parseLong(changeset);
+				else {
+					try {
+						Long.parseLong(changeset);
+					}
+					catch (NumberFormatException nfe) {
+						TaskException e = new TaskException("変更セットNoに数字以外の文字が入っています");
+						e.setTask(task);
+						throw e;
+					}
 				}
-				catch (NumberFormatException nfe) {
-					TaskException e = new TaskException("変更セットNoに数字以外の文字が入っています");
+			}
+			else if ((task.getOperation() == Operation.NG) || (task.getOperation() == Operation.NG)) {
+				if (ctask.getStatus() != Status.IMPORTED) {
+					NotAcceptableException e = new NotAcceptableException("編集されていないため検証できません");
 					e.setTask(task);
 					throw e;
 				}
-				
+				if (ctask.getUsername().equals(user.getUsername())) {
+					TaskException e = new TaskException("自己の編集を検証することはできません");
+					e.setTask(task);
+					throw e;
+				}
+
+				String comment = task.getComment();
+				if (comment == null || comment.isEmpty()) {
+					TaskException e = new TaskException("コメントが入力されていません");
+					e.setTask(task);
+					throw e;
+				}
 			}
 			task.setPreId(ctask.getCurrentId());
 			task.setCurrentId(uuid);

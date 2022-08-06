@@ -72,11 +72,6 @@
                       <td></td>
                     </tr>
                     <tr>
-                      <td th:text="#{changeSet}"></td>
-                      <td th:text="*{changeSet}"></td>
-                      <td></td>
-                    </tr>
-                    <tr>
                       <td th:text="#{status}"></td>
                       <td th:text="*{status}"></td>
                       <td></td>
@@ -109,6 +104,15 @@
                     </label>
                     <input class="form-control" type="text" th:errorclass="is-invalid" th:field="*{changeSet}">
                     <div class="invalid-feedback" th:errors="*{changeSet}">
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="username" class="form-label">
+                      コメント
+                    </label>
+                    <input class="form-control" type="text" th:errorclass="is-invalid" th:field="*{comment}">
+                    <div class="invalid-feedback" th:errors="*{comment}">
                     </div>
                   </div>
 
