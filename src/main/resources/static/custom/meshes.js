@@ -21,12 +21,12 @@ if(queryString){
 function loadMap() {
 	$.when(
 		// マップ表示のための中心位置を読み取る
-		$.getJSON("/city/index.json")
+		$.getJSON("/task-bldg/city/index.json")
 	).done(function(data1) {
 		site = data1.site;
 		style = new ol.style.Style({
 		    image: new ol.style.Icon({
-		        src: '/img/osm_200x200.png',
+		        src: '/task-bldg/img/osm_200x200.png',
 		        anchor: [0.5, 0.5],
 		        scale: 0.2
 		    }),
@@ -71,7 +71,7 @@ function loadMap() {
 	    });
 
 		$.when(
-			$.getJSON("/city/"+ dir + geojson)
+			$.getJSON("/task-bldg/city/"+ dir + geojson)
 		).done(function(data2) {
 			features = data2.features;
 		    $(features).each(function() {
@@ -105,7 +105,7 @@ function loadMap() {
 		            var descriptionHTML =
 		                "<div>code: " + info.properties.id + "</div>" +
 		                "<div>version: " + info.properties.version + "</div>" +
-		                "<div><a href='/tasks?citycode=" + citycode + "&meshcode=" + info.properties.id +"'>タスク</a></div>";
+		                "<div><a href='/task-bldg/tasks?citycode=" + citycode + "&meshcode=" + info.properties.id +"'>タスク</a></div>";
 		            element.innerHTML = descriptionHTML;
 		            __overlay.setPosition(coordinates);
 		            __map.addOverlay(__overlay);

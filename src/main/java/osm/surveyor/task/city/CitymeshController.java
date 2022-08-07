@@ -17,7 +17,7 @@ public class CitymeshController {
 	private final CitymeshRepository meshRepository;
 	private final CityRepository cityRepository;
 
-	@GetMapping("/mesh/{citycode}")
+	@GetMapping("/task-bldg/mesh/{citycode}")
 	public String showList(@PathVariable String citycode, Model model) {
 		City city = cityRepository.findByCitycode(citycode);
 		List<Citymesh> tasks = meshRepository.findByCitycode(citycode);

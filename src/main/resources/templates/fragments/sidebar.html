@@ -17,7 +17,7 @@
 
         <div class="offcanvas-header">
           <h4 class="offcanvas-title">
-            <a th:href="@{/city}" class="text-white">
+            <a th:href="@{/task-bldg/city}" class="text-white">
               <span class="d-inline-block me-1" style="transform: rotate(-15deg)">
                 <i class="bi bi-credit-card-2-front-fill fs-3">
                 </i>
@@ -31,52 +31,40 @@
           <hr class="mt-1">
           <ul class="navbar-nav">
             <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
-              <a th:href="@{/}" class="nav-link text-white">
+              <a th:href="@{/task-bldg/}" class="nav-link text-white">
                 <i class="bi bi-person-fill me-2"></i>
                 ログイン情報
               </a>
             </li>
             <li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
-              <a th:href="@{/}" class="nav-link text-white">
+              <a th:href="@{/task-bldg/}" class="nav-link text-white">
                 <i class="bi bi-person-fill me-2"></i>
                 ログイン情報
               </a>
             </li>
             
             <li class="nav-item">
-              <a th:href="@{/login}" class="nav-link text-white">
+              <a th:href="@{/task-bldg/login}" class="nav-link text-white">
                 <i class="bi bi-person-fill me-2"></i>
                 ログイン
               </a>
             </li>
             <li sec:authorize="hasRole('ADMIN')" class="nav-item">
-              <a th:href="@{/admin/list}" class="nav-link text-white">
+              <a th:href="@{/task-bldg/admin/list}" class="nav-link text-white">
                 <i class="bi bi-table me-2"></i>
                 マッパーリスト
               </a>
             </li>
             <li class="nav-item">
-              <a th:href="@{/logout}" class="nav-link text-white">
+              <a th:href="@{/task-bldg/logout}" class="nav-link text-white">
                 <i class="bi bi-box-arrow-right me-2"></i>
                 ログアウト
               </a>
             </li>
             <li class="nav-item">
-              <a th:href="@{/city}" class="nav-link text-white">
+              <a th:href="@{/task-bldg/city}" class="nav-link text-white">
                 <i class="bi bi-table me-2"></i>
                 BLDGデータリスト
-              </a>
-            </li>
-            <li class="nav-item">
-              <a th:href="@{/city/add}" class="nav-link text-white">
-                <i class="bi bi-table me-2"></i>
-                BLDGデータ登録
-              </a>
-            </li>
-            <li class="nav-item">
-              <a th:href="@{/pref}" class="nav-link text-white">
-                <i class="bi bi-table me-2"></i>
-                都道府県
               </a>
             </li>
           </ul>

@@ -40,7 +40,7 @@ public class TaskController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/tasks")
+	@GetMapping("/task-bldg/tasks")
 	public String showList(@AuthenticationPrincipal UserDetails user, Model model,
 			@RequestParam(name="citycode") String citycode,
 			@RequestParam(name="meshcode") String meshcode)
@@ -75,7 +75,7 @@ public class TaskController {
 	 * @param task
 	 * @return
 	 */
-	@GetMapping("/task/add")
+	@GetMapping("/task-bldg/task/add")
 	public String addTask(@AuthenticationPrincipal UserDetails user,
 			Model model,
 			@RequestParam(name="op") String op,
@@ -161,7 +161,7 @@ public class TaskController {
 		}
 	}
 	
-	@PostMapping("/task/process")
+	@PostMapping("/task-bldg/task/process")
 	public String process(@AuthenticationPrincipal UserDetails user, 
 			@Validated @ModelAttribute Task task,
 			BindingResult result)
@@ -172,7 +172,7 @@ public class TaskController {
 		}
 		service.add(task, user);
 		
-		return "redirect:/tasks?citycode="+ task.getCitycode() +"&meshcode="+ task.getMeshcode();
+		return "redirect:/task-bldg/tasks?citycode="+ task.getCitycode() +"&meshcode="+ task.getMeshcode();
 	}
 	
 	/**

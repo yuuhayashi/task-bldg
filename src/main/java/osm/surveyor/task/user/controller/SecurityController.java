@@ -22,12 +22,12 @@ public class SecurityController {
     private final SiteUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @GetMapping("/login")
+    @GetMapping("/task-bldg/login")
     public String success() {
         return "login";
     }
 
-    @GetMapping("/")
+    @GetMapping("/task-bldg/")
     public String showList(Authentication loginUser, Model model) {
     	if (loginUser == null) {
             model.addAttribute("username", "");
@@ -37,25 +37,23 @@ public class SecurityController {
             model.addAttribute("username", loginUser.getName());
             model.addAttribute("role", loginUser.getAuthorities());
     	}
-        return "user";
+		return "redirect:/task-bldg/city";
     }
 
-    @GetMapping("/admin/list")
+    @GetMapping("/task-bldg/admin/list")
     public String showAdminList(Model model) {
         model.addAttribute("users", userRepository.findAll());
         return "list";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/task-bldg/register")
     public String register(@ModelAttribute("user") SiteUser user) {
         return "register";
     }
 
-    @PostMapping("/register")
-    public String process(@Validated @ModelAttribute("user") SiteUser user,
-            BindingResult result) {
-
-        if (result.hasErrors()) {
+    @PostMapping("/task-bldg/register")
+    public String process(@Validated @ModelAttribute("user") SiteUser user, BindingResult result) {
+    	if (result.hasErrors()) {
             return "register";
         }
 
@@ -67,6 +65,6 @@ public class SecurityController {
         }
         userRepository.save(user);
 
-        return "redirect:/login?register";
+        return "redirect:/task-bldg/login?register";
     }
 }

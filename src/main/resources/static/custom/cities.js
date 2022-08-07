@@ -22,7 +22,7 @@ function loadMap() {
     // マーカーの見た目の作成
     var style = new ol.style.Style({
         image: new ol.style.Icon({
-            src: '/img/osm_200x200.png',
+            src: '/task-bldg/img/osm_200x200.png',
             anchor: [0.5, 0.5],
             scale: 0.2
         })
@@ -41,12 +41,12 @@ function loadMap() {
     });
 
 	$.when(
-		$.getJSON("/city/index.json")
+		$.getJSON("/task-bldg/city/index.json")
 	).done(function(data) {
 		site = data.site;
 		style = new ol.style.Style({
 		    image: new ol.style.Icon({
-		        src: '/img/osm_200x200.png',
+		        src: '/task-bldg/img/osm_200x200.png',
 		        anchor: [0.5, 0.5],
 		        scale: 0.2
 		    }),
@@ -79,7 +79,7 @@ function loadMap() {
 	            var descriptionHTML =
 	                "<div>" + info.code + "</div>" +
 	                "<div>" + info.name + "</div>" +
-	                "<div><a href='/mesh/"+ info.code +"'>" + info.path + "</a></div>";
+	                "<div><a href='/task-bldg/mesh/"+ info.code +"'>" + info.path + "</a></div>";
 	            element.innerHTML = descriptionHTML;
 	            __overlay.setPosition(coordinates);
 	            __map.addOverlay(__overlay);
