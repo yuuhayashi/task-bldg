@@ -121,7 +121,7 @@ function loadMesh(dir) {
 						    featurePoint.information = this;
 						    featurePoint.setStyle(new ol.style.Style({
 							    image: new ol.style.Icon({
-							        src: '/task-bldg/img/osm_200x200.png',
+							        src: './img/osm_200x200.png',
 							        anchor: [0.5, 0.5],
 							        scale: 0.2
 							    }),

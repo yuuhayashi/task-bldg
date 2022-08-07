@@ -41,7 +41,7 @@ function loadMap() {
     });
 
 	$.when(
-		$.getJSON("/task-bldg/city/index.json")
+		$.getJSON("./city/index.json")
 	).done(function(data) {
 		site = data.site;
 		style = new ol.style.Style({
