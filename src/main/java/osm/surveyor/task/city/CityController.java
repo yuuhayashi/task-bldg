@@ -17,36 +17,36 @@ import osm.surveyor.task.city.model.City;
 public class CityController {
 	private final CityRepository repository;
 	
-	@GetMapping("/task-bldg/city")
+	@GetMapping("/city")
 	public String showList(Model model) {
 		model.addAttribute("cities", repository.findAll());
 		return "cities";
 	}
 	
-	@GetMapping("/task-bldg/city/add")
+	@GetMapping("/city/add")
 	public String addCity(@ModelAttribute City city) {
 		return "form";
 	}
 	
-	@PostMapping("/task-bldg/city/process")
+	@PostMapping("/city/process")
 	public String process(@Validated @ModelAttribute City city, BindingResult result) {
 		if (result.hasErrors()) {
 			return "form";
 		}
 
 		repository.save(city);
-		return "redirect:/task-bldg/city";
+		return "redirect:/city";
 	}
 
-	@GetMapping("/task-bldg/city/edit/{citycode}")
+	@GetMapping("/city/edit/{citycode}")
 	public String editCity(@PathVariable String citycode, Model model) {
 		model.addAttribute("city", repository.findByCitycode(citycode));
 		return "form";
 	}
 
-	@GetMapping("/task-bldg/city/delete/{citycode}")
+	@GetMapping("/city/delete/{citycode}")
 	public String deleteCity(@PathVariable String citycode) {
 		repository.deleteByCitycode(citycode);
-		return "redirect:/task-bldg/city";
+		return "redirect:/city";
 	}
 }

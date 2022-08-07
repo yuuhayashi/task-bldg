@@ -22,12 +22,12 @@ public class SecurityController {
     private final SiteUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @GetMapping("/task-bldg/login")
+    @GetMapping("/login")
     public String success() {
         return "login";
     }
 
-    @GetMapping("/task-bldg/")
+    @GetMapping("/")
     public String showList(Authentication loginUser, Model model) {
     	if (loginUser == null) {
             model.addAttribute("username", "");
@@ -37,21 +37,21 @@ public class SecurityController {
             model.addAttribute("username", loginUser.getName());
             model.addAttribute("role", loginUser.getAuthorities());
     	}
-		return "redirect:/task-bldg/city";
+		return "redirect:/city";
     }
 
-    @GetMapping("/task-bldg/admin/list")
+    @GetMapping("/admin/list")
     public String showAdminList(Model model) {
         model.addAttribute("users", userRepository.findAll());
         return "list";
     }
 
-    @GetMapping("/task-bldg/register")
+    @GetMapping("/register")
     public String register(@ModelAttribute("user") SiteUser user) {
         return "register";
     }
 
-    @PostMapping("/task-bldg/register")
+    @PostMapping("/register")
     public String process(@Validated @ModelAttribute("user") SiteUser user, BindingResult result) {
     	if (result.hasErrors()) {
             return "register";
@@ -65,6 +65,6 @@ public class SecurityController {
         }
         userRepository.save(user);
 
-        return "redirect:/task-bldg/login?register";
+        return "redirect:/login?register";
     }
 }

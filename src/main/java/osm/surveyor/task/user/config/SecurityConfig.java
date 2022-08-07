@@ -31,14 +31,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // セキュリティ設定を、無視（ignoring）するパスを指定します
         // 通常、cssやjs、imgなどの静的リソースを指定します
         web.ignoring().antMatchers(
-    		"/task-bldg/favicon.ico",
-    		"/task-bldg/custom/**",
-    		"/task-bldg/pref/**",
-    		"/task-bldg/js/**",
-    		"/task-bldg/css/**",
-    		"/task-bldg/img/**",
-    		"/task-bldg/data/**",
-    		"/task-bldg/webjars/**",
+    		"/favicon.ico",
+    		"/custom/**",
+    		"/pref/**",
+    		"/js/**",
+    		"/css/**",
+    		"/img/**",
+    		"/data/**",
+    		"/webjars/**",
     		"/h2-console/**"
         );
     }
@@ -47,20 +47,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 		        // 「/login」と「/error」をアクセス可能にします
-		        .antMatchers("/task-bldg/login", "/task-bldg/error", "/task-bldg/register").permitAll()
-		        .antMatchers("/task-bldg/admin/**").hasRole(Role.ADMIN.name())
+		        .antMatchers("/login", "/error", "/register").permitAll()
+		        .antMatchers("/admin/**").hasRole(Role.ADMIN.name())
 		        .anyRequest().authenticated()
 		        .and()
 		    .formLogin()
 		        // ログイン時のURLを指定
-		        .loginPage("/task-bldg/login")
+		        .loginPage("/login")
 		        // 認証後にリダイレクトする場所を指定
-		        .defaultSuccessUrl("/task-bldg/city")
+		        .defaultSuccessUrl("/city")
 		        .and()
 		    // ログアウトの設定
 		    .logout()
 		        // ログアウト時のURLを指定
-		        .logoutRequestMatcher(new AntPathRequestMatcher("/task-bldg/logout"))
+		        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 		        .and()
 		    // Remember-Meの認証を許可します
 		    // これを設定すると、ブラウザを閉じて、
