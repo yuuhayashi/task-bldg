@@ -21,12 +21,12 @@ if(queryString){
 function loadMap() {
 	$.when(
 		// マップ表示のための中心位置を読み取る
-		$.getJSON("/city/index.json")
+		$.getJSON("./city/index.json")
 	).done(function(data1) {
 		site = data1.site;
 		style = new ol.style.Style({
 		    image: new ol.style.Icon({
-		        src: '/img/osm_200x200.png',
+		        src: './img/osm_200x200.png',
 		        anchor: [0.5, 0.5],
 		        scale: 0.2
 		    }),

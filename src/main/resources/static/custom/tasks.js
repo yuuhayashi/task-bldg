@@ -33,7 +33,7 @@ function loadMap() {
 	// 'citycode'に対応するデータを読む
 	var lonlat = [139.7637,35.6808];
 	$.when(
-		$.getJSON("/city/index.json")
+		$.getJSON("./city/index.json")
 	).done(function(data1) {
 		site = data1.site;
 		$(data1.list).each(function() {
@@ -121,7 +121,7 @@ function loadMesh(dir) {
 						    featurePoint.information = this;
 						    featurePoint.setStyle(new ol.style.Style({
 							    image: new ol.style.Icon({
-							        src: '/img/osm_200x200.png',
+							        src: './img/osm_200x200.png',
 							        anchor: [0.5, 0.5],
 							        scale: 0.2
 							    }),
