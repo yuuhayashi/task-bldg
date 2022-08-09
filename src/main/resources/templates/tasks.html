@@ -54,7 +54,7 @@
                           <i th:text="#{meshcode}"></i> : <i th:text="*{meshcode}"></i>
                         </div>
                         <div>
-                          <i th:text="#{status}"></i> : <i th:text="*{status}"></i>
+                          <i th:text="#{status}"></i> : <img th:alt="*{status}" th:src="@{/img/{status}.png(status=*{status})}"></img>
                         </div>
                       </th>
                     </tr>
@@ -108,7 +108,7 @@
                   <tbody>
                     <tr th:each="task : ${tasks}" th:object="${task}">
                       <td th:text="*{updateTime}"></td>
-                      <td th:text="*{status}"></td>
+                      <td><img th:alt="*{status}" th:src="@{/img/{status}.png(status=*{status})}"></img></td>
                       <td th:text="*{username}"></td>
                       <td th:text="*{changeSet}"></td>
                       <td th:text="*{validator}"></td>

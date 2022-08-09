@@ -37,7 +37,7 @@ public class TaskService {
 			task.setStatus(Status.IMPORTED);
 		}
 		else if (task.getOperation() == Operation.NG) {
-			task.setStatus(Status.ACCEPTING);
+			task.setStatus(Status.NG);
 		}
 		else if (task.getOperation() == Operation.OK) {
 			task.setStatus(Status.END);
@@ -67,8 +67,8 @@ public class TaskService {
 				throw e;
 			}
 			if (task.getOperation() == Operation.RESERVE) {
-				if (ctask.getStatus() != Status.ACCEPTING) {
-					NotAcceptableException e = new NotAcceptableException("ステータスがACCEPTIONGではないためタスク予約できませんでした : "+ task.getOperation());
+				if ((ctask.getStatus() != Status.ACCEPTING) && (ctask.getStatus() != Status.NG)) {
+					NotAcceptableException e = new NotAcceptableException("予約受付中ではないためタスク予約できませんでした : "+ task.getOperation());
 					e.setTask(task);
 					throw e;
 				}
@@ -121,7 +121,7 @@ public class TaskService {
 					}
 				}
 			}
-			else if ((task.getOperation() == Operation.NG) || (task.getOperation() == Operation.NG)) {
+			else if ((task.getOperation() == Operation.NG) || (task.getOperation() == Operation.OK)) {
 				if (ctask.getStatus() != Status.IMPORTED) {
 					NotAcceptableException e = new NotAcceptableException("編集されていないため検証できません");
 					e.setTask(task);
@@ -146,6 +146,8 @@ public class TaskService {
 		
 		task.setUpdateTime(new Date());
 		mesh.setStatus(task.getStatus());
+		mesh.setUsername(task.getUsername());
+		mesh.setValidator(task.getValidator());
 		
 		// データベースに格納
 		repository.save(task);

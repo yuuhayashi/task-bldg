@@ -47,4 +47,15 @@ public class Citymesh {
 	 */
 	@Enumerated(EnumType.ORDINAL)
 	private Status status = Status.PREPARATION;
+	
+	/**
+	 * インポート実行者
+	 */
+	private String username;
+	
+	/**
+	 * 検証者
+	 */
+	private String validator;
+	
 }

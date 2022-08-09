@@ -48,7 +48,7 @@ public class Task {
 	/**
 	 * インポート実行者
 	 */
-	private String username;	// 
+	private String username;
 	
 	/**
 	 * 検証者

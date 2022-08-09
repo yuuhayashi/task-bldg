@@ -132,6 +132,7 @@ public class TaskController {
 		Task pre = service.getTaskByMesh(citycode, meshcode);
 		if (pre != null) {
 			pre.setOperation(operation);
+			pre.setStatus(nextStatus);
 			if (op.equals(Operation.OK.toString()) || op.equals(Operation.NG.toString())) {
 				pre.setValidator(loginName);
 			}

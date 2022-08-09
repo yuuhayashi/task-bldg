@@ -78,7 +78,7 @@
                     </tr>
                     <tr>
                       <td th:text="#{status}"></td>
-                      <td th:text="*{status}"></td>
+                      <td><img th:alt="*{status}" th:src="@{/img/{status}.png(status=*{status})}"></img></td>
                       <td></td>
                     </tr>
                     <tr>

@@ -55,7 +55,7 @@
                   </thead>
                   <tbody>
                     <tr th:each="mesh : ${meshes}" th:object="${mesh}">
-                      <td th:text="*{status}"></td>
+                      <td><img th:alt="*{status}" th:src="@{/img/{status}.png(status=*{status})}"></img></td>
                       <td th:text="*{meshcode}"></td>
                       <td th:text="*{version}"></td>
                       <td th:text="*{path}"></td>

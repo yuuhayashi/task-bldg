@@ -61,7 +61,7 @@
                   </thead>
                   <tbody>
                     <tr th:each="city : ${cities}" th:object="${city}">
-                      <td th:text="*{status}"></td>
+                      <td><img th:alt="*{status}" th:src="@{/img/{status}.png(status=*{status})}"></img></td>
                       <td th:text="*{citycode}"></td>
                       <td th:text="*{cityname}"></td>
                       <td th:text="*{folder}"></td>
