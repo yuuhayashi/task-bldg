@@ -19,3 +19,6 @@ img#QGISlogo {
     width: 50%;
     height: 50%;
 }
+.error_red {
+	color: red;
+}

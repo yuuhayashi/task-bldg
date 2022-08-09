@@ -112,8 +112,8 @@
                     </div>
                   </div>
 
-                  <p th:text="${error}"></p>
-                  <p th:text="${message}"></p>
+                  <p class="error_red" th:text="${error}"></p>
+                  <p class="error_red" th:text="${message}"></p>
 
                   <a th:text="#{return}" th:href="@{/tasks?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
                   </a>
