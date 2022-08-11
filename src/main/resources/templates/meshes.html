@@ -50,6 +50,8 @@
                       <th th:text="#{meshcode}"></th>
                       <th>version</th>
                       <th th:text="#{path}"></th>
+                      <th th:text="#{username}"></th>
+                      <th th:text="#{validator}"></th>                      
                       <th th:text="#{operation}"></th>
                     </tr>
                   </thead>
@@ -59,6 +61,8 @@
                       <td th:text="*{meshcode}"></td>
                       <td th:text="*{version}"></td>
                       <td th:text="*{path}"></td>
+                      <td><a th:text="*{username}" th:href="@{https://www.openstreetmap.org/user/{user}(user=*{username})}"></a></td>
+                      <td><a th:text="*{validator}" th:href="@{https://www.openstreetmap.org/user/{user}(user=*{validator})}"></a></td>
                       <td>
                         <a th:text="#{download}" th:href="@{{site}{folder}/bldg/{path}(site=*{city.site},folder=*{city.folder},path=*{path})}" class="btn btn-navy">
                         </a>

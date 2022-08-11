@@ -63,12 +63,12 @@
                     </tr>
                     <tr>
                       <td th:text="#{username}"></td>
-                      <td th:text="*{username}"></td>
+                      <td><a th:text="*{username}" th:href="@{https://www.openstreetmap.org/user/{user}(user=*{username})}"></a></td>
                       <td></td>
                     </tr>
                     <tr>
                       <td th:text="#{validator}"></td>
-                      <td th:text="*{validator}"></td>
+                      <td><a th:text="*{validator}" th:href="@{https://www.openstreetmap.org/user/{user}(user=*{validator})}"></a></td>
                       <td></td>
                     </tr>
                     <tr>

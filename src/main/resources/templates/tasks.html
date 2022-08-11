@@ -109,9 +109,9 @@
                     <tr th:each="task : ${tasks}" th:object="${task}">
                       <td th:text="*{updateTime}"></td>
                       <td><img th:alt="*{status}" th:src="@{/img/{status}.png(status=*{status})}"></img></td>
-                      <td th:text="*{username}"></td>
+                      <td><a th:text="*{username}" th:href="@{https://www.openstreetmap.org/user/{user}(user=*{username})}"></a></td>
                       <td th:text="*{changeSet}"></td>
-                      <td th:text="*{validator}"></td>
+                      <td><a th:text="*{validator}" th:href="@{https://www.openstreetmap.org/user/{user}(user=*{validator})}"></a></td>
                       <td th:text="*{operation}"></td>
                       <td th:text="*{comment}"></td>
                     </tr>
