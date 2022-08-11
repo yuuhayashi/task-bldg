@@ -78,7 +78,7 @@ class SecurityControllerTest {
             // ステータスコードが、OK（200）であることを検証します
             .andExpect(status().isOk())
             // HTMLの表示内容に、指定した文字列を含んでいるか検証します
-            .andExpect(content().string(containsString("ユーザ一覧")))
+            .andExpect(content().string(containsString("マッパーリスト")))
             .andExpect(view().name("list"));
     }
 

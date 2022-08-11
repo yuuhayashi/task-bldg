@@ -48,7 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
 		        // 「/login」と「/error」をアクセス可能にします
 		        .antMatchers("/login", "/error", "/register").permitAll()
-		        .antMatchers("/admin/**").hasRole(Role.ADMIN.name())
 		        .anyRequest().authenticated()
 		        .and()
 		    .formLogin()
