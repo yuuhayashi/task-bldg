@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout}">
+<head>
+  <meta charset="UTF-8" th:remove="tag">
+</head>
+<body>
+
+  <!-- サイドバーの表示 -->
+  <div layout:fragment="sidebar" th:replace="~{fragments/sidebar :: sidebar}">
+  </div>
+
+  <!-- コンテンツの表示 -->
+  <div layout:fragment="content">
+    <main class="offcanvas-outside bg-light">
+      <div class="container-fluid">
+        <!-- トグルボタン -->
+        <div th:replace="~{fragments/sidebar :: toggler}">
+        </div>
+
+        <div class="row">
+          <div class="col">
+
+            <div class="card shadow">
+              <div class="card-header">
+                <h6 class="text-navy my-2" id='title'></h6>
+              </div>
+              <div class="card-body">
+
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th th:text="#{status}"></th>
+                      <th th:text="#{citycode}"></th>
+                      <th th:text="#{meshcode}"></th>
+                      <th>version</th>
+                      <th th:text="#{path}"></th>
+                      <th th:text="#{username}"></th>
+                      <th th:text="#{validator}"></th>
+                      <th th:text="#{operation}"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="mesh : ${meshes}" th:object="${mesh}">
+                      <td><img th:alt="*{status}" th:src="@{/img/{status}.png(status=*{status})}"></img></td>
+                      <td th:text="*{citycode}"></td>
+                      <td th:text="*{meshcode}"></td>
+                      <td th:text="*{version}"></td>
+                      <td th:text="*{path}"></td>
+                      <td><a th:text="*{username}" th:href="@{https://www.openstreetmap.org/user/{user}(user=*{username})}"></a></td>
+                      <td><a th:text="*{validator}" th:href="@{https://www.openstreetmap.org/user/{user}(user=*{validator})}"></a></td>
+                      <td>
+                        <a th:text="#{download}" th:href="@{{site}{folder}/bldg/{path}(site=*{city.site},folder=*{city.folder},path=*{path})}" class="btn btn-navy">
+                        </a>
+
+                        <a th:href="@{/tasks?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+                          <i class="bi bi-pencil-square" th:text="#{operation}"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

@@ -25,7 +25,7 @@
           <div class="card shadow">
             <div class="card-header">
               <h6 class="text-navy my-2">
-                ユーザ一覧
+                マッパーリスト
               </h6>
             </div>
             <div class="card-body table-responsive">
@@ -34,16 +34,20 @@
                   <tr>
                     <th>#</th>
                     <th th:text="#{username}"></th>
-                    <th th:text="#{email}"></th>
                     <th th:text="#{role}"></th>
+                    <th th:text="#{operation}"></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr th:each="user : ${users}" th:object="${user}">
                     <td th:text="*{id}"></td>
-                    <td th:text="*{username}"></td>
-                    <td th:text="*{email}"></td>
+                    <td><a th:text="*{username}" th:href="@{https://www.openstreetmap.org/user/{user}(user=*{username})}"></a></td>
                     <td th:text="*{role}"></td>
+                    <td>
+                      <a th:href="@{/usertask?user={user}(user=*{username})}" class="btn btn-navy">
+                        担当タスク
+                      </a>
+                    </td>
                   </tr>
                 </tbody>
               </table>
