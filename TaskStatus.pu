@@ -1,34 +1,40 @@
 @startuml
 
-[*] --> PREPARATION
-PREPARATION --> ACCEPTING : DataLoad
-ACCEPTING --> RESERVED	: RESERVE(タスク予約)
-ACCEPTING --> IMPORTED	: DONE(編集完了) 
-RESERVED --> IMPORTED	: DONE(編集完了) 
-IMPORTED --> IMPORTED	: DONE(編集完了) 
-ACCEPTING <-- RESERVED	: CANCEL(タスク予約取消)
-
-IMPORTED --> END	: OK[検証結果=OK]
-ACCEPTING <-- IMPORTED : NG[検証結果=NG]
-
-state "PREPARATION\n準備中" as PREPARATION {
+state "準備中" as PREPARATION #FFFFFF {
 }
 
-state "ACCEPTING\n受付中" as ACCEPTING {
+state "受付中" as ACCEPTING #orange {
 }
 
-state "RESERVED\n予約済み" as RESERVED {
+state "NG" as NG #red {
+}
+
+state "予約済み" as RESERVED #yellow {
 	RESERVED : 編集者
 }
 
-state "IMPORTED\nインポート済み" as IMPORTED {
+state "インポート済み" as IMPORTED #lightgreen {
 	IMPORTED : 編集者
 	IMPORTED : 変更セットNo
 }
 
-state "END\n完了" as END {
+state "完了" as END #green {
 	END : 編集者
 	END : 変更セットNo
 	END : 検証者
 }
+
+[*] --> PREPARATION
+PREPARATION --> ACCEPTING
+ACCEPTING --> RESERVED	: タスク予約
+NG --> RESERVED	: タスク予約
+ACCEPTING --> IMPORTED	: 編集完了
+NG --> IMPORTED	: 編集完了
+RESERVED --> IMPORTED	: 編集完了
+IMPORTED --> IMPORTED	: 編集完了
+ACCEPTING <- RESERVED	: タスク予約取消
+
+IMPORTED --> END	: 検証結果[OK]
+NG <- IMPORTED		: 検証結果[NG]
+
 @enduml
