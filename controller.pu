@@ -1,24 +1,5 @@
 @startuml
 
-[*] --> sidebar
-
-state sidebar {
-	state "ユーザ管理" as users
-	state "ユーザ一覧\n[Role=admin]" as list_
-	state "ログイン" as login_
-	state "ログアウト" as logout
-	state "BLDGデータリスト" as indeies
-	state "BLDGデータ登録" as add
-	state "都道府県" as pref
-	logout --> logout : /logout
-}
-indeies --> cities : /city
-
-state "login" as login {
-	login : Username
-	login : Password
-}
-
 state "register.html" as register {
 	state "user" as register_user {
 		register_user : username
@@ -28,16 +9,19 @@ state "register.html" as register {
 	}
 }
 
-login_ --> login : /login
-login --> login : [!success]
-sidebar <-- login : [success]
-login --> register : /register 新規登録
-
-state user {
-	user : username
-	user : role
+state "login" as login {
+	login : Username
+	login : Password
 }
-users --> user : /user
+
+state sidebar {
+	state "ログイン" as login_
+	state "ログアウト" as logout_
+	state "BLDGデータリスト" as indeies_
+	state "マッパーリスト" as list_
+	state "使い方（外部リンク）" as howto_
+	logout_ --> logout_ : /logout
+}
 
 state "ユーザ一覧" as list {
 	state ユーザ {
@@ -47,7 +31,6 @@ state "ユーザ一覧" as list {
 		ユーザ : role
 	}
 }
-list_ --> list : /admin/list
 
 state cities {
 	state city_list {
@@ -56,9 +39,6 @@ state cities {
 		city_list : *{path}
 	}
 }
-cities --> cities : /city/delete/{citycode}
-cities --> form : /city/edit/{citycode}
-cities --> meshes : /mesh/{citycode}
 
 state meshes {
 	state mesh_list
@@ -76,29 +56,26 @@ state task {
 	task : updateTime
 }
 
+state "外部リンク" as howto {
+	howto : "https://github.com/yuuhayashi/task-bldg/wiki"
+}
+
+[*] --> sidebar
+
+register <-- login : /register 新規登録
+
+login <-- login_ : /login
+login --> login : [!success]
+login --> sidebar : [success]
+
+indeies_ --> cities : /city
+howto_ --> howto	: /howto
+
+list_ --> list : /admin/list
+cities --> cities : /city/delete/{citycode}
+cities --> meshes : /mesh/{citycode}
 meshes --> tasks : /tasks
-tasks --> task : /task
-tasks <-- task : /tasks
-
-state form {
-	state city {
-		city : citycode
-		city : cityname
-		city : path
-	}
-}
-
-state "preflist.html" as preflist {
-	state pref_list {
-		pref_list : *{prefcode}
-		pref_list : *{prefname}
-		pref_list : *{Point}
-	}
-}
-pref --> preflist : /pref
-
-add --> form : /city/add
-form --> sidebar : [!hasErrors]
-form --> form : [hasErrors]
+tasks -> task : /task
+tasks <- task : /tasks
 
 @enduml
