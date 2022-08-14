@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.view.RedirectView;
 
 import lombok.RequiredArgsConstructor;
 import osm.surveyor.task.city.model.City;
@@ -49,12 +48,5 @@ public class CityController {
 	public String deleteCity(@PathVariable String citycode) {
 		repository.deleteByCitycode(citycode);
 		return "redirect:/city";
-	}
-
-	@GetMapping("/howto")
-	public RedirectView howto() {
-		RedirectView redirectView = new RedirectView();
-	    redirectView.setUrl("https://github.com/yuuhayashi/task-bldg/wiki");
-	    return redirectView;
 	}
 }
