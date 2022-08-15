@@ -165,5 +165,4 @@ public class TaskService {
 	public List<Task> getTasks() {
 		return repository.findAll();
 	}
-
 }

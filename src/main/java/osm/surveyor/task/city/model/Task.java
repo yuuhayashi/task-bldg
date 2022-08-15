@@ -14,13 +14,16 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.NumberFormat;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import lombok.Getter;
 import lombok.Setter;
+import osm.surveyor.task.util.JsonTemple;
 
 @Getter
 @Setter
 @Entity
-public class Task {
+public class Task extends JsonTemple {
 	
     @Id
     @Column(name = "current_id")
@@ -78,4 +81,29 @@ public class Task {
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
     Date updateTime;
+	
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		boolean c1 = false;
+		sb.append("{");
+		c1 = outStr(c1, sb, "currentId", this.getCurrentId());
+		c1 = outStr(c1, sb, "preId", this.getPreId());
+		c1 = outStr(c1, sb, "citycode", this.getCitycode());
+		c1 = outStr(c1, sb, "meshcode", this.getMeshcode());
+		c1 = outStr(c1, sb, "status", this.getStatus().toString());
+		c1 = outStr(c1, sb, "username", this.getUsername());
+		c1 = outStr(c1, sb, "validator", this.getValidator());
+		c1 = outStr(c1, sb, "changeSet", this.getChangeSet());
+		c1 = outStr(c1, sb, "comment", this.getComment());
+		c1 = outStr(c1, sb, "operation", this.getOperation().toString());
+		c1 = outStr(c1, sb, "updateTime", this.getUpdateTime().toString());
+		sb.append("}");
+		return sb.toString();
+	}
+	
+	@Override
+	public void parse(JsonNode node) {
+		// TODO
+	}
 }

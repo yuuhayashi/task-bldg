@@ -19,6 +19,7 @@ state sidebar {
 	state "ログアウト" as logout_
 	state "BLDGデータリスト" as indeies_
 	state "マッパーリスト" as list_
+	state "管理" as admin_
 	state "使い方（外部リンク）" as howto_
 	logout_ --> logout_ : /logout
 }
@@ -56,6 +57,10 @@ state task {
 	task : updateTime
 }
 
+state "管理" as admin {
+	admin : download
+}
+
 state "外部リンク" as howto {
 	howto : "https://github.com/yuuhayashi/task-bldg/wiki"
 }
@@ -77,5 +82,7 @@ cities --> meshes : /mesh/{citycode}
 meshes --> tasks : /tasks
 tasks -> task : /task
 tasks <- task : /tasks
+admin_ --> admin	: /admin
+admin --> admin		: /admin/download
 
 @enduml

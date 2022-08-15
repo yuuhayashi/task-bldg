@@ -1,7 +1,11 @@
 package osm.surveyor.task.city;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -175,6 +179,44 @@ public class TaskController {
 		
 		return "redirect:/tasks?citycode="+ task.getCitycode() +"&meshcode="+ task.getMeshcode();
 	}
+	
+	@GetMapping("/admin")
+	public String admin()
+	{
+		return "admin";
+	}
+
+	@PostMapping("/admin/download")
+    public String download(HttpServletResponse response) {
+        try (OutputStream os = response.getOutputStream();) {
+        	List<Task> list = taskRepository.findAll();
+        	StringBuffer sb = new StringBuffer();
+    		boolean c1 = false;
+        	sb.append("[");
+        	sb.append(System.lineSeparator());
+        	for (Task task : list) {
+    			if (c1) {
+    				sb.append(",");
+    			}
+    			else {
+    				c1 = true;
+    			}
+        		sb.append(task.toString());
+            	sb.append(System.lineSeparator());
+        	}
+        	sb.append("]");
+            byte[] fb1 = String.valueOf(sb).getBytes();
+
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment; filename="+ "task-bldg.json");
+            response.setContentLength(fb1.length);
+            os.write(fb1);
+            os.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 	
 	/**
 	 * 400 Bad Request
