@@ -84,11 +84,13 @@ function loadMap() {
         if (feature) {
             var coordinates = feature.getGeometry().getCoordinates();
             var info = feature.information;
+            var point = info.geometry.coordinates;
             var element = __overlay.getElement();
             var descriptionHTML =
                 "<div>code: " + info.properties.id + "</div>" +
                 "<div>version: " + info.properties.version + "</div>" +
-                "<div><a href='/task-bldg"+ site + dir + info.properties.path +"'>" + info.properties.path + "</a></div>";
+                "<div><a href='"+ site + dir + info.properties.path +"'>" + info.properties.path + "</a></div>" +
+                "<div><a href='https://www.openstreetmap.org/#map=15/"+ point[1] + "/" + point[0] +"'>OpenStreetMap で現状を確認する</a></div>";
             element.innerHTML = descriptionHTML;
             __overlay.setPosition(coordinates);
             __map.addOverlay(__overlay);
