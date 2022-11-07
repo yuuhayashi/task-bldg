@@ -1,0 +1,81 @@
+@startuml
+
+class Geojson {
+	type : "FeatureCollection"
+	crs : JsonCrs
+	features : List<JsonFeature>
+	out() : boolean
+	toString() : String
+	parse(JsonNode)
+}
+Geojson *--|| JsonCrs : crs
+Geojson *--|{ JsonFeature : features
+
+class JsonCrs {
+	type : "name"
+	properties : JsonProperties
+	toString() : String
+	parse(JsonNode)
+}
+
+class JsonProperties {
+	name : String
+	path : String
+	id : String
+	version : String
+	toString() : String
+	parse(JsonNode)
+}
+JsonCrs *.. JsonProperties
+
+class JsonFeature {
+	geometryPoint : JsonGeometryPoint
+	geometryLine : JsonGeometryLine
+	type : String
+	properties : JsonProperties
+	toString() : String
+	parse(JsonNode)
+}
+JsonFeature o..o| JsonProperties
+JsonFeature o..o| JsonGeometry
+
+interface JsonGeometry {
+}
+JsonGeometry <|-- JsonGeometryLine
+JsonGeometry <|-- JsonGeometryPoint
+
+class JsonGeometryLine {
+	type : "LineString"
+	coordinates : List<Point>
+	toString() : String
+	parse(JsonNode)
+}
+JsonGeometryLine *..|{ Point
+
+class JsonGeometryPoint {
+	type : "Point"
+	coordinates : Point
+	toString() : String
+	parse(JsonNode)
+}
+JsonGeometryPoint *..|| Point
+
+class Point {
+	lng : String
+	lnt : String
+	setLng(BigDecimal)
+	setLng(String)
+	setLat(BigDecimal)
+	setLat(String)
+	store()
+	toString() : String
+	parse(JsonNode)
+}
+Point --|> JsonNumberArray
+
+class JsonNumberArray {
+	list : List<String>
+	toString() : String
+}
+
+@enduml

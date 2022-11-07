@@ -27,4 +27,11 @@ http://localhost:8080/task
 ### H2 console
 http://localhost:8080/h2-console/
 
+---
 
+## 設計図
+
+- [クラス図](uml/class.png)
+- [controller](uml/controller.png)
+- [geojson](uml/geojson.png)
+- [TaskStatus](uml/TaskStatus.png)

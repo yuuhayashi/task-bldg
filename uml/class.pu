@@ -1,0 +1,209 @@
+@startuml
+
+database "h2" as db {
+	entity city {
+		+ citycode : VARCHAR 255
+		cityname : VARCHAR 255
+		folder : VARCHAR 255
+		lng : VARCHAR 255
+		lat :VARCHAR 255
+	}
+
+	entity site_user {
+		+ id : BIGINT
+		active : BOOLEAN
+		admin : BOOLEAN
+		email : VARCHAR 255
+		password : VARCHAR 255
+		role :VARCHAR 255
+		username :VARCHAR 20
+	}
+
+	entity citymesh {
+		+ citycode : VARCHAR 255
+		+ meshcode : VARCHAR 255
+		version :VARCHAR 255
+		path : VARCHAR 255
+		line : VARCHAR 255
+		point :VARCHAR 255
+		city : City@ManyToOne
+	}
+
+	city |o--|{ citymesh
+	
+	entity task {
+		+currentId : VARCHAR 255
+		preId : VARCHAR 255
+		citycode : VARCHAR 255
+		meshcode : VARCHAR 255
+		status : Status
+		username : VARCHAR 255
+		validator : VARCHAR 255
+		operation : Operation
+		updateTime : Date
+		mesh : @ManyToOne
+	}
+	citymesh ||--o{ task
+}
+note bottom of db : spring.datasource.url=jdbc:h2:./taskdb\nspring.jpa.hibernate.ddl-auto=update
+
+class SecurityConfig <<Configuration>> {
+	- userDetailsService : UserDetailsService
+	+ passwordEncoder() : PasswordEncoder
+	+ configure(WebSecurity)
+	configure(HttpSecurity)
+	configure(AuthenticationManagerBuilder)
+}
+
+class UserDetailsServiceImpl <<Service>> {
+  - userRepository : SiteUserRepository
+  + loadUserByUsername(username) : UserDetails
+  + createUserDetails(:SiteUser) : User
+}
+
+class SecurityController <<Controller>> {
+  - userRepository : userRepository
+  - passwordEncoder : PasswordEncoder
+  + success()
+  + showList(loginUser, model)
+}
+
+class SiteUser <<Entity>> {
+  + id : Long
+  - username : String
+  - email : String@Email
+  - admin : boolean
+  - role : String
+  - active : boolean
+}
+SiteUser .. site_user
+
+class UniqueLoginValidator<UniqueLogin> <<ConstraintValidator>> {
+  - userRepository : SiteUserRepository
+  + isValid(String, ConstraintValidatorContext) : boolean
+}
+
+class UniqueLogin <<Constraint>> {
+  message() : String
+  groups() : Class<?>[]
+  payload() : Class<? extends Payload>[]
+}
+
+interface SiteUserRepository <<JpaRepository>> {
+	findByUsername(String)
+	existsByUsername(String)
+}
+SecurityConfig ..> UserDetailsServiceImpl
+UserDetailsServiceImpl ..> SiteUserRepository
+SecurityController ..> SiteUserRepository
+UniqueLoginValidator ..> SiteUserRepository
+UniqueLogin .. UniqueLoginValidator
+SiteUserRepository <|-- SiteUser
+
+class City <<Entity>> {
+	site : static String
+  + citycode : String@NumberFormat
+  - cityname : String
+  - folder : String
+  - lng : String@NumberFormat
+  - lat : String@NumberFormat
+  + setSite(String)
+  + getSite() : String
+  + setLng(BigDecimal)
+  + setLat(BigDecimal)
+  + setPoint(lng,lat)
+  + getPoint() : Point
+  + toString() : String
+}
+City .. city
+City . CityPK : citycode
+
+class CityPK {
+	citycode : String
+	+ equals(Object) : boolean
+	+ hashCode() : int
+}
+
+interface CityRepository <<JpaRepository>> {
+	findByCitycode(String) : City
+	deleteByCitycode(String) : List<City>
+}
+CityRepository <|-- City
+
+class CityController <<Controller>> {
+  - repository : CityRepository
+  + showList(model)
+  + addCity(city)
+  + process(city, result)
+  + editCity(id, model)
+  + deleteCity(id)
+}
+CityController ..> CityRepository
+
+class CitymeshController <<Controller>> {
+  - repository : CitymeshRepository
+  + showList(citycode, model)
+}
+CitymeshController ..> CitymeshRepository
+
+interface CitymeshRepository <<JpaRepository>> {
+	findByCitycode() : List<Citymesh>
+}
+CitymeshRepository <|-- Citymesh
+
+class Citymesh <<Entity>> {
+  - citycode : String@NumberFormat
+  - meshcode : String@NumberFormat
+  version : String
+  path : String
+  point : String
+  line : String
+  + setPoint(Point)
+  + setLine(JsonLine)
+}
+Citymesh .. citymesh
+Citymesh . CitymeshPK
+class CitymeshPK {
+	citycode : String
+	meshcode : String
+	+ equals(Object) : boolean
+	+ hashCode() : int
+}
+
+class Task <<Entity>> {
+  + currentId : String
+  preId : String
+  - citycode : String@NumberFormat
+  - meshcode : String@NumberFormat
+  mesh : Citymesh
+  status : Status
+  username : String
+  validator : String
+  operation : Operation
+  updateTime : Date
+}
+class TaskPK {
+	currentId : String
+	+ equals(Object) : boolean
+	+ hashCode() : int
+}
+
+Task .. task
+Task . TaskPK
+
+interface TaskRepository <<JpaRepository>> {
+}
+
+
+interface CommandLineRunner
+
+class DataLoader <<Component>> {
+  - repository : CityRepository
+  + run()
+}
+DataLoader ..> CityRepository
+DataLoader ..> CitymeshRepository
+
+CommandLineRunner <|-- DataLoader
+
+@enduml
