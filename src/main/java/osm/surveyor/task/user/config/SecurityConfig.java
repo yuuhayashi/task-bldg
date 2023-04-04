@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.authorizeHttpRequests()
 		        // 「/login」と「/error」をアクセス可能にします
 		        .antMatchers("/login", "/error", "/register").permitAll()
 		        .anyRequest().authenticated()
