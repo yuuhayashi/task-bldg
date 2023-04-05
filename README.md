@@ -6,7 +6,7 @@ Plateau 3D都市データをOSMに反映させるための「タスク管理」�
 
 タスクの基本的な進行は、「タスク予約」→「編集完了」→「検証(OK)」というフェーズで進めます。
 
-![TaskStatus](https://github.com/yuuhayashi/task-bldg/wiki/TaskStatus)
+![TaskStatus](https://github.com/yuuhayashi/task-bldg/wiki/uml/TaskStatus.png)
 
 
 ## 起動方法
