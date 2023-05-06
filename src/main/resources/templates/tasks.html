@@ -54,7 +54,7 @@
                           <i th:text="#{meshcode}"></i> : <i th:text="*{meshcode}"></i>
                         </div>
                         <div>
-                          <i th:text="#{status}"></i> : <img th:alt="*{status}" th:src="@{/img/{status}.png(status=*{status})}"></img>
+                          <i th:text="#{status}"></i> : <img th:alt="*{status}" th:src="@{/img/{status}.png(status=*{status})}"></img> <i th:text="*{status}"></i>
                         </div>
                       </th>
                     </tr>

@@ -107,7 +107,8 @@
                     <label for="username" class="form-label">
                       コメント
                     </label>
-                    <input class="form-control" type="text" th:errorclass="is-invalid" th:field="*{comment}">
+                    <textarea class="form-control" rows="4" th:errorclass="is-invalid" th:field="*{comment}">
+                    </textarea>
                     <div class="invalid-feedback" th:errors="*{comment}">
                     </div>
                   </div>

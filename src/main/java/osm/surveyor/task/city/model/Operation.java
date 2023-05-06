@@ -7,12 +7,12 @@ package osm.surveyor.task.city.model;
  */
 public enum Operation {
 	NOP,			// ノーオペ
-    RESERVE, 		// 予約
-    CANCEL,			// 取消
-    DONE,			// インポート済み
+    RESERVE, 		// 担当登録
+    CANCEL,			// 編集中止
+    DONE,			// 編集完了
     VALID,			// 検証
-    OK,				// 検証済み
-    NG,				// 検証不良
-    END,			// 完了
+    NG,				// (deprecated)検証済み
+    OK,				// (deprecated)検証済み
+    END,			// (deprecated)完了
     VIEW			// 参照
 }
