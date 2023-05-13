@@ -49,13 +49,8 @@ public class Citymesh {
 	private Status status = Status.PREPARATION;
 	
 	/**
-	 * インポート実行者
+	 * 編集者
 	 */
 	private String username;
-	
-	/**
-	 * 検証者
-	 */
-	private String validator;
 	
 }

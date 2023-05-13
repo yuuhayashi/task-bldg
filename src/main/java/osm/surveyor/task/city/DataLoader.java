@@ -95,7 +95,6 @@ public class DataLoader implements CommandLineRunner {
                     			else {
                     				mesh.setStatus(task.getStatus());
                     				mesh.setUsername(task.getUsername());
-                    				mesh.setValidator(task.getValidator());
                     			}
                     			meshRepository.save(mesh);
                     		}

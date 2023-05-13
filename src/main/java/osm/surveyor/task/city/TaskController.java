@@ -90,30 +90,25 @@ public class TaskController {
 		Operation operation = Operation.NOP;
 		Status nextStatus = Status.PREPARATION;
 		if (op.equals(Operation.RESERVE.toString())) {
-			model.addAttribute("command", "タスク予約");
+			model.addAttribute("command", "編集者登録");
 			operation = Operation.RESERVE;
-			nextStatus = Status.RESERVED;
+			nextStatus = Status.EDITING;
 		}
 		else if (op.equals(Operation.CANCEL.toString())) {
-			model.addAttribute("command", "タスク予約取消");
+			model.addAttribute("command", "編集取消");
 			operation = Operation.CANCEL;
 			nextStatus = Status.ACCEPTING;
 		}
-		else if (op.equals(Operation.DONE.toString())) {
+		else if (op.equals(Operation.OK.toString())) {
 			model.addAttribute("command", "編集完了");
-			operation = Operation.DONE;
-			nextStatus = Status.IMPORTED;
+			operation = Operation.OK;
+			nextStatus = Status.OK;
 			next = "task_done";
 		}
 		else if (op.equals(Operation.NG.toString())) {
-			model.addAttribute("command", "検証(NG)");
+			model.addAttribute("command", "編集(NG)");
 			operation = Operation.NG;
 			nextStatus = Status.ACCEPTING;
-		}
-		else if (op.equals(Operation.OK.toString())) {
-			model.addAttribute("command", "検証(OK)");
-			operation = Operation.OK;
-			nextStatus = Status.END;
 		}
 
 		// ログイン名を取得
@@ -137,12 +132,6 @@ public class TaskController {
 		if (pre != null) {
 			pre.setOperation(operation);
 			pre.setStatus(nextStatus);
-			if (op.equals(Operation.OK.toString()) || op.equals(Operation.NG.toString())) {
-				pre.setValidator(loginName);
-			}
-			else {
-				pre.setUsername(loginName);
-			}
 			model.addAttribute("task", pre);
 			return next;
 		}
@@ -157,9 +146,6 @@ public class TaskController {
 			task.setMesh(mesh);
 			task.setStatus(nextStatus);
 			task.setUsername(loginName);
-			if (op.equals(Operation.OK.toString()) || op.equals(Operation.NG.toString())) {
-				task.setValidator(loginName);
-			}
 			task.setOperation(operation);
 			model.addAttribute("task", task);
 			return next;
@@ -285,14 +271,11 @@ public class TaskController {
 		else if (task.getOperation() == Operation.CANCEL) {
 			model.addAttribute("command", "タスク予約取消");
 		}
-		else if (task.getOperation() == Operation.DONE) {
+		else if (task.getOperation() == Operation.OK) {
 			model.addAttribute("command", "編集済み");
 		}
 		else if (task.getOperation() == Operation.NG) {
-			model.addAttribute("command", "検証(NG)");
-		}
-		else if (task.getOperation() == Operation.OK) {
-			model.addAttribute("command", "検証(OK)");
+			model.addAttribute("command", "編集(NG)");
 		}
 		model.addAttribute("citycode", task.getCitycode());
 		model.addAttribute("meshcode", task.getMeshcode());
@@ -302,7 +285,7 @@ public class TaskController {
 	}
 	
 	private String nextPage(Task task) {
-		if (task.getOperation() == Operation.DONE) {
+		if (task.getOperation() == Operation.OK) {
 			return "task_done";
 		}
 		return "task";

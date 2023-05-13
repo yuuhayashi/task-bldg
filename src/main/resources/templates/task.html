@@ -67,11 +67,6 @@
                       <td></td>
                     </tr>
                     <tr>
-                      <td th:text="#{validator}"></td>
-                      <td><a th:text="*{validator}" th:href="@{https://www.openstreetmap.org/user/{user}(user=*{validator})}"></a></td>
-                      <td></td>
-                    </tr>
-                    <tr>
                       <td th:text="#{changeSet}"></td>
                       <td th:text="*{changeSet}"></td>
                       <td></td>
@@ -98,7 +93,6 @@
                   <input type="hidden" th:field="*{citycode}" th:value="*{citycode}" />
                   <input type="hidden" th:field="*{meshcode}" th:value="*{meshcode}" />
                   <input type="hidden" th:field="*{username}" th:value="*{username}" />
-                  <input type="hidden" th:field="*{validator}" th:value="*{validator}" />
                   <input type="hidden" th:field="*{status}" th:value="*{status}" />
                   <input type="hidden" th:field="*{operation}" th:value="*{operation}" />
                   <input type="hidden" th:field="*{changeSet}" th:value="*{changeSet}" />

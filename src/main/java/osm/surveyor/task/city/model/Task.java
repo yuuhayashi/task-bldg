@@ -49,14 +49,9 @@ public class Task extends JsonTemple {
 	private Status status = Status.PREPARATION;
 	
 	/**
-	 * インポート実行者
+	 * 編集者
 	 */
 	private String username;
-	
-	/**
-	 * 検証者
-	 */
-	private String validator;
 	
 	/**
 	 * 変更セットNo
@@ -93,11 +88,10 @@ public class Task extends JsonTemple {
 		c1 = outStr(c1, sb, "meshcode", this.getMeshcode());
 		c1 = outStr(c1, sb, "status", this.getStatus().toString());
 		c1 = outStr(c1, sb, "username", this.getUsername());
-		c1 = outStr(c1, sb, "validator", this.getValidator());
 		c1 = outStr(c1, sb, "changeSet", this.getChangeSet());
 		c1 = outStr(c1, sb, "comment", this.getComment());
 		c1 = outStr(c1, sb, "operation", this.getOperation().toString());
-		c1 = outStr(c1, sb, "updateTime", this.getUpdateTime().toString());
+		c1 = outStr(c1, sb, "updateTime", (this.getUpdateTime() == null ? "" : this.getUpdateTime().toString()));
 		sb.append("}");
 		return sb.toString();
 	}
