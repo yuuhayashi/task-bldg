@@ -17,7 +17,7 @@ import osm.surveyor.task.city.model.City;
 import osm.surveyor.task.city.model.CityJson;
 import osm.surveyor.task.city.model.Citymesh;
 import osm.surveyor.task.city.model.Status;
-import osm.surveyor.task.city.model.Task;
+import osm.surveyor.task.city.model.TaskEntity;
 import osm.surveyor.task.util.Geojson;
 import osm.surveyor.task.util.JsonFeature;
 import osm.surveyor.task.util.JsonGeometryPoint;
@@ -85,7 +85,7 @@ public class DataLoader implements CommandLineRunner {
                     			mesh.setPoint(geometryPoint.getCoordinates().toString());
                     			mesh.setCity(city);
                     			
-                    			Task task = taskService.getTaskByMesh(city.getCitycode(), meshcode);
+                    			TaskEntity task = (TaskEntity) taskService.getTaskByMesh(city.getCitycode(), meshcode);
                     			if (task == null) {
                             		Status status = city.getStatus();
                             		if (status != null) {

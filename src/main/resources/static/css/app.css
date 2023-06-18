@@ -64,6 +64,11 @@
   background-color: #224abe;
 }
 
+.btn-gray {
+  color: white;
+  background-color: #a9a9a9;
+}
+
 .btn-navy:hover {
   color: white;
   background-color: #0d47a1;

@@ -16,14 +16,14 @@ import org.springframework.format.annotation.NumberFormat;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import osm.surveyor.task.util.JsonTemple;
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper=false)
 @Entity
-public class Task extends JsonTemple {
+public class TaskEntity extends JsonTemple {
 	
     @Id
     @Column(name = "current_id")

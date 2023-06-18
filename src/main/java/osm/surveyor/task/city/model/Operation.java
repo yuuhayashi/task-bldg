@@ -11,5 +11,6 @@ public enum Operation {
     CANCEL,			// 編集取消
     NG,				// 編集[NG]
     OK,			// 編集完了
-    VIEW			// 参照
+    VIEW,			// 参照
+    RESERVE_CANCEL	// 予約取消
 }

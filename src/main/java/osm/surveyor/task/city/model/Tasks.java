@@ -14,7 +14,7 @@ public class Tasks {
 
 	private Result result; // 処理結果
 	
-	private List<Task> tasks; // データ
+	private List<TaskEntity> tasks; // データ
 	
 	@Getter
 	@Builder

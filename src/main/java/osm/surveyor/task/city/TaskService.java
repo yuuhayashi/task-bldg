@@ -8,7 +8,7 @@ import osm.surveyor.task.city.model.Citymesh;
 import osm.surveyor.task.city.model.CitymeshPK;
 import osm.surveyor.task.city.model.Operation;
 import osm.surveyor.task.city.model.Status;
-import osm.surveyor.task.city.model.Task;
+import osm.surveyor.task.city.model.TaskEntity;
 
 import javax.transaction.Transactional;
 
@@ -26,7 +26,7 @@ public class TaskService {
 	@Autowired
 	CitymeshRepository meshRepository;
 
-	public void add(Task task, UserDetails user) {
+	public void add(TaskEntity task, UserDetails user) {
 		if (task.getOperation() == Operation.RESERVE) {
 			task.setStatus(Status.EDITING);
 		}
@@ -52,7 +52,7 @@ public class TaskService {
 		pk.setMeshcode(task.getMeshcode());
 		Citymesh mesh = meshRepository.getById(pk);
 		
-		Task ctask = getTaskByMesh(task.getCitycode(), task.getMeshcode());
+		TaskEntity ctask = getTaskByMesh(task.getCitycode(), task.getMeshcode());
 		if (ctask == null) {
 			task.setPreId(uuid);
 			task.setCurrentId(uuid);
@@ -63,21 +63,9 @@ public class TaskService {
 				e.setTask(task);
 				throw e;
 			}
-			if (task.getOperation() == Operation.RESERVE) {
-				if ((ctask.getStatus() != Status.ACCEPTING) && (ctask.getStatus() != Status.NG)) {
-					NotAcceptableException e = new NotAcceptableException("予約受付中ではないためタスク予約できませんでした : "+ task.getOperation());
-					e.setTask(task);
-					throw e;
-				}
-			}
-			else if (task.getOperation() == Operation.CANCEL) {
+			if (task.getOperation() == Operation.CANCEL) {
 				if (ctask.getStatus() != Status.EDITING) {
 					NotAcceptableException e = new NotAcceptableException("タスクが'編集中'ではないため'編集取消'できませんでした : "+ task.getOperation());
-					e.setTask(task);
-					throw e;
-				}
-				if (!ctask.getUsername().equals(user.getUsername())) {
-					NotAcceptableException e = new NotAcceptableException("他のマッパーの'タスク'は'編集取消'できません");
 					e.setTask(task);
 					throw e;
 				}
@@ -85,12 +73,6 @@ public class TaskService {
 			else if (task.getOperation() == Operation.OK) {
 				// タスク予約していなくてもインポートできる
 				// 他のマッパーが予約していてもインポート可能
-				if (ctask.getStatus() == Status.PREPARATION) {
-					NotAcceptableException e = new NotAcceptableException("準備中のため登録できませんでした");
-					e.setTask(task);
-					throw e;
-				}
-
 				String changeset = task.getChangeSet();
 				if (changeset == null) {
 					TaskException e = new TaskException("変更セットNoが入力されていません");
@@ -134,15 +116,15 @@ public class TaskService {
 		meshRepository.save(mesh);
 	}
 	
-	public Task getTaskByMesh(String citycode, String meshcode) {
-		List<Task> tasks = repository.serchByMesh(citycode, meshcode);
-		for (Task t : tasks) {
+	public TaskEntity getTaskByMesh(String citycode, String meshcode) {
+		List<TaskEntity> tasks = repository.serchByMesh(citycode, meshcode);
+		for (TaskEntity t : tasks) {
 			return t;
 		}
 		return null;
 	}
 
-	public List<Task> getTasks() {
+	public List<TaskEntity> getTasks() {
 		return repository.findAll();
 	}
 }

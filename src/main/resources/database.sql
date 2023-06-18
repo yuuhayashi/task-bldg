@@ -1,0 +1,6 @@
+-- insert into task_status (status_code, status, is_reserve, is_reserve_cancel, is_edit_ok, is_edit_ng) values (1, 'PREPARATION', false,false,false,false);
+-- insert into task_status (status_code, status, is_reserve, is_reserve_cancel, is_edit_ok, is_edit_ng) values (2, 'ACCEPTING', true,false,true,true);
+-- insert into task_status (status_code, status, is_reserve, is_reserve_cancel, is_edit_ok, is_edit_ng) values (3, 'RESERVED', false,true,true,true);
+-- insert into task_status (status_code, status, is_reserve, is_reserve_cancel, is_edit_ok, is_edit_ng) values (4, 'EDITING', false,false,true,true);
+-- insert into task_status (status_code, status, is_reserve, is_reserve_cancel, is_edit_ok, is_edit_ng) values (5, 'NG', false,false,true,true);
+-- insert into task_status (status_code, status, is_reserve, is_reserve_cancel, is_edit_ok, is_edit_ng) values (6, 'OK', false,false,true,true);

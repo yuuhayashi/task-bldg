@@ -27,7 +27,7 @@ import osm.surveyor.task.city.model.Citymesh;
 import osm.surveyor.task.city.model.CitymeshPK;
 import osm.surveyor.task.city.model.Operation;
 import osm.surveyor.task.city.model.Status;
-import osm.surveyor.task.city.model.Task;
+import osm.surveyor.task.city.model.TaskEntity;
 
 @RequiredArgsConstructor
 @Controller
@@ -67,7 +67,7 @@ public class TaskController {
 		Citymesh mesh = meshRepository.getById(pk);
         model.addAttribute("mesh", mesh);
         
-		List<Task> tasks = taskRepository.serchByMesh(citycode, meshcode);
+		List<TaskEntity> tasks = taskRepository.serchByMesh(citycode, meshcode);
 		model.addAttribute("tasks", tasks);
 		return "tasks";
 	}
@@ -128,7 +128,7 @@ public class TaskController {
 		pk.setMeshcode(meshcode);
 		Citymesh mesh = meshRepository.getById(pk);
 		
-		Task pre = service.getTaskByMesh(citycode, meshcode);
+		TaskEntity pre = service.getTaskByMesh(citycode, meshcode);
 		if (pre != null) {
 			pre.setOperation(operation);
 			pre.setStatus(nextStatus);
@@ -138,7 +138,7 @@ public class TaskController {
 		else {
 			// 既存Taskが無い場合は生成する
 			String uuid = UUID.randomUUID().toString();
-			Task task = new Task();
+			TaskEntity task = new TaskEntity();
 			task.setCurrentId(uuid);
 			task.setPreId(uuid);
 			task.setCitycode(citycode);
@@ -154,7 +154,7 @@ public class TaskController {
 	
 	@PostMapping("/task/process")
 	public String process(@AuthenticationPrincipal UserDetails user, 
-			@Validated @ModelAttribute Task task,
+			@Validated @ModelAttribute TaskEntity task,
 			BindingResult result)
 	{
 		if (result.hasErrors()) {
@@ -175,12 +175,12 @@ public class TaskController {
 	@PostMapping("/admin/download")
     public String download(HttpServletResponse response) {
         try (OutputStream os = response.getOutputStream();) {
-        	List<Task> list = taskRepository.findAll();
+        	List<TaskEntity> list = taskRepository.findAll();
         	StringBuffer sb = new StringBuffer();
     		boolean c1 = false;
         	sb.append("[");
         	sb.append(System.lineSeparator());
-        	for (Task task : list) {
+        	for (TaskEntity task : list) {
     			if (c1) {
     				sb.append(",");
     			}
@@ -260,7 +260,7 @@ public class TaskController {
 		return exceptionHandler(e.getTask(), model);
 	}
 	
-	private String exceptionHandler(Task task, Model model) {
+	private String exceptionHandler(TaskEntity task, Model model) {
 		if (task == null) {
 			return "error";
 		}
@@ -284,7 +284,7 @@ public class TaskController {
 		return nextPage(task);
 	}
 	
-	private String nextPage(Task task) {
+	private String nextPage(TaskEntity task) {
 		if (task.getOperation() == Operation.OK) {
 			return "task_done";
 		}
