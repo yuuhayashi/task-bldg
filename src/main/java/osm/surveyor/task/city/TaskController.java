@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,17 +43,10 @@ public class TaskController {
 	 * @return
 	 */
 	@GetMapping("/tasks")
-	public String showList(@AuthenticationPrincipal UserDetails user, Model model,
+	public String showList(Model model,
 			@RequestParam(name="citycode") String citycode,
 			@RequestParam(name="meshcode") String meshcode)
 	{
-		// ログイン名を取得
-		String loginName = "";
-    	if (user != null) {
-    		loginName = user.getUsername();
-    	}
-        model.addAttribute("username", loginName);
-
         City city = cityRepository.getById(citycode);
 		model.addAttribute("citycode", citycode);
 		model.addAttribute("cityname", city.getCityname());
@@ -80,8 +71,7 @@ public class TaskController {
 	 * @return
 	 */
 	@GetMapping("/task/add")
-	public String addTask(@AuthenticationPrincipal UserDetails user,
-			Model model,
+	public String addTask(Model model,
 			@RequestParam(name="op") String op,
 			@RequestParam(name="citycode") String citycode,
 			@RequestParam(name="meshcode") String meshcode)
@@ -92,7 +82,7 @@ public class TaskController {
 		if (op.equals(Operation.RESERVE.toString())) {
 			model.addAttribute("command", "編集者登録");
 			operation = Operation.RESERVE;
-			nextStatus = Status.EDITING;
+			nextStatus = Status.RESERVED;
 		}
 		else if (op.equals(Operation.CANCEL.toString())) {
 			model.addAttribute("command", "編集取消");
@@ -111,13 +101,6 @@ public class TaskController {
 			nextStatus = Status.ACCEPTING;
 		}
 
-		// ログイン名を取得
-		String loginName = "";
-    	if (user != null) {
-    		loginName = user.getUsername();
-    	}
-        model.addAttribute("username", loginName);
-        
         City city = cityRepository.getById(citycode);
 		model.addAttribute("citycode", citycode);
 		model.addAttribute("cityname", city.getCityname());
@@ -145,7 +128,7 @@ public class TaskController {
 			task.setMeshcode(meshcode);
 			task.setMesh(mesh);
 			task.setStatus(nextStatus);
-			task.setUsername(loginName);
+			task.setUsername("");
 			task.setOperation(operation);
 			model.addAttribute("task", task);
 			return next;
@@ -153,15 +136,14 @@ public class TaskController {
 	}
 	
 	@PostMapping("/task/process")
-	public String process(@AuthenticationPrincipal UserDetails user, 
-			@Validated @ModelAttribute TaskEntity task,
+	public String process(@Validated @ModelAttribute TaskEntity task,
 			BindingResult result)
 	{
 		if (result.hasErrors()) {
 			// エラーがある場合
 			return nextPage(task);
 		}
-		service.add(task, user);
+		service.add(task);
 		
 		return "redirect:/tasks?citycode="+ task.getCitycode() +"&meshcode="+ task.getMeshcode();
 	}

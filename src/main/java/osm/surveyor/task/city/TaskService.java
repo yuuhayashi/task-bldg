@@ -1,7 +1,6 @@
 package osm.surveyor.task.city;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import osm.surveyor.task.city.model.Citymesh;
@@ -26,9 +25,9 @@ public class TaskService {
 	@Autowired
 	CitymeshRepository meshRepository;
 
-	public void add(TaskEntity task, UserDetails user) {
+	public void add(TaskEntity task) {
 		if (task.getOperation() == Operation.RESERVE) {
-			task.setStatus(Status.EDITING);
+			task.setStatus(Status.RESERVED);
 		}
 		else if (task.getOperation() == Operation.CANCEL) {
 			task.setStatus(Status.ACCEPTING);
@@ -64,7 +63,7 @@ public class TaskService {
 				throw e;
 			}
 			if (task.getOperation() == Operation.CANCEL) {
-				if (ctask.getStatus() != Status.EDITING) {
+				if (ctask.getStatus() != Status.RESERVED) {
 					NotAcceptableException e = new NotAcceptableException("タスクが'編集中'ではないため'編集取消'できませんでした : "+ task.getOperation());
 					e.setTask(task);
 					throw e;
@@ -73,6 +72,18 @@ public class TaskService {
 			else if (task.getOperation() == Operation.OK) {
 				// タスク予約していなくてもインポートできる
 				// 他のマッパーが予約していてもインポート可能
+				String username = task.getUsername();
+				if (username == null) {
+					TaskException e = new TaskException("編集者が入力されていません");
+					e.setTask(task);
+					throw e;
+				}
+				else if (username.isEmpty()) {
+					TaskException e = new TaskException("編集者が入力されていません");
+					e.setTask(task);
+					throw e;
+				}
+				
 				String changeset = task.getChangeSet();
 				if (changeset == null) {
 					TaskException e = new TaskException("変更セットNoが入力されていません");
@@ -96,6 +107,18 @@ public class TaskService {
 				}
 			}
 			else if (task.getOperation() == Operation.NG) {
+				String username = task.getUsername();
+				if (username == null) {
+					TaskException e = new TaskException("編集者が入力されていません");
+					e.setTask(task);
+					throw e;
+				}
+				else if (username.isEmpty()) {
+					TaskException e = new TaskException("編集者が入力されていません");
+					e.setTask(task);
+					throw e;
+				}
+
 				String comment = task.getComment();
 				if (comment == null || comment.isEmpty()) {
 					TaskException e = new TaskException("コメントが入力されていません");

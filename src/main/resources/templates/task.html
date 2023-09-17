@@ -92,11 +92,20 @@
                   <input type="hidden" th:field="*{preId}" th:value="*{preId}" />
                   <input type="hidden" th:field="*{citycode}" th:value="*{citycode}" />
                   <input type="hidden" th:field="*{meshcode}" th:value="*{meshcode}" />
-                  <input type="hidden" th:field="*{username}" th:value="*{username}" />
                   <input type="hidden" th:field="*{status}" th:value="*{status}" />
                   <input type="hidden" th:field="*{operation}" th:value="*{operation}" />
                   <input type="hidden" th:field="*{changeSet}" th:value="*{changeSet}" />
 
+                  <div class="mb-3">
+                    <label for="username" class="form-label">
+                      <span class="badge bg-danger">必須</span>
+                      編集者
+                    </label>
+                    <input class="form-control" type="text" th:errorclass="is-invalid" th:field="*{username}" th:value="*{username}" />
+                    <div class="invalid-feedback" th:errors="*{username}">
+                    </div>
+                  </div>
+                  
                   <div class="mb-3">
                     <label for="username" class="form-label">
                       コメント
