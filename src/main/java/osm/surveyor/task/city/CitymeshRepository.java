@@ -10,6 +10,9 @@ import osm.surveyor.task.city.model.Citymesh;
 import osm.surveyor.task.city.model.CitymeshPK;
 
 public interface CitymeshRepository extends JpaRepository<Citymesh,CitymeshPK> {
+	
+	@Query("SELECT m FROM Citymesh m WHERE m.citycode = :citycode AND m.meshcode = :meshcode")
+	Citymesh findOne(@Param("citycode")String citycode, @Param("meshcode")String meshcode);
 
 	List<Citymesh> findByCitycode(String citycode);
 	

@@ -6,15 +6,19 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.NumberFormat;
 
-import lombok.Getter;
-import lombok.Setter;
-import osm.surveyor.task.util.JsonGeometryLine;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-@Getter
-@Setter
+import lombok.Data;
+import osm.surveyor.task.util.JsonGeometryLine;
+import osm.surveyor.task.util.Point;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
 @Entity
 @IdClass(CitymeshPK.class)
 public class Citymesh {
@@ -28,15 +32,28 @@ public class Citymesh {
 	private String meshcode;	// CitymeshPK.meshcode
 	
 	@ManyToOne
+	@JsonIgnore
 	City city;					// リレーション: to City 多対１
+	
+	@NotBlank
+	@NumberFormat
+	private String lng;
+	
+	@NotBlank
+	@NumberFormat
+	private String lat;
 	
 	private String version;
 	
 	private String path;
 	
-	private String point;
-	
 	private String line;
+	
+	@JsonIgnore
+	public void setPoint(Point p) {
+		setLng(p.getLng());
+		setLat(p.getLat());
+	}
 	
 	public void setLine(JsonGeometryLine p) {
 		this.line = p.toString();

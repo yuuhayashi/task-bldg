@@ -21,7 +21,7 @@ if(queryString){
 function loadMap() {
 	$.when(
 		// マップ表示のための中心位置を読み取る
-		$.getJSON("/task-bldg/city/index.json")
+		$.getJSON("http://surveyor.mydns.jp/osm-data/index.json")
 	).done(function(data1) {
 		site = data1.site;
 		style = new ol.style.Style({

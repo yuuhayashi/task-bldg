@@ -5,19 +5,6 @@
 </head>
 <body>
 
-  <!-- ログインメッセージ -->
-  <div th:fragment="login">
-    <div class="alert alert-danger" th:if="${param.error}">
-      <small>ユーザ名またはパスワードが正しくありません</small>
-    </div>
-    <div class="alert alert-success" th:if="${param.register}">
-      <small>ユーザを新規登録しました</small>
-    </div>
-    <div class="alert alert-success" th:if="${param.logout}">
-      <small>ログアウトしました</small>
-    </div>
-  </div>
-
   <!-- エラーメッセージ(404 Not Foundなど) -->
   <div th:fragment="error">
     <div class="text-center">

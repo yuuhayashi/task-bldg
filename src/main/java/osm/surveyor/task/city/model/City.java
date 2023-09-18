@@ -41,18 +41,13 @@ public class City {
 	@NumberFormat
 	private String lat = "0.0";
 	
+	
 	/**
 	 * ステータス
 	 */
 	@Enumerated(EnumType.STRING)
 	private Status status = Status.PREPARATION;
 	
-	/**
-	 * リレーション： to Citymesh 1..*
-	 */
-	//@OneToMany
-	//List<Citymesh> meshes;
-		
 	public void setSite(String site) {
 		City.site = site;
 	}
@@ -77,7 +72,7 @@ public class City {
 		this.lat = dec.toString();
 	}
 	
-	public void setCoordinates(BigDecimal lng, BigDecimal lat) {
+	public void setPoint(BigDecimal lng, BigDecimal lat) {
 		setLng(lng);
 		setLat(lat);
 	}

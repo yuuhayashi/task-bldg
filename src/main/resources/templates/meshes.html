@@ -4,7 +4,144 @@
   layout:decorate="~{layout/layout}">
 <head>
   <meta charset="UTF-8" th:remove="tag">
-  <script th:src="@{/custom/meshes.js}"></script>
+	<script th:inline="javascript">
+		const meshes = /*[[${meshes}]]*/"meshes";
+		console.log(meshes);
+		const city = /*[[${city}]]*/"city";
+		console.log(city);
+
+var __map = null;
+var __markerLayer = null;
+var __lineLayer = null;
+
+function loadMap() {
+	style = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: '/task-bldg/img/osm_200x200.png',
+	        anchor: [0.5, 0.5],
+	        scale: 0.2
+	    }),
+	    stroke: new ol.style.Stroke({color: '#ff33ff', width: 10})
+	});
+	
+	// マップの作成
+	__map = new ol.Map({
+		target: 'map',
+		layers: [
+			new ol.layer.Tile({
+				source: new ol.source.OSM()
+			})
+		],
+		view: new ol.View({
+			center: ol.proj.fromLonLat([Number(city.lng),Number(city.lat)]),
+			zoom: 12
+		})
+	});
+	
+	var title = document.getElementById("title");
+	title.innerHTML = "PLATEAU OSMデータ : " + city.citycode + " " + city.cityname;
+
+    // 表示するためのレイヤーを作成する
+    __markerLayer = new ol.layer.Vector({
+        source: new ol.source.Vector()
+    });
+    __map.addLayer(__markerLayer);
+    
+    // ポップアップを表示するためのオーバーレイを作成する
+    __overlay = new ol.Overlay({
+        element: document.getElementById('popup'),
+        positioning: 'bottom-center'
+    });
+    
+	// ICON のスタイル
+	style = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: './img/osm_200x200.png',
+	        anchor: [0.5, 0.5],
+	        scale: 0.2
+	    }),
+	    stroke: new ol.style.Stroke({color: '#ff33ff', width: 10})
+	});
+
+	{
+	    $(meshes).each(function() {
+			
+			// Icon
+		    var feature = new ol.Feature({
+		        geometry: new ol.geom.Point(ol.proj.fromLonLat([Number(this.lng),Number(this.lat)])),
+		        code: this.meshcode
+		    });
+		    feature.information = this;
+		    feature.setStyle(style);
+		    __markerLayer.getSource().addFeature(feature);
+		    
+		    // LineString
+			if (this.line != null) {
+				var lineString = JSON.parse(this.line);
+				var points = lineString.coordinates;
+				console.log(points);
+				drawPolygon([points]);
+			}
+	    });
+	    
+	    // 地図のクリックイベントを設定
+	    __map.on('click', function (evt) {
+	        var feature = __map.forEachFeatureAtPixel(
+				evt.pixel,
+	            function (feature) {
+	                return feature;
+	            }
+	        );
+	        if (feature) {
+	            var coordinates = feature.getGeometry().getCoordinates();
+	            var info = feature.information;
+	            var element = __overlay.getElement();
+	            var descriptionHTML =
+	                "<div>" + info.citycode +" : "+ info.cityname + "</div>" +
+	                "<div>code: " + info.meshcode + "</div>" +
+	                "<div>file: " + info.path + "</div>" +
+	                "<div>version: " + info.version + "</div>" +
+	                "<div>status: " + info.status + "</div>" +
+	                "<div><a href='/task-bldg/tasks?citycode=" + city.citycode + "&meshcode=" + info.meshcode +"'>タスク</a></div>";
+	            element.innerHTML = descriptionHTML;
+	            __overlay.setPosition(coordinates);
+	            __map.addOverlay(__overlay);
+	        } else {
+	            __map.removeOverlay(__overlay);
+	        }
+	    });
+	};
+}
+
+/**
+ * ポリゴンを描画する
+ */
+function drawPolygon(coordinates) {
+    // ジオメトリの作成
+    var polygon = new ol.geom.Polygon([]);
+    polygon.setCoordinates(coordinates);
+
+    // 地物オブジェクトの作成　〜　レイヤーの作成
+    var feature = new ol.Feature(
+        polygon.transform('EPSG:4326', 'EPSG:3857')
+    );
+    feature.setId('tokyotower');
+
+    var vector = new ol.source.Vector({
+        features: [feature]
+    });
+    var routeLayer = new ol.layer.Vector({
+        source: vector,
+        style: new ol.style.Style({
+            stroke: new ol.style.Stroke({ color: '#000000', width: 2 })
+            //fill: new ol.style.Fill({ color: [0, 0, 0, 0.2] })
+        })
+    });
+
+    // 作成したポリゴンをレイヤーにのせる
+    __map.addLayer(routeLayer);
+}
+	</script>
 </head>
 <body onload='loadMap()'>
   <input type="hidden" id="city" th:value="${city}" />
@@ -65,7 +202,7 @@
                         <a th:text="#{download}" th:href="@{{site}{folder}/bldg/{path}(site=*{city.site},folder=*{city.folder},path=*{path})}" class="btn btn-navy">
                         </a>
 
-                        <a th:href="@{/tasks?citycode={citycode}&meshcode={meshcode}(citycode=*{citycode},meshcode=*{meshcode})}" class="btn btn-navy">
+                        <a th:href="@{/tasks?citycode={city.citycode}&meshcode={meshcode}(city.citycode=*{city.citycode},meshcode=*{meshcode})}" class="btn btn-navy">
                           <i class="bi bi-pencil-square" th:text="#{operation}"></i>
                         </a>
                       </td>

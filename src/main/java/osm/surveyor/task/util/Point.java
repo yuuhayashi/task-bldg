@@ -4,19 +4,27 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.format.annotation.NumberFormat;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper=false)
 public class Point extends JsonNumberArray {
 	
+	@NotBlank
+	@NumberFormat
 	private String lng = "0.0";
 	
+	@NotBlank
+	@NumberFormat
 	private String lat = "0.0";
-	
+
 	public void setLng(String str) {
 		this.lng = str;
 	}
@@ -31,6 +39,20 @@ public class Point extends JsonNumberArray {
 
 	public void setLat(BigDecimal dec) {
 		this.lat = dec.toString();
+	}
+	
+	public void setPoint(Point p) {
+		setPoint(p.getLng(), p.getLat());
+	}
+	
+	public void setPoint(BigDecimal lng, BigDecimal lat) {
+		setLng(lng);
+		setLat(lat);
+	}
+	
+	public void setPoint(String lng, String lat) {
+		setLng(lng);
+		setLat(lat);
 	}
 	
 	private void store() {

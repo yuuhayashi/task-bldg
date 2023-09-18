@@ -1,5 +1,6 @@
 package osm.surveyor.task.util;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class JsonGeometryLine extends JsonTemple {
 		if (coordinates != null) {
 			first = true;
 			boolean c1 = false;
-			sb.append("[");
+			sb.append("\"coordinates\":[");
 			for (JsonNumberArray arry : coordinates) {
 				c1 = out(c1, sb, null, arry);
 			}
@@ -64,5 +65,50 @@ public class JsonGeometryLine extends JsonTemple {
 				this.coordinates.add(point);
 			}
 		}
+	}
+	
+	/**
+	 * このラインの中心点を取得する
+	 * 各ラインの頂点の最大最小値の中間
+	 */
+	public Point getCenter() {
+		if (coordinates == null) {
+			return null;
+		}
+		double maxlng = -180.0;
+		double maxlat = -90.0;
+		double minlng = 180.0;
+		double minlat = 90.0;
+		for (JsonNumberArray arry : coordinates) {
+			boolean first = true;
+			List<String> lnglat = arry.getList();
+			for (String str : lnglat) {
+				double dd = Double.parseDouble(str);
+				if (first) {
+					if (maxlng < dd) {
+						maxlng = dd;
+					}
+					if (minlng > dd) {
+						minlng = dd;
+					}
+					first = false;
+				}
+				else {
+					if (maxlat < dd) {
+						maxlat = dd;
+					}
+					if (minlat > dd) {
+						minlat = dd;
+					}
+				}
+			}
+		}
+		double lng = (minlng + maxlng) / 2;
+		double lat = (minlat + maxlat) / 2;
+
+		Point point = new Point();
+		point.setLat(BigDecimal.valueOf(lat));
+		point.setLng(BigDecimal.valueOf(lng));
+		return point;
 	}
 }

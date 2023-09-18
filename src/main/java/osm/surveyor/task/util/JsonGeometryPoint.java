@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class JsonGeometryPoint extends JsonTemple {
-	private Point coordinates;
+	private Point point;
 	
 	private String type = "Point";
 	
@@ -22,7 +22,7 @@ public class JsonGeometryPoint extends JsonTemple {
 		StringBuffer sb = new StringBuffer();
 		boolean c = false;
 		sb.append("{");
-		c = out(c, sb, "coordinates", this.coordinates.toString());
+		c = out(c, sb, "coordinates", this.point.toString());
 		c = outStr(c, sb, "type", this.type);
 		sb.append("}");
 		return sb.toString();
@@ -36,8 +36,8 @@ public class JsonGeometryPoint extends JsonTemple {
 		
 		node1 = node.get("coordinates");
 		if (node1 != null) {
-			this.coordinates = new Point();
-			this.coordinates.parse(node1);
+			this.point = new Point();
+			this.point.parse(node1);
 		}
 	}
 }

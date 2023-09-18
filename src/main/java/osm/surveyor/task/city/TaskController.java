@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.RequiredArgsConstructor;
 import osm.surveyor.task.city.model.City;
 import osm.surveyor.task.city.model.Citymesh;
@@ -52,11 +55,17 @@ public class TaskController {
 		model.addAttribute("cityname", city.getCityname());
 		model.addAttribute("meshcode", meshcode);
 		
-		CitymeshPK pk = new CitymeshPK();
-		pk.setCitycode(citycode);
-		pk.setMeshcode(meshcode);
-		Citymesh mesh = meshRepository.getById(pk);
+		Citymesh mesh = meshRepository.findOne(citycode,meshcode);
         model.addAttribute("mesh", mesh);
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+        String meshstr = "{}";
+		try {
+			meshstr = objectMapper.writeValueAsString(mesh);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+        model.addAttribute("meshstr", meshstr);
         
 		List<TaskEntity> tasks = taskRepository.serchByMesh(citycode, meshcode);
 		model.addAttribute("tasks", tasks);

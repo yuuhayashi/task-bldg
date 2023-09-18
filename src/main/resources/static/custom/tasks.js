@@ -33,7 +33,7 @@ function loadMap() {
 	// 'citycode'に対応するデータを読む
 	var lonlat = [139.7637,35.6808];
 	$.when(
-		$.getJSON("/task-bldg/city/index.json")
+		$.getJSON("http://surveyor.mydns.jp/osm-data/index.json")
 	).done(function(data1) {
 		site = data1.site;
 		$(data1.list).each(function() {
