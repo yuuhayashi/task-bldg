@@ -11,18 +11,18 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.NumberFormat;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import lombok.Data;
 import osm.surveyor.task.util.Point;
 
-@Getter
-@Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
 @Entity
 @Table(name = "city")
 public class City {
 
-	private static String site;		// 全体に適用する
-	
 	@Id
 	@NumberFormat(pattern="#####")
 	private String citycode;
@@ -41,20 +41,14 @@ public class City {
 	@NumberFormat
 	private String lat = "0.0";
 	
+	private String site;
+	
 	
 	/**
 	 * ステータス
 	 */
 	@Enumerated(EnumType.STRING)
 	private Status status = Status.PREPARATION;
-	
-	public void setSite(String site) {
-		City.site = site;
-	}
-	
-	public String getSite() {
-		return City.site;
-	}
 	
 	public void setLng(String str) {
 		this.lng = str;
@@ -72,11 +66,13 @@ public class City {
 		this.lat = dec.toString();
 	}
 	
+	@JsonIgnore
 	public void setPoint(BigDecimal lng, BigDecimal lat) {
 		setLng(lng);
 		setLat(lat);
 	}
 	
+	@JsonIgnore
 	public void setPoint(String lng, String lat) {
 		setLng(lng);
 		setLat(lat);

@@ -50,22 +50,34 @@ public class TaskController {
 			@RequestParam(name="citycode") String citycode,
 			@RequestParam(name="meshcode") String meshcode)
 	{
-        City city = cityRepository.getById(citycode);
+        City city = cityRepository.findByCitycode(citycode);
 		model.addAttribute("citycode", citycode);
 		model.addAttribute("cityname", city.getCityname());
 		model.addAttribute("meshcode", meshcode);
+		model.addAttribute("site", city.getSite());
 		
 		Citymesh mesh = meshRepository.findOne(citycode,meshcode);
         model.addAttribute("mesh", mesh);
         
-        ObjectMapper objectMapper = new ObjectMapper();
         String meshstr = "{}";
 		try {
+	        ObjectMapper objectMapper = new ObjectMapper();
 			meshstr = objectMapper.writeValueAsString(mesh);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
         model.addAttribute("meshstr", meshstr);
+        
+        model.addAttribute("mesh", mesh);
+        
+        String citystr = "{}";
+		try {
+	        ObjectMapper objectMapper = new ObjectMapper();
+			citystr = objectMapper.writeValueAsString(city);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+        model.addAttribute("citystr", citystr);
         
 		List<TaskEntity> tasks = taskRepository.serchByMesh(citycode, meshcode);
 		model.addAttribute("tasks", tasks);

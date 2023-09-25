@@ -10,8 +10,10 @@
 		const meshcode = /*[[${meshcode}]]*/"meshcode";
 		const tasks = /*[[${tasks}]]*/"tasks";
 		const meshstr = /*[[${meshstr}]]*/"meshstr";
+		const citystr = /*[[${citystr}]]*/"citystr";
 	  
 var mesh = JSON.parse(meshstr);
+var city = JSON.parse(citystr);
 var __map = null;
 var __markerLayer = null;
 var __lineLayer = null;
@@ -84,13 +86,14 @@ function loadMap() {
         );
         if (feature) {
             var coordinates = feature.getGeometry().getCoordinates();
-            var info = feature.information;
+            var info = featurePoint.information;
             var element = __overlay.getElement();
             var descriptionHTML =
-                "<div>code: " + info.properties.id + "</div>" +
-                "<div>version: " + info.properties.version + "</div>" +
-                "<div><a href='"+ site + dir + info.properties.path +"'>" + info.properties.path + "</a></div>" +
-                "<div><a href='https://www.openstreetmap.org/#map=15/"+ info.properties.lat + "/" + info.properties.lng +"'>OpenStreetMap で現状を確認する</a></div>";
+                "<div>" + info.citycode +" : "+ info.cityname + "</div>" +
+                "<div>code: " + info.meshcode + "</div>" +
+                "<div>version: " + info.version + "</div>" +
+                "<div>status: " + info.status + "</div>" +
+                "<div><a href='"+ city.site + city.folder +"/bldg/"+ info.path +"'>" + info.path + "</a></div>";
             element.innerHTML = descriptionHTML;
             __overlay.setPosition(coordinates);
             __map.addOverlay(__overlay);
