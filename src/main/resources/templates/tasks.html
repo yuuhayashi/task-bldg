@@ -63,13 +63,77 @@ function loadMap() {
 	    stroke: new ol.style.Stroke({color: '#ff33ff', width: 10})
 	});
 	
+	var status1 = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: './img/PREPARATION.png',
+	        anchor: [0.5, 0.5],
+	        scale: 2
+	    })
+	});
+	var status2 = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: './img/ACCEPTING.png',
+	        anchor: [0.5, 0.5],
+	        scale: 2
+	    })
+	});
+	var status3 = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: './img/RESERVED.png',
+	        anchor: [0.5, 0.5],
+	        scale: 2
+	    })
+	});
+	var status4 = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: './img/EDITING.png',
+	        anchor: [0.5, 0.5],
+	        scale: 2
+	    })
+	});
+	var status5 = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: './img/NG.png',
+	        anchor: [0.5, 0.5],
+	        scale: 2
+	    })
+	});
+	var status6 = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: './img/OK.png',
+	        anchor: [0.5, 0.5],
+	        scale: 2
+	    })
+	});
+	
 	// マーカーの表示
     featurePoint = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.fromLonLat([Number(mesh.lng),Number(mesh.lat)])),
         code: mesh.meshcode
     });
     featurePoint.information = mesh;
-    featurePoint.setStyle(style);
+    if (mesh.status == "PREPARATION") {
+    	featurePoint.setStyle(status1);
+    }
+    else if (mesh.status == "ACCEPTING") {
+    	featurePoint.setStyle(status2);
+    }
+    else if (mesh.status == "RESERVED") {
+    	featurePoint.setStyle(status3);
+    }
+    else if (mesh.status == "EDITING") {
+    	featurePoint.setStyle(status4);
+    }
+    else if (mesh.status == "NG") {
+    	featurePoint.setStyle(status5);
+    }
+    else if (mesh.status == "OK") {
+    	featurePoint.setStyle(status6);
+    }
+    else {
+    	featurePoint.setStyle(style);
+    }
+
     __markerLayer.getSource().addFeature(featurePoint);
     __map.getView().setCenter(ol.proj.fromLonLat([Number(mesh.lng),Number(mesh.lat)]));
 

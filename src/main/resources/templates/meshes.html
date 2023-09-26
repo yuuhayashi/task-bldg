@@ -15,6 +15,8 @@ var __markerLayer = null;
 var __lineLayer = null;
 
 function loadMap() {
+
+	// ICON のスタイル
 	style = new ol.style.Style({
 	    image: new ol.style.Icon({
 	        src: '/task-bldg/img/osm_200x200.png',
@@ -22,6 +24,49 @@ function loadMap() {
 	        scale: 0.2
 	    }),
 	    stroke: new ol.style.Stroke({color: '#ff33ff', width: 10})
+	});
+	
+	var status1 = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: '/task-bldg/img/PREPARATION.png',
+	        anchor: [0.5, 0.5],
+	        scale: 1
+	    })
+	});
+	var status2 = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: '/task-bldg/img/ACCEPTING.png',
+	        anchor: [0.5, 0.5],
+	        scale: 1
+	    })
+	});
+	var status3 = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: '/task-bldg/img/RESERVED.png',
+	        anchor: [0.5, 0.5],
+	        scale: 1
+	    })
+	});
+	var status4 = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: '/task-bldg/img/EDITING.png',
+	        anchor: [0.5, 0.5],
+	        scale: 1
+	    })
+	});
+	var status5 = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: '/task-bldg/img/NG.png',
+	        anchor: [0.5, 0.5],
+	        scale: 1
+	    })
+	});
+	var status6 = new ol.style.Style({
+	    image: new ol.style.Icon({
+	        src: '/task-bldg/img/OK.png',
+	        anchor: [0.5, 0.5],
+	        scale: 1
+	    })
 	});
 	
 	// マップの作成
@@ -53,16 +98,6 @@ function loadMap() {
         positioning: 'bottom-center'
     });
     
-	// ICON のスタイル
-	style = new ol.style.Style({
-	    image: new ol.style.Icon({
-	        src: '/task-bldg/img/osm_200x200.png',
-	        anchor: [0.5, 0.5],
-	        scale: 0.2
-	    }),
-	    stroke: new ol.style.Stroke({color: '#ff33ff', width: 10})
-	});
-
 	{
 	    $(meshes).each(function() {
 			
@@ -72,8 +107,30 @@ function loadMap() {
 		        code: this.meshcode
 		    });
 		    feature.information = this;
-		    feature.setStyle(style);
+		    if (this.status == "PREPARATION") {
+		    	feature.setStyle(status1);
+		    }
+		    else if (this.status == "ACCEPTING") {
+		    	feature.setStyle(status2);
+		    }
+		    else if (this.status == "RESERVED") {
+		    	feature.setStyle(status3);
+		    }
+		    else if (this.status == "EDITING") {
+		    	feature.setStyle(status4);
+		    }
+		    else if (this.status == "NG") {
+		    	feature.setStyle(status5);
+		    }
+		    else if (this.status == "OK") {
+		    	feature.setStyle(status6);
+		    }
+		    else {
+		    	feature.setStyle(style);
+		    }
+
 		    __markerLayer.getSource().addFeature(feature);
+		    __map.getView().setCenter(ol.proj.fromLonLat([Number(this.lng),Number(this.lat)]));
 		    
 		    // LineString
 			if (this.line != null) {
