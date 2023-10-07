@@ -238,6 +238,17 @@ function drawPolygon(coordinates) {
                 </div>
             
                 <table class="table table-bordered">
+                  <tbody th:object="${mesh}">
+                    <tr>
+                      <td>
+                        <a th:text="#{return}" th:href="@{/}" class="btn btn-navy">
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <table class="table table-bordered">
                   <thead>
                     <tr>
                       <th th:text="#{status}"></th>

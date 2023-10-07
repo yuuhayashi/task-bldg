@@ -11,6 +11,8 @@ Plateau 3D都市データをOSMに反映させるための「タスク管理」�
 ![TaskStatus](https://github.com/yuuhayashi/task-bldg/wiki/uml/TaskStatus.png)
 
 
+-----
+
 ## 関連情報
 
 - [ポータル利用者のための操作説明書](https://github.com/yuuhayashi/task-bldg/wiki/HowToUse)
