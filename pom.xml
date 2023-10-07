@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>osm.surveyor.plateau</groupId>
 	<artifactId>task-bldg</artifactId>
-	<version>0.1.12</version>
+	<version>0.1.13</version>
 	<packaging>war</packaging>
 	<name>task-bldg</name>
 	<description>TaskingManager for Plateau BLDG</description>
