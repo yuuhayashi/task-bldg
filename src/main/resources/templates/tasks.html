@@ -297,7 +297,7 @@ function drawPolygon(coordinates) {
                       <td th:text="*{updateTime}"></td>
                       <td><img th:alt="*{status}" th:src="@{/img/{status}.png(status=*{status})}"></img></td>
                       <td><a th:text="*{username}" th:href="@{https://www.openstreetmap.org/user/{user}(user=*{username})}"></a></td>
-                      <td th:text="*{changeSet}"></td>
+                      <td><a th:text="*{changeSet}" th:href="@{https://www.openstreetmap.org/changeset/{changeSet}(changeSet=*{changeSet})}"></a></td>
                       <td th:text="*{operation}"></td>
                       <td th:text="*{comment}"></td>
                     </tr>
