@@ -1,5 +1,6 @@
 package osm.surveyor.task.city;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +20,7 @@ public class CityController {
 	
 	@GetMapping("/city")
 	public String showList(Model model) {
-		model.addAttribute("cities", repository.findAll());
+		model.addAttribute("cities", repository.findAll(Sort.by(Sort.Direction.ASC, "citycode")));
 		return "cities";
 	}
 	
