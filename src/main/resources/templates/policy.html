@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout}">
+<head>
+  <meta charset="UTF-8" th:remove="tag" />
+	<style type="text/css">
+		body {color: rgb(36, 31, 49); line-height: 1.5; font-size: 14px;}
+		h1 {font-size: 20px; line-height: 2; color: blue}
+		h2 {font-size: 18px; line-height: 1.5; color: blue}
+		h3 {font-size: 16px; line-height: 1.5; color: blue}
+		h4 {font-size: 14px; line-height: 1.5; color: blue}
+		p {margin: 20px;}
+		.plane {
+			white-space: pre-line;
+			border: dotted 2px skyblue;
+			margin: 20px;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+
+  <!-- サイドバーの表示 -->
+  <div layout:fragment="sidebar" th:replace="~{fragments/sidebar :: sidebar}">
+  </div>
+
+  <!-- コンテンツの表示 -->
+  <div layout:fragment="content">
+    <main class="offcanvas-outside bg-light">
+      <div class="container-fluid">
+
+        <!-- トグルボタン -->
+        <div th:replace="~{fragments/sidebar :: toggler}">
+        </div>
+
+        <!-- コンテンツ -->
+        <div class="card shadow">
+          <div class="card-header">
+
+	<div class="header">
+		<H1>Terms of Use</H1>
+	</div>
+	<div>
+		<H2>1. ご利用条件について</H2>
+	    <p>当Webサイト（<a href="http://surveyor.mydns.jp/task-bldg/">http://surveyor.mydns.jp/task-bldg/</a>、以下「'task-bldg'サイト」）は、"<a href="https://github.com/yuuhayashi">haya4</a>"が個人運営するウェブサイトです。
+	     'task-bldg'サイトは、以下の条件（以下「利用条件」）に同意のうえご利用ください。'task-bldg'サイトの利用開始をもって、利用条件に同意したものとみなします。
+	      なお、利用条件は変更されることがありますので、その際は最新の内容をご確認いただきますようお願いいたします。</p>
+	</div>
+	<div>
+		<H2>2. リンクについて</H2>
+		<p>'task-bldg'サイトは、原則リンクフリーです。</p>
+	</div>
+	<div>
+		<H2>3. 著作権について</H2>
+		<p>'task-bldg'サイトで公開している情報は（「<a href="https://www.geospatial.jp/ckan/dataset/plateau">G空間情報センター</a>」で公開している<a href="https://www.geospatial.jp/ckan/dataset/plateau">3D都市モデル</a>のオープンデータを含む。以下「コンテンツ」といいます。）は、どなたでも以下の（１）～（５）に従って、複製、公衆送信、翻訳・変形等の翻案等、自由に利用できます。商用利用も可能です。また、数値データ、簡単な表・グラフ等は著作権の対象ではありませんので、これらについては本利用ルールの適用はなく、自由に利用できます。
+コンテンツ利用に当たっては、本利用ルールに同意したものとみなします。</p>
+
+		<h3>（１）出典の記載について</h3>
+		<p>① コンテンツの出典</p>
+		<p>コンテンツの中には、国土交通省が「G空間情報センター」に委託して公開している3D都市モデルのオープンデータと、3D都市モデルを <a href="https://github.com/yuuhayashi/citygml-osm">'citygml-osm'</a>(https://github.com/yuuhayashi/citygml-osm) を利用して変換を行った「osm-data」が含まれます。</p>
+		<p class='plane'>「GML」の出典：
+国土交通省「3D都市モデル」（https://www.geospatial.jp/ckan/dataset/plateau）
+
+「osm-data」の出典：
+国土交通省「3D都市モデル」（https://www.geospatial.jp/ckan/dataset/plateau）を加工して作成</p>
+
+		<p>② コンテンツを利用する際は出典を記載してください。出典の記載方法は以下のとおりです</p>
+		<p class='plane'>（出典記載例）
+
+出典：G空間情報センター「3D都市モデル」（https://www.geospatial.jp/ckan/dataset/plateau）
+出典：MLIT PLATEAU（https://www.mlit.go.jp/plateau/）など</p>
+
+		<h3>（２）第三者の権利の保護について</h3>
+		<p>① コンテンツの中には、国土交通省が「G空間情報センター」に委託して公開している3D都市モデルのオープンデータが含まれます。利用にあたっては「3D都市モデル」の'<a href="https://www.mlit.go.jp/plateau/site-policy/">Site Policy</a>'(https://www.mlit.go.jp/plateau/site-policy/)に従ってください。</p>
+		<p>② コンテンツのうち第三者が権利を有しているものについては、出典の表記等によって第三者が権利を有していることを直接的又は間接的に表示・示唆しているものもありますが、明確に第三者が権利を有している部分の特定・明示等を行っていないものもあります。利用する場合は利用者の責任において確認してください。</p>
+		<p>① 第三者が著作権等を有しているコンテンツであっても、著作権法上認められている引用など、著作権者等の許諾なしに利用できる場合があります。</p>
+
+		<h3>（３）本利用ルールが適用されないコンテンツについて</h3>
+	    <p>以下のコンテンツについては、本利用ルールの適用外です。</p>
+	    <p>① 組織や特定の事業を表すシンボルマーク、ロゴ、キャラクターデザイン</p>
+
+		<h3>（４）免責について</h3>
+	    <p>① 出典元および当ホームページ運営者は、利用者がコンテンツを用いて行う一切の行為（コンテンツを編集・加工等した情報を利用することを含む。）について何ら責任を負うものではありません。</p>
+	    <p>② コンテンツは、予告なく変更、移転、削除等が行われることがあります。</p>
+
+		<h3>（５）その他</h3>
+	    <p>① 本利用ルールは、著作権法上認められている引用などの利用について、制限するものではありません。</p>
+	    <p>② 本利用ルールは、２０２３年１１月１０日に定めたものです。本利用ルールは、今後変更される可能性があります。</p>
+	    <p>③ 本利用ルールは、<a href="https://creativecommons.org/licenses/by/4.0/legalcode.ja">クリエイティブ・コモンズ・ライセンスの表示4.0国際</a>（https://creativecommons.org/licenses/by/4.0/legalcode.ja に規定される著作権利用許諾条件。以下「CC BY」といいます。）と互換性があり、本利用ルールが適用されるコンテンツはCC BYに従うことでも利用することができます。また、利用者が<a href="https://opendatacommons.org/licenses/by/1-0/">Open Data CommonsによるODC BY</a>（https://opendatacommons.org/licenses/by/1-0/）又は<a href="https://opendatacommons.org/licenses/odbl/">ODbL</a>（https://opendatacommons.org/licenses/odbl/）での利用を希望する場合に、それを妨げるものではありません。</p>
+	</div>
+          
+        </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
