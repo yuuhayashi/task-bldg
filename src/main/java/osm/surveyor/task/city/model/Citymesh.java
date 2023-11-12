@@ -45,6 +45,8 @@ public class Citymesh {
 	
 	private String version;
 	
+	private String surveyYear;
+	
 	private String path;
 	
 	private String line;
