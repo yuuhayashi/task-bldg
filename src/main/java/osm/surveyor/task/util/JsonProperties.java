@@ -19,6 +19,7 @@ public class JsonProperties extends JsonTemple {
 	private String path;
 	private String id;
 	private String version;
+	private String surveyYear;
 	private Long prefcode;
 	private String prefname;
 	private Long citycode;
@@ -35,6 +36,7 @@ public class JsonProperties extends JsonTemple {
 		c1 = outStr(c1, sb, "path", this.path);
 		c1 = outStr(c1, sb, "id", this.id);
 		c1 = outStr(c1, sb, "version", this.version);
+		c1 = outStr(c1, sb, "surveyYear", this.surveyYear);
 		c1 = out(c1, sb, "prefcode", getPrefcode());
 		c1 = outStr(c1, sb, "prefname", getPrefname());
 		sb.append("}");
@@ -60,6 +62,11 @@ public class JsonProperties extends JsonTemple {
 		node1 = node.get("version");
 		if (node1 != null) {
 			this.version = node1.textValue();
+		}
+
+		node1 = node.get("surveyYear");
+		if (node1 != null) {
+			this.surveyYear = node1.textValue();
 		}
 
 		node1 = node.get("prefcode");

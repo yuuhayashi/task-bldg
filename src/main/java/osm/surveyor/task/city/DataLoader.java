@@ -95,6 +95,7 @@ public class DataLoader implements CommandLineRunner {
                     	mesh.setCitycode(city.getCitycode());
             			mesh.setMeshcode(meshcode);
             			mesh.setVersion(prop.getVersion());
+            			mesh.setSurveyYear(prop.getSurveyYear());
             			mesh.setPath(prop.getPath());
             			mesh.setPoint(geometryPoint.getPoint());
             			mesh.setCity(city);
@@ -128,6 +129,7 @@ public class DataLoader implements CommandLineRunner {
         				Citymesh meshDb = (Citymesh) meshRepository.findOne(city.getCitycode(), meshcode);
         				if (meshDb != null) {
                 			mesh.setVersion(meshDb.getVersion());
+                			mesh.setSurveyYear(meshDb.getSurveyYear());
                 			mesh.setPath(meshDb.getPath());
                 			mesh.setLng(meshDb.getLng());
                 			mesh.setLat(meshDb.getLat());
