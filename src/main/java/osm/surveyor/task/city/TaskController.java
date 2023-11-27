@@ -40,6 +40,9 @@ public class TaskController {
 	@Autowired
 	private TaskService service;
 	
+	@Autowired
+	private CityService cityService;
+	
 	/**
 	 * ログインユーザーが関係しているTASKリスト
 	 * @param model
@@ -99,7 +102,7 @@ public class TaskController {
 	{
 		String next = "task";
 		Operation operation = Operation.NOP;
-		Status nextStatus = Status.PREPARATION;
+		Status nextStatus = Status.ACCEPTING;
 		if (op.equals(Operation.RESERVE.toString())) {
 			model.addAttribute("command", "編集者登録");
 			operation = Operation.RESERVE;
@@ -165,6 +168,7 @@ public class TaskController {
 			return nextPage(task);
 		}
 		service.add(task);
+		cityService.updateStatus(task.getCitycode());
 		
 		return "redirect:/tasks?citycode="+ task.getCitycode() +"&meshcode="+ task.getMeshcode();
 	}

@@ -136,6 +136,11 @@ function loadMap() {
                 <table class="table table-bordered">
                   <thead>
                     <tr>
+                      <td colspan="5">
+                        <img th:src="@{/img/NG.png}"></img>:エラーあり <img th:src="@{/img/OK.png}"></img>:完了 <img th:src="@{/img/EDITING.png}"></img>:あとちょっと <img th:src="@{/img/RESERVED.png}"></img>:編集中 <img th:src="@{/img/ACCEPTING.png}"></img>:着手 <img th:src="@{/img/PREPARATION.png}"></img>:未着手
+                      </td>
+                    </tr>
+                    <tr>
                       <th th:text="#{status}"></th>
                       <th th:text="#{citycode}"></th>
                       <th th:text="#{cityname}"></th>

@@ -49,7 +49,7 @@ function loadMap() {
 	});
 	var status4 = new ol.style.Style({
 	    image: new ol.style.Icon({
-	        src: '/task-bldg/img/EDITING.png',
+	        src: '/task-bldg/img/IMPORTED.png',
 	        anchor: [0.5, 0.5],
 	        scale: 1
 	    })
@@ -244,6 +244,9 @@ function drawPolygon(coordinates) {
                       <td>
                         <a th:text="#{return}" th:href="@{/}" class="btn btn-navy">
                         </a>
+                      </td>
+                      <td>
+                        <img th:src="@{/img/NG.png}"></img>:エラー <img th:src="@{/img/OK.png}"></img>:完了 <img th:src="@{/img/EDITING.png}"></img>:編集中 <img th:src="@{/img/RESERVED.png}"></img>:予約済み <img th:src="@{/img/ACCEPTING.png}"></img>:受付中 <img th:src="@{/img/PREPARATION.png}"></img>:未着手
                       </td>
                     </tr>
                   </tbody>

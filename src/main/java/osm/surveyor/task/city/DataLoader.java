@@ -32,6 +32,7 @@ public class DataLoader implements CommandLineRunner {
 	private final CityRepository cityRepository;
 	private final CitymeshRepository meshRepository;
 	private final TaskService taskService;
+	private final CityService cityService;
 
 	String url = "http://surveyor.mydns.jp/osm-data";
 	
@@ -59,6 +60,7 @@ public class DataLoader implements CommandLineRunner {
 
     		cityRepository.save(city);
     		storeTask(city);
+    		cityService.updateStatus(city.getCitycode());
         }
 	}
 	

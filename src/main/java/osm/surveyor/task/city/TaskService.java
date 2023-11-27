@@ -30,7 +30,7 @@ public class TaskService {
 			task.setStatus(Status.RESERVED);
 		}
 		else if (task.getOperation() == Operation.CANCEL) {
-			task.setStatus(Status.ACCEPTING);
+			task.setStatus(Status.PREPARATION);
 		}
 		else if (task.getOperation() == Operation.NG) {
 			task.setStatus(Status.NG);
