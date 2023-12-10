@@ -61,21 +61,27 @@ public class CityService {
 		
 		City city = getCity(citycode);
 		if (err > 0) {
+			//	エラーあり
 			city.setStatus(Status.NG);
 		}
 		else if ((cnt / total) > 0.99d) {
+			//	完了
 			city.setStatus(Status.OK);
 		}
-		else if ((cnt / total) > 0.9d) {
+		else if ((cnt / total) > 0.8d) {
+			//	あとちょっと
 			city.setStatus(Status.EDITING);
 		}
-		else if (edit > 0d) {
+		else if ((edit > 0d) || (cnt > 0d)) {
+			//	編集中
 			city.setStatus(Status.RESERVED);
 		}
 		else if (resv > 0d) {
+			//	着手
 			city.setStatus(Status.ACCEPTING);
 		}
 		else {
+			// 未着手
 			city.setStatus(Status.PREPARATION);
 		}
 		repository.save(city);
