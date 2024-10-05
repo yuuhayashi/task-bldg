@@ -1,5 +1,7 @@
 package osm.surveyor.task.city;
 
+import osm.surveyor.task.task.TaskException;
+
 /**
  * 406 Not Acceptable
  * "ACCEPTIONGではないため予約できません"

@@ -1,4 +1,4 @@
-package osm.surveyor.task.city.model;
+package osm.surveyor.task.task.model;
 
 import java.util.List;
 

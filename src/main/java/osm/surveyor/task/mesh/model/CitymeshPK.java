@@ -1,4 +1,4 @@
-package osm.surveyor.task.city.model;
+package osm.surveyor.task.mesh.model;
 
 import java.io.Serializable;
 

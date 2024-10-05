@@ -1,11 +1,12 @@
-package osm.surveyor.task.city;
+package osm.surveyor.task.task;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import osm.surveyor.task.city.model.TaskEntity;
+
+import osm.surveyor.task.task.model.TaskEntity;
 
 public interface TaskRepository extends JpaRepository<TaskEntity,String> {
 	

@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import osm.surveyor.task.city.model.City;
-import osm.surveyor.task.city.model.Citymesh;
 import osm.surveyor.task.city.model.Status;
+import osm.surveyor.task.mesh.CitymeshRepository;
+import osm.surveyor.task.mesh.model.Citymesh;
 
 @Service
 @Transactional // メソッド開始時にトランザクションを開始、終了時にコミットする

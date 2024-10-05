@@ -1,13 +1,16 @@
-package osm.surveyor.task.city;
+package osm.surveyor.task.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import osm.surveyor.task.city.model.Citymesh;
-import osm.surveyor.task.city.model.CitymeshPK;
+import osm.surveyor.task.city.ConflictException;
+import osm.surveyor.task.city.NotAcceptableException;
 import osm.surveyor.task.city.model.Operation;
 import osm.surveyor.task.city.model.Status;
-import osm.surveyor.task.city.model.TaskEntity;
+import osm.surveyor.task.mesh.CitymeshRepository;
+import osm.surveyor.task.mesh.model.Citymesh;
+import osm.surveyor.task.mesh.model.CitymeshPK;
+import osm.surveyor.task.task.model.TaskEntity;
 
 import javax.transaction.Transactional;
 
@@ -49,7 +52,7 @@ public class TaskService {
 		CitymeshPK pk = new CitymeshPK();
 		pk.setCitycode(task.getCitycode());
 		pk.setMeshcode(task.getMeshcode());
-		Citymesh mesh = meshRepository.getById(pk);
+		Citymesh mesh = meshRepository.getReferenceById(pk);
 		
 		TaskEntity ctask = getTaskByMesh(task.getCitycode(), task.getMeshcode());
 		if (ctask == null) {

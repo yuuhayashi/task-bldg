@@ -1,4 +1,4 @@
-package osm.surveyor.task.city;
+package osm.surveyor.task.mesh;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import osm.surveyor.task.city.model.Citymesh;
-import osm.surveyor.task.city.model.CitymeshPK;
+import osm.surveyor.task.mesh.model.Citymesh;
+import osm.surveyor.task.mesh.model.CitymeshPK;
 
 public interface CitymeshRepository extends JpaRepository<Citymesh,CitymeshPK> {
 	

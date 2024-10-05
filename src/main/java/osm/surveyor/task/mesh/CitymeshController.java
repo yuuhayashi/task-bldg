@@ -1,4 +1,4 @@
-package osm.surveyor.task.city;
+package osm.surveyor.task.mesh;
 
 import java.util.List;
 
@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import lombok.RequiredArgsConstructor;
+import osm.surveyor.task.city.CityRepository;
 import osm.surveyor.task.city.model.City;
-import osm.surveyor.task.city.model.Citymesh;
+import osm.surveyor.task.mesh.model.Citymesh;
 
 @RequiredArgsConstructor
 @Controller

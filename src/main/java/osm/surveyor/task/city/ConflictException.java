@@ -1,5 +1,7 @@
 package osm.surveyor.task.city;
 
+import osm.surveyor.task.task.TaskException;
+
 /**
  * 409 Conflict
  * "タスクが変更されたため更新できません"

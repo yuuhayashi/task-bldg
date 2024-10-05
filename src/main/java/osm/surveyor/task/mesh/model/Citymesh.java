@@ -1,4 +1,4 @@
-package osm.surveyor.task.city.model;
+package osm.surveyor.task.mesh.model;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +14,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Data;
+import osm.surveyor.task.city.model.City;
+import osm.surveyor.task.city.model.Status;
 import osm.surveyor.task.util.JsonGeometryLine;
 import osm.surveyor.task.util.Point;
 

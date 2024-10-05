@@ -1,4 +1,4 @@
-package osm.surveyor.task.city.model;
+package osm.surveyor.task.task.model;
 
 import java.util.Date;
 
@@ -18,6 +18,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import osm.surveyor.task.city.model.Operation;
+import osm.surveyor.task.city.model.Status;
+import osm.surveyor.task.mesh.model.Citymesh;
 import osm.surveyor.task.util.JsonTemple;
 
 @Data
