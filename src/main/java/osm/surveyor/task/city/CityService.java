@@ -16,11 +16,14 @@ import osm.surveyor.task.mesh.model.Citymesh;
 @Transactional // メソッド開始時にトランザクションを開始、終了時にコミットする
 public class CityService {
 
-	@Autowired
-	CityRepository repository;
+	private final CityRepository repository;
+	private final CitymeshRepository meshRepository;
 	
 	@Autowired
-	CitymeshRepository meshRepository;
+	public CityService(CityRepository repository, CitymeshRepository meshRepository) {
+	    this.repository = repository;
+	    this.meshRepository = meshRepository;
+	}
 
 	public List<City> getAll() {
 		return repository.findAll(Sort.by(Sort.Direction.ASC, "citycode"));

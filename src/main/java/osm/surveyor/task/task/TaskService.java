@@ -22,11 +22,14 @@ import java.util.UUID;
 @Transactional // メソッド開始時にトランザクションを開始、終了時にコミットする
 public class TaskService {
 
-	@Autowired
-	TaskRepository repository;
+	private final TaskRepository repository;
+	private final CitymeshRepository meshRepository;
 	
 	@Autowired
-	CitymeshRepository meshRepository;
+	public TaskService(TaskRepository repository, CitymeshRepository meshRepository) {
+	    this.repository = repository;
+	    this.meshRepository = meshRepository;
+	}
 
 	public void add(TaskEntity task) {
 		if (task.getOperation() == Operation.RESERVE) {
