@@ -36,7 +36,7 @@ public class DataLoader implements CommandLineRunner {
 	private final TaskService taskService;
 	private final CityService cityService;
 
-	String url = "http://surveyor.mydns.jp/osm-data";
+	String url = "http://192.168.0.200/osm-data";
 	
 	@Override
 	public void run(String... args) throws Exception {
