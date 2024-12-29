@@ -1,4 +1,5 @@
-{"type":"FeatureCollection","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"name":"北海道","id":"1"},"geometry":{"coordinates":[143.35,43.479],"type":"Point"}}
+{"type":"FeatureCollection","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[
+{"type":"Feature","properties":{"name":"北海道","id":"1"},"geometry":{"coordinates":[143.35,43.479],"type":"Point"}}
 ,{"type":"Feature","properties":{"name":"青森県","id":"2"},"geometry":{"coordinates":[140.609,40.907],"type":"Point"}}
 ,{"type":"Feature","properties":{"name":"岩手県","id":"3"},"geometry":{"coordinates":[141.559,39.65],"type":"Point"}}
 ,{"type":"Feature","properties":{"name":"宮城県","id":"4"},"geometry":{"coordinates":[141.29,38.387],"type":"Point"}}
