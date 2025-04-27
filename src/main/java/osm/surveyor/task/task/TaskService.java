@@ -3,6 +3,7 @@ package osm.surveyor.task.task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import osm.surveyor.task.city.ConflictException;
 import osm.surveyor.task.city.NotAcceptableException;
 import osm.surveyor.task.city.model.Operation;
@@ -11,8 +12,6 @@ import osm.surveyor.task.mesh.CitymeshRepository;
 import osm.surveyor.task.mesh.model.Citymesh;
 import osm.surveyor.task.mesh.model.CitymeshPK;
 import osm.surveyor.task.task.model.TaskEntity;
-
-import javax.transaction.Transactional;
 
 import java.util.Date;
 import java.util.List;

@@ -70,7 +70,7 @@ public class DataLoader implements CommandLineRunner {
 		RestTemplate restTemplate = new RestTemplate();
 		System.out.println(String.format("INFO: httpGet(%s)", url));
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
-		HttpStatus httpStatus = response.getStatusCode();
+		HttpStatus httpStatus = (HttpStatus) response.getStatusCode();
 		if (httpStatus.isError()) {
 			System.out.println("ERROE: Can not access '"+ url +"'");
 			throw new Exception("ERROE: Can not access '"+ url +"'");

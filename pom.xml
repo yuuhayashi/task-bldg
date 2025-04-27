@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.18</version>
+		<version>3.4.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>osm.surveyor.plateau</groupId>
@@ -15,7 +15,7 @@
 	<name>task-bldg</name>
 	<description>TaskingManager for Plateau BLDG</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -106,7 +106,6 @@
 		<dependency>
 		    <groupId>com.h2database</groupId>
 		    <artifactId>h2</artifactId>
-		    <version>1.4.200</version>
             <scope>runtime</scope>
 		</dependency>
 		
@@ -114,7 +113,6 @@
 		<dependency>
 		    <groupId>org.junit.jupiter</groupId>
 		    <artifactId>junit-jupiter-api</artifactId>
-		    <version>5.11.4</version>
 		    <scope>test</scope>
 		</dependency>
 	</dependencies>

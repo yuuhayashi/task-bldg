@@ -1,5 +1,8 @@
 package osm.surveyor.task.util;
 
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -9,11 +12,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@SpringBootTest
 class GeojsonTest {
 
 	@BeforeAll
@@ -39,6 +44,7 @@ class GeojsonTest {
         try (InputStream is = new ClassPathResource(path).getInputStream()) {
         	ObjectMapper mapper = new ObjectMapper();
         	JsonNode node = mapper.readTree(is);
+        	assertNotNull(node);
         	Geojson geojson = new Geojson();
         	geojson.parse(node);
         	

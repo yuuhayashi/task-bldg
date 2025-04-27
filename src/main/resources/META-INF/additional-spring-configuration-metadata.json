@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "task-bldg.osm-data.url",
+    "type": "java.lang.String",
+    "description": "A description for 'task-bldg.osm-data.url'"
+  },
+  {
+    "name": "app.plateau.dir",
+    "type": "java.lang.String",
+    "description": "A description for 'app.plateau.dir'"
+  },
+  {
+    "name": "app.plateau.dir",
+    "type": "java.lang.String",
+    "description": "A description for 'app.plateau.dir'"
+  },
+  {
+    "name": "app.osm-data.url",
+    "type": "java.lang.String",
+    "description": "A description for 'app.osm-data.url'"
+  }
+]}

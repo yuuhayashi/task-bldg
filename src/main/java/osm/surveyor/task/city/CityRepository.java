@@ -2,9 +2,8 @@ package osm.surveyor.task.city;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import osm.surveyor.task.city.model.City;
 

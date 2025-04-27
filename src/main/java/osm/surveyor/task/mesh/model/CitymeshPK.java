@@ -2,8 +2,7 @@ package osm.surveyor.task.mesh.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Embeddable;
-
+import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
 
