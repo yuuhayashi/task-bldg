@@ -12,7 +12,7 @@ public class IndexController {
 
 	@GetMapping("/index")
 	public String index() {
-		String url = "http://surveyor.mydns.jp/osm-data";
+		String url = "https://surveyor.mydns.jp/osm-data";
 		try {
 			RestTemplate restTemplate = new RestTemplate();
 			System.out.println(String.format("INFO: httpGet(%s)", url));
