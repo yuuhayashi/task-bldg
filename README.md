@@ -6,7 +6,7 @@ Plateau 3D都市データをOSMに反映させるための「タスク管理」�
 
 このWebアプリケーションではPlateauで配布されているファイル単位を「タスク」とし、それぞれのタスクの作業進捗を管理するものです。
 
-タスクの基本的な進行は、「タスク予約」→「編集完了」→「検証(OK)」というフェーズで進めます。
+タスクの基本的な進行は、「タスク予約」→「編集(OK/NG)」というフェーズで進めます。
 
 ![TaskStatus](https://github.com/yuuhayashi/task-bldg/wiki/uml/TaskStatus.png)
 
