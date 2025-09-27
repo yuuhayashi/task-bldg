@@ -11,6 +11,7 @@ import lombok.Setter;
 public class CitiesJson {
 	
 	private String site;
+	private String tasksite;
 	
 	private List<CityJson> list = new ArrayList<>();
 	
